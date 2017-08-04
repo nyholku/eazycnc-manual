@@ -1,0 +1,183 @@
+\contentsline {chapter}{\numberline {1}Safety First!}{6}{chapter.1}
+\contentsline {chapter}{\numberline {2}Introduction to CNC-Machining}{8}{chapter.2}
+\contentsline {section}{\numberline {2.1}Overview of a CNC Machining System}{8}{section.2.1}
+\contentsline {section}{\numberline {2.2}Understanding Real-Time}{8}{section.2.2}
+\contentsline {section}{\numberline {2.3}Understanding Stepper Motors}{9}{section.2.3}
+\contentsline {chapter}{\numberline {3}Hardware and Software Requirements}{12}{chapter.3}
+\contentsline {section}{\numberline {3.1}Dedicated Computer}{12}{section.3.1}
+\contentsline {section}{\numberline {3.2}Hardware}{12}{section.3.2}
+\contentsline {section}{\numberline {3.3}Operating System}{13}{section.3.3}
+\contentsline {section}{\numberline {3.4}Java}{13}{section.3.4}
+\contentsline {section}{\numberline {3.5}Anti-Virus Software}{14}{section.3.5}
+\contentsline {chapter}{\numberline {4}Installation}{15}{chapter.4}
+\contentsline {section}{\numberline {4.1}Getting Java}{15}{section.4.1}
+\contentsline {section}{\numberline {4.2}Getting the Application}{15}{section.4.2}
+\contentsline {section}{\numberline {4.3}Installing the Application}{16}{section.4.3}
+\contentsline {chapter}{\numberline {5}Overview of EazyCNC}{17}{chapter.5}
+\contentsline {section}{\numberline {5.1}Moving Around in the Program}{17}{section.5.1}
+\contentsline {chapter}{\numberline {6}Setting Up and Configuring}{20}{chapter.6}
+\contentsline {section}{\numberline {6.1}Saving Your Setup}{20}{section.6.1}
+\contentsline {section}{\numberline {6.2}Setting the Communication Port Name}{21}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Using the Auto Detect port function}{22}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Installing the Windows Serial Port Driver}{22}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Finding out the virtual serial port name on Mac OS X}{23}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}Finding out the virtual serial port name in Linux}{24}{subsection.6.2.4}
+\contentsline {section}{\numberline {6.3}Setting the User Interface}{24}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Units -popup menu}{25}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}DRO-format -entry field}{25}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {6.3.3}Update rate -entry field}{25}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {6.3.4}Language -popup menu}{25}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {6.3.5}Screen Size -popup menu}{25}{subsection.6.3.5}
+\contentsline {section}{\numberline {6.4}Configuring Motors and Axes}{26}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Motor Config -panel}{26}{subsection.6.4.1}
+\contentsline {subsubsection}{Axis On -checkbox}{26}{section*.12}
+\contentsline {subsubsection}{Current -popup menu}{26}{section*.13}
+\contentsline {subsubsection}{Forward -popup menu}{27}{section*.14}
+\contentsline {subsubsection}{Home -popup menu}{28}{section*.15}
+\contentsline {subsubsection}{Home -popup menu}{29}{section*.16}
+\contentsline {subsubsection}{Pair X and A -checkbox}{29}{section*.17}
+\contentsline {subsubsection}{Steps/mm -entry field, Steps/inch -entry field}{29}{section*.18}
+\contentsline {subsection}{\numberline {6.4.2}Axis Limits -panel}{31}{subsection.6.4.2}
+\contentsline {subsubsection}{Limits Enabled -checkbox}{32}{section*.23}
+\contentsline {subsubsection}{Min/Max - entry fields / Touch -buttons}{32}{section*.24}
+\contentsline {subsection}{\numberline {6.4.3}Jogging -panel}{32}{subsection.6.4.3}
+\contentsline {subsubsection}{Crawl Velocity -entry field}{33}{section*.25}
+\contentsline {subsubsection}{Crawl Length -entry field}{33}{section*.26}
+\contentsline {subsubsection}{Min Crawl -entry field}{33}{section*.27}
+\contentsline {subsubsection}{Acceleration -entry field}{33}{section*.28}
+\contentsline {subsubsection}{Jog Velocity -entry field}{33}{section*.29}
+\contentsline {subsection}{\numberline {6.4.4}Test -panel}{34}{subsection.6.4.4}
+\contentsline {subsection}{\numberline {6.4.5}Pre-requisites}{34}{subsection.6.4.5}
+\contentsline {subsection}{\numberline {6.4.6}The Test run}{34}{subsection.6.4.6}
+\contentsline {subsubsection}{Top Velocity -entry field}{35}{section*.30}
+\contentsline {subsubsection}{Acceleration -entry field}{35}{section*.31}
+\contentsline {subsubsection}{Direction -popup menu}{35}{section*.32}
+\contentsline {section}{\numberline {6.5}Setting the Movement limits}{36}{section.6.5}
+\contentsline {subsection}{\numberline {6.5.1}Velocity -entry field}{36}{subsection.6.5.1}
+\contentsline {subsection}{\numberline {6.5.2}Acceleration -entry field}{37}{subsection.6.5.2}
+\contentsline {subsection}{\numberline {6.5.3}Path tolerance -entry field}{37}{subsection.6.5.3}
+\contentsline {subsection}{\numberline {6.5.4}Z-scaler -entry field}{37}{subsection.6.5.4}
+\contentsline {subsection}{\numberline {6.5.5}Update Period -entry field}{37}{subsection.6.5.5}
+\contentsline {section}{\numberline {6.6}Spindle setup}{38}{section.6.6}
+\contentsline {subsection}{\numberline {6.6.1}Min Speed -entry field}{39}{subsection.6.6.1}
+\contentsline {subsection}{\numberline {6.6.2}Max Speed -entry field}{39}{subsection.6.6.2}
+\contentsline {section}{\numberline {6.7}G-Code Options}{40}{section.6.7}
+\contentsline {subsection}{\numberline {6.7.1}Incremental IJK -checkbox}{40}{subsection.6.7.1}
+\contentsline {subsection}{\numberline {6.7.2}Incremental XYZ -checkbox}{40}{subsection.6.7.2}
+\contentsline {subsection}{\numberline {6.7.3}G4 P in msec -checkbox}{40}{subsection.6.7.3}
+\contentsline {section}{\numberline {6.8}Shortcuts setup}{41}{section.6.8}
+\contentsline {section}{\numberline {6.9}Sys Info screen}{42}{section.6.9}
+\contentsline {chapter}{\numberline {7}Operating Your CNC Machine}{43}{chapter.7}
+\contentsline {section}{\numberline {7.1}Using Keyboard and Joystick}{43}{section.7.1}
+\contentsline {section}{\numberline {7.2}Simulation versus Cutting Metal}{44}{section.7.2}
+\contentsline {section}{\numberline {7.3}Status Display}{45}{section.7.3}
+\contentsline {section}{\numberline {7.4}Interactive Execution of G-code}{45}{section.7.4}
+\contentsline {section}{\numberline {7.5}G-code display}{46}{section.7.5}
+\contentsline {subsection}{\numberline {7.5.1}Loading G-code for execution}{46}{subsection.7.5.1}
+\contentsline {subsection}{\numberline {7.5.2}The Goto -button}{47}{subsection.7.5.2}
+\contentsline {subsection}{\numberline {7.5.3}Editing G-code}{47}{subsection.7.5.3}
+\contentsline {section}{\numberline {7.6}Toolpath display}{47}{section.7.6}
+\contentsline {subsection}{\numberline {7.6.1}Controlling the toolpath display}{48}{subsection.7.6.1}
+\contentsline {section}{\numberline {7.7}Coordinate displays aka DROs}{49}{section.7.7}
+\contentsline {section}{\numberline {7.8}Jogging}{50}{section.7.8}
+\contentsline {section}{\numberline {7.9}Finding your bearings i.e. coordinates}{50}{section.7.9}
+\contentsline {section}{\numberline {7.10}The easy and lazy way}{51}{section.7.10}
+\contentsline {section}{\numberline {7.11}Going pro}{52}{section.7.11}
+\contentsline {section}{\numberline {7.12}Adjusting Feed Rate}{52}{section.7.12}
+\contentsline {section}{\numberline {7.13}Controlling the Spindle}{53}{section.7.13}
+\contentsline {section}{\numberline {7.14}Machining!}{53}{section.7.14}
+\contentsline {subsection}{\numberline {7.14.1}Pausing the machining}{54}{subsection.7.14.1}
+\contentsline {subsection}{\numberline {7.14.2}Stepping and Reversing}{55}{subsection.7.14.2}
+\contentsline {subsection}{\numberline {7.14.3}Stopping}{55}{subsection.7.14.3}
+\contentsline {section}{\numberline {7.15}Setting up and managing the coordinate systems}{55}{section.7.15}
+\contentsline {subsection}{\numberline {7.15.1}Coordinate axes}{56}{subsection.7.15.1}
+\contentsline {subsection}{\numberline {7.15.2}Work/Fixture Coordinate System/Offsets}{56}{subsection.7.15.2}
+\contentsline {subsection}{\numberline {7.15.3}Selecting the active coordinate system}{56}{subsection.7.15.3}
+\contentsline {subsection}{\numberline {7.15.4}Changing offsets/setting up the coordinates}{57}{subsection.7.15.4}
+\contentsline {subsection}{\numberline {7.15.5}Setting the XY-coordinate system origin via touching}{57}{subsection.7.15.5}
+\contentsline {subsection}{\numberline {7.15.6}Setting the Z-coordinate system origin via touching}{58}{subsection.7.15.6}
+\contentsline {section}{\numberline {7.16}Setting up and managing tool information}{58}{section.7.16}
+\contentsline {subsection}{\numberline {7.16.1}Setting the current tool}{59}{subsection.7.16.1}
+\contentsline {subsection}{\numberline {7.16.2}Managing the tool diameter and length}{60}{subsection.7.16.2}
+\contentsline {subsection}{\numberline {7.16.3}Setting the tool length via touching}{60}{subsection.7.16.3}
+\contentsline {chapter}{\numberline {8}Cutter compensation}{62}{chapter.8}
+\contentsline {section}{\numberline {8.1}Tool length compensation}{62}{section.8.1}
+\contentsline {section}{\numberline {8.2}Cutter diameter compensation}{62}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Cutter compensation example - cutting part's outline}{63}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}Cutter compensation example - cutting holes and openings}{65}{subsection.8.2.2}
+\contentsline {chapter}{\numberline {9}G-code reference}{66}{chapter.9}
+\contentsline {section}{\numberline {9.1}The Basics}{66}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}Operator Messages}{67}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}Debug Messages}{67}{subsection.9.1.2}
+\contentsline {section}{\numberline {9.2}Numbers, Expressions and Parameters}{68}{section.9.2}
+\contentsline {subsection}{\numberline {9.2.1}Numbers}{68}{subsection.9.2.1}
+\contentsline {subsection}{\numberline {9.2.2}Expressions}{68}{subsection.9.2.2}
+\contentsline {subsubsection}{Arithmetic operators}{68}{section*.59}
+\contentsline {subsubsection}{Arithmetic functions}{69}{section*.60}
+\contentsline {subsection}{\numberline {9.2.3}Parameters}{69}{subsection.9.2.3}
+\contentsline {section}{\numberline {9.3}G-codes and M-codes}{70}{section.9.3}
+\contentsline {subsection}{\numberline {9.3.1}Length Units, G20,G21 codes}{70}{subsection.9.3.1}
+\contentsline {subsection}{\numberline {9.3.2}Coordinate Axes}{70}{subsection.9.3.2}
+\contentsline {subsection}{\numberline {9.3.3}Setting the length units -- G20,G21}{71}{subsection.9.3.3}
+\contentsline {subsection}{\numberline {9.3.4}Feedrate -- F-word}{71}{subsection.9.3.4}
+\contentsline {subsection}{\numberline {9.3.5}Spindle speed -- S-word}{71}{subsection.9.3.5}
+\contentsline {subsection}{\numberline {9.3.6}Spindle on/off -- M3,M4,M5 codes}{71}{subsection.9.3.6}
+\contentsline {subsection}{\numberline {9.3.7}Coolant on/off -- M7,M8,M9 codes}{72}{subsection.9.3.7}
+\contentsline {subsection}{\numberline {9.3.8}Select a tool -- T-word}{72}{subsection.9.3.8}
+\contentsline {subsection}{\numberline {9.3.9}Dwelling -- G4 P*-code}{72}{subsection.9.3.9}
+\contentsline {subsection}{\numberline {9.3.10}Coordinates/moving axes -- XYZABC -words}{73}{subsection.9.3.10}
+\contentsline {subsection}{\numberline {9.3.11}Motion mode -- G0,G1,G2 and G3 codes}{73}{subsection.9.3.11}
+\contentsline {subsection}{\numberline {9.3.12}Rapid positioning -- G0 code}{74}{subsection.9.3.12}
+\contentsline {subsection}{\numberline {9.3.13}Linear interpolation -- G1 code}{74}{subsection.9.3.13}
+\contentsline {subsection}{\numberline {9.3.14}Clockwise Arc interpolation -- G2 code}{74}{subsection.9.3.14}
+\contentsline {subsubsection}{Specifying arc using center point}{74}{section*.64}
+\contentsline {paragraph}{\texttt {G2 X\nobreakspace {} Y\nobreakspace {} Z\nobreakspace {} I\nobreakspace {} J\nobreakspace {} K\nobreakspace {}}}{74}{section*.65}
+\contentsline {subsubsection}{Specifying arc using radius}{75}{section*.66}
+\contentsline {paragraph}{\texttt {G2 X\nobreakspace {} Y\nobreakspace {} Z\nobreakspace {} R\nobreakspace {}}}{75}{section*.67}
+\contentsline {subsection}{\numberline {9.3.15}Counter Clockwise Arc interpolation -- G3 code}{75}{subsection.9.3.15}
+\contentsline {subsection}{\numberline {9.3.16}Perform probing move -- G31}{75}{subsection.9.3.16}
+\contentsline {subsection}{\numberline {9.3.17}Pause Machining -- M0,M1}{76}{subsection.9.3.17}
+\contentsline {subsection}{\numberline {9.3.18}Stop Machining -- M2}{76}{subsection.9.3.18}
+\contentsline {section}{\numberline {9.4}Coordinate systems}{76}{section.9.4}
+\contentsline {subsection}{\numberline {9.4.1}Scaling -- G50,G51 codes}{76}{subsection.9.4.1}
+\contentsline {paragraph}{\texttt {G51 X* Y* Z* A* B* C*}}{76}{section*.70}
+\contentsline {subsection}{\numberline {9.4.2}Incremental mode -- G90,G91 codes}{77}{subsection.9.4.2}
+\contentsline {paragraph}{\texttt {G91}}{77}{section*.71}
+\contentsline {paragraph}{\texttt {G90}}{77}{section*.72}
+\contentsline {subsection}{\numberline {9.4.3}Polar coordinate mode -- G15,G16 codes}{77}{subsection.9.4.3}
+\contentsline {paragraph}{\texttt {G16}}{77}{section*.73}
+\contentsline {paragraph}{\texttt {G15}}{78}{section*.74}
+\contentsline {subsection}{\numberline {9.4.4}Temporary coordinate system offsets -- G52}{78}{subsection.9.4.4}
+\contentsline {subsection}{\numberline {9.4.5}Temporary coordinate system offsets -- G52,G92,G92.1,G92.2,G92.3 codes}{78}{subsection.9.4.5}
+\contentsline {paragraph}{\texttt {92 X\nobreakspace {} Y\nobreakspace {} Z\nobreakspace {} A\nobreakspace {} B\nobreakspace {} C\nobreakspace {}}}{78}{section*.75}
+\contentsline {paragraph}{\texttt {92.1}}{78}{section*.76}
+\contentsline {paragraph}{\texttt {92.2}}{78}{section*.77}
+\contentsline {paragraph}{\texttt {92.3}}{79}{section*.78}
+\contentsline {paragraph}{\texttt {92.1 X\nobreakspace {} Y\nobreakspace {} Z\nobreakspace {} A\nobreakspace {} B\nobreakspace {} C\nobreakspace {}}}{79}{section*.79}
+\contentsline {subsection}{\numberline {9.4.6}Coordinate system rotation -- G68,G69 codes}{79}{subsection.9.4.6}
+\contentsline {paragraph}{\texttt {G68 A\nobreakspace {} B\nobreakspace {} I\nobreakspace {} R\nobreakspace {}}}{79}{section*.80}
+\contentsline {paragraph}{\texttt {G69}}{79}{section*.81}
+\contentsline {subsection}{\numberline {9.4.7}Active plane -- G17,G18,G19 codes}{79}{subsection.9.4.7}
+\contentsline {subsection}{\numberline {9.4.8}Tool length compensation -- G43,G44,G49 codes}{80}{subsection.9.4.8}
+\contentsline {paragraph}{\texttt {G43 H\nobreakspace {}}}{80}{section*.82}
+\contentsline {paragraph}{\texttt {G44 H\nobreakspace {}}}{80}{section*.83}
+\contentsline {paragraph}{\texttt {G49}}{80}{section*.84}
+\contentsline {subsection}{\numberline {9.4.9}Work/fixture offsets -- G54,G55,G56,G57,G58,G59 codes}{80}{subsection.9.4.9}
+\contentsline {paragraph}{\texttt {G59 P*}}{80}{section*.85}
+\contentsline {subsection}{\numberline {9.4.10}Absolute coordinates -- G53 code}{80}{subsection.9.4.10}
+\contentsline {subsection}{\numberline {9.4.11}Cutter radius compensation -- G40,G41,G4 codes}{80}{subsection.9.4.11}
+\contentsline {subsection}{\numberline {9.4.12}Feedrate mode -- G93,G94,G95 codes}{81}{subsection.9.4.12}
+\contentsline {subsection}{\numberline {9.4.13}Feedrate override on/off -- M48,M49 codes}{82}{subsection.9.4.13}
+\contentsline {subsection}{\numberline {9.4.14}Tool change -- M6 code}{82}{subsection.9.4.14}
+\contentsline {subsection}{\numberline {9.4.15}Tool length compensation -- G43,G44,G49 codes}{82}{subsection.9.4.15}
+\contentsline {subsection}{\numberline {9.4.16}Path mode -- G61,G61.1,G64 codes}{82}{subsection.9.4.16}
+\contentsline {subsection}{\numberline {9.4.17}Incremental XYZ mode -- G90,G91 codes}{83}{subsection.9.4.17}
+\contentsline {subsection}{\numberline {9.4.18}Incremental IJK mode -- G90.1,G91.1 codes}{83}{subsection.9.4.18}
+\contentsline {subsection}{\numberline {9.4.19}Set tool table -- G10 L1 code}{84}{subsection.9.4.19}
+\contentsline {paragraph}{\texttt {G10 L1 P\nobreakspace {} A\nobreakspace {} Z\nobreakspace {} X\nobreakspace {}}}{84}{section*.86}
+\contentsline {subsection}{\numberline {9.4.20}Set work/fixture offsets -- G10 L2 code}{84}{subsection.9.4.20}
+\contentsline {paragraph}{\texttt {G10 L2 P\nobreakspace {} X\nobreakspace {} Y\nobreakspace {} Z\nobreakspace {} A\nobreakspace {} B\nobreakspace {} C\nobreakspace {}}}{84}{section*.87}
+\contentsline {subsection}{\numberline {9.4.21}Call subroutine -- M98/M99}{84}{subsection.9.4.21}
+\contentsline {paragraph}{\texttt {M98 P1234}}{85}{section*.88}
+\contentsline {paragraph}{\texttt {M98 P1234 (example.txt)}}{85}{section*.89}
+\contentsline {paragraph}{\texttt {M98 P2000 L10}}{85}{section*.90}

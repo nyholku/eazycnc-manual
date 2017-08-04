@@ -1,0 +1,192 @@
+\chapter{Introduction to CNC-Machining}
+
+
+
+\section{Overview of a CNC Machining System}
+
+
+This is probably familiar territory for you otherwise you would
+not be here in  the first place but
+this section is short introduction  to tell you where exactly EazyCNC
+and TOAD4 fits in the big picture.
+
+%Figure~\ref{fig:cnc-system-overview} tries to capture the 'big' picture of a CNC machining system.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+%\includegraphics[scale=0.4]{cnc-system-overview.png}
+\caption{a CNC Machining System Overview}
+\label{fig:cnc-system-overview}
+\end{figure}
+%---------------------------------------------------------------------------
+
+The CNC machining process starts with a design of the part to be machined
+which is turned into a sequence of instructions to the computer that
+controls the motors, typically stepper motors, that move the cutting tool 
+(or work piece) via series of gears, belts, pulleys and/or screws. 
+These tool movements are typically called 'axes', for example X-axis, Y-axis etc.
+
+The 'sequence of instructions' is called G-code and it is basically a text
+file with coordinate points that define the path the cutting tool will make.
+
+G-code can be hand written but is typically generated automatically from
+a CAD (Computer Aided Design model) of the part using CAM (Computer Aided Manufacturing)  
+software, either directly by the CAD/CAM program or by a program called 
+post-processor.
+
+The G-code file is read by a program that turns the coordinate information
+and other commands in the G-code file into motor control pulses in real-time
+observing programmed feed rates and machine parameters such as number of pulses
+required to move a unit distance.
+
+This is where EazyCNC/TOAD4 comes into picture because EazyCNC is the program that
+does the G-code interpretation and TOAD4 is a micro controller that does the
+real-time motor control.
+
+\section{Understanding Real-Time}
+
+In common language real time means roughly 'as it happens' but in 
+computer jargon real-time has a specific and important meaning.
+
+Real-time here means that the pulses that control the distance and speed
+of movements need to be generated precisely at appropriate rate because
+the motors and mechanisms that move the axis have physical limits beyond 
+which they fail to move as required. 
+
+EazyCNC runs an a personal computer  such as an IBM PC compatible 
+or a Macintosh computer. These computers use an operating systems,
+such as Windows, Linux or Mac OS X, that are not ideally suited to
+real-time control. You can easily get a feel for this when you plug in 
+a USB-device as often the mouse cursor stops for a second or two -- imaging
+if the system paused like that when it should be turning a corner.
+
+There are different ways out of this difficulty. A Windows program called
+Mach3 uses a special 'driver' software for the real-time stuff and another
+program called EMC2 uses a specially 'patched' version of the Linux 
+operating system just to mention two.
+
+EazyCNC takes a different approach.
+
+EacyCNC delegates the most demanding real-time tasks to the TOAD4
+micro controller which is better equipped and positioned to do the 
+precise real-time generation of motor control pulses and such because
+it does not have to deal with the endless variety of the PC hardware
+and software and because it has been designed from ground up for 
+the very task of performing real-time control.
+
+EazyCNC reads and interprets the G-code and breaks it into bite size
+chunks that the simple micro controller in the TOAD4 can process in real-time.
+
+These bite size chunks are are transferred from the PC to TOAD4 over
+the USB bus and put into a command queue in the TOAD4 micro controller.
+
+EazyCNC attempts to keep the queue full at all times so that if EazyCNC
+or the operating system it runs on needs to 'pause' for a second or so
+there is still data for TOAD4 to process and machining can continue 
+without missing a beat.
+
+This is important because when stepper motors are run at high speed
+a delayed pulse is equivalent to a sudden deceleration which may
+cause the system to exceed the stepper motor's max torque in which case
+the stepper motor will not be able to 'hold' its position and accuracy
+is compromised. 
+
+
+\section{Understanding Stepper Motors}
+
+While EazyCNC and TOAD4 can be used with Servo Motors they really
+are meant to be used with Stepper Motors.
+
+Stepper Motor are motors with two or more stationary coils and
+a rotating permanent magnet rotor. By energizing the coils
+in sequence the rotor can be made to move.
+
+Stepper Motors have some interesting and important properties.
+
+First of all they do not 'run' if you just energize them, at most
+they make a single small movement called step. This makes them
+rather safe as a short circuited transistor in the drive system
+cannot make the motor run wildly.
+
+Secondly when you apply a controlled energizing sequence into
+the coils the motor makes precise fractional rotational movements 
+called steps, a typical stepper motor step is 1.8\degree or 
+200 steps/revolution.
+
+It is this second property that makes steppers very attractive
+for controlling precise movements. 
+
+If you 'step' a stepper motor ten times you can be pretty sure
+that it actually moved ten steps. So there is no need to
+measure position of the motor in any other way than counting
+the pulses we send to it, no need for expensive encoders and 
+or position scales. 
+
+This makes stepper motors very cost effective
+way to implement motion control.
+
+But the lack of position feedback is also the downside of
+stepper motors.
+
+The positional control of a stepper motor based system
+relies on an initial position and keeping track of the steps
+and their direction.
+
+The initial position can be either given manually or
+found automatically by using a reference switch.
+
+Manually means that you move the motor/axis to a 
+know position, such as to the end of the movement range,
+and tell the system that this is it.
+
+If a reference switch is available then the system
+can move the axis/motor through its range of movements
+and make a note of the step number on which the reference
+switch is reached and in this way calibrate its position.
+
+Keeping track of the pulse and their direction
+is done automatically and precisely by the software
+but under certain circumstances the motor
+cannot 'carry out the step' and the system looses
+track of the real physical position, this is called
+missing steps.
+
+Missing steps can happen if the stepper is stepped too 
+fast or the load exceeds what the motor can deliver. To
+prevent that the correct maximum speed and acceleration 
+parameters need to be programmed into the system.
+
+Also note that manually forcing the axes to move, if
+you manage to overpower the motors, will cause the
+system to loose its position, so all manual movements
+must be done via the 'jog' controls of the system.
+
+It must also be mentioned that since we are controlling
+the motor position, not the cutter position, any backlash 
+or play in the mechanism is \emph{not} automatically compensated for.
+
+Typically not of practical concern but good to know
+is the fact that stepper motors are not very 'stiff'. Even
+though the motor has specific torque it actually has very
+little torque when the magnetic poles of the coil and
+rotor are aligned i.e. at every full step. 
+
+You can think about this as if the rotor and stator poles were
+connected with springs; when the poles are aligned the
+spring will not pull the rotor one way or the other,
+they only exert force and torque when the rotor is moved
+into misalignment and thus there is almost always a small
+but measurable error between the physical and ideal step
+position.
+
+There is of course a lot more to know and understand
+about Stepper Motors but above is the most import
+thing to keep in mind when working with systems based on
+them.
+
+
+
+
+
+

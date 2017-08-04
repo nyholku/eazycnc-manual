@@ -1,0 +1,58 @@
+\chapter{Overview of EazyCNC}
+
+
+The main purpose of EazyCNC is to read machining instructions in the form of a G-code file and control accordingly the motors that move the machine tool. In addition to that it provides the necessary controls to manually move the machine axes.
+
+
+\section{Moving Around in the Program}
+
+Figure~\ref{fig:eazycnc-main-screen} shows the 'main screen' of the application.
+Note that if your screen resolution is small then the titles of 
+the boxes aka panels are not displayed to conserve some screen real estate.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{g-code-view.png}
+\caption{EazyCNC Main Screen -- the G-code view}
+\label{fig:eazycnc-main-screen}
+\end{figure}
+%---------------------------------------------------------------------------
+
+The screen is logically dived into two parts, upper and lower half. The lower half is always the same, but the upper half changes depending on which screen or view you are.
+
+On the upper left corner, Figure~\ref{fig:view-buttons} are buttons that control what is show on the upper half. When this manual says 'go to screen' or 'in screen' it refers to these view control buttons and the different screens they bring up. 
+
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{view-buttons.png}
+\caption{The view selection buttons}
+\label{fig:view-buttons}
+\end{figure}
+
+The lower half of the screen always shows the controls that are used to cause the machine to actually move.
+
+%---------------------------------------------------------------------------
+%\begin{figure}[htb]
+%\includegraphics[scale=0.4]{view-buttons.png}
+%\caption{The view selection buttons}
+%\label{fig:view-buttons}
+%\end{figure}
+%---------------------------------------------------------------------------
+
+
+For a typical usage the main screen, 'G-code', provides all the controls that are necessary to open a G-code file and machine the part it represents.
+
+The other screens are for setting up coordinate systems, tool parameters and to configure various aspects of the machining system.
+
+On the main screen  the upper right quarter of the screen  the current G-code file is shown with the line G-code line  being executed highlighted in blue.
+
+On the upper left quarter a 3D view of the tool path is shown with the path already executed shown in green and the path that remains to be machined shown in red.
+
+Below those, from left to right, there are the coordinate read outs (DROs) displaying the tool position, jog controls to manually move the tool, user programmable function keys for repeated tasks and manual spindle controls and feed override controls.
+
+At the bottom row there are buttons to control the actual machining and running of the G-code program, either in simulation mode or actually cutting some metal. With these controls it is also possible to temporarily pause the execution and run the G-code step by step and even backwards.
+
+Usage and cutting metal with EazyCNC is described in detail in Chapter~\ref{chap:operating}.
+
+Setting up of EazyCNC is described in the following chapter.
+

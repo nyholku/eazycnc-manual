@@ -1,0 +1,1051 @@
+\chapter{Operating Your CNC Machine}
+\label{chap:operating}
+
+This chapter tells you all how to operate EazyCNC to machine stuff with G-code.
+
+G-code is covered in more detail is Chapter~\ref{chap:g-code-chapter}, but since the sole purpose
+of EazyCNC is G-code interpretation most functionality is related to 
+G-code in some way I cover that in this chapter.
+
+
+\section{Using Keyboard and Joystick}
+\label{sec:keyboard-and-joystick}
+
+Most of the EazyCNC functions needed to operate your CNC machine can be activated
+from the keyboard with single key from the computer's keyboard. 
+
+A Joystick or Gamepad can also be used to active most of the functions.
+
+To extend the number of functions accessible using the Joystick/Gamepad buttons
+EazyCNC supports a software 'Shift Lock' -button, Figure~\ref{fig:shift-lock}.
+If this button is activate then the Joystick/Keyboard generates an other set
+of keys onto which functions can be attached.
+
+See Section~\ref{sec:shortcut-setup} to learn how to view and change both keyboard 
+and joystick shortcuts.
+
+The default keyboard / shortcuts assignments are given in Table~\ref{tab:keyboard-short-cuts}.
+
+\begin{table}[!ht] 
+\begin{center} 
+\begin{threeparttable} 
+\caption{Keyboard and Joystick Shortcuts}
+\label{tab:keyboard-short-cuts}
+\centering
+\begin{tabular}{l l}
+\hline\hline
+Key & Function\\ [0.5ex] 
+\hline
+R& RUN\\
+H& HOLD\\
+S& STOP\\
+Space&Toggle RUN/HOLD\\
+C&Toggle Coolant ON/OFF\\
+T&Toggle Spindle ON/OFF\\
+Cursor LEFT& Jog -X\\
+Cursor RIGHT& Jog +X\\
+Cursor DOWN& Jog -Y\\
+Cursor UP& Jog +Y\\
+Stick LEFT& Jog -X\\
+Stick RIGHT& Jog +X\\
+Stick DOWN& Jog -Y\\
+Stick UP& Jog +Y\\
+Button 1& RUN\\
+Button 2& HOLD\\
+Button 3& STOP\\
+Alt-Cmd S& Save Configuration (Mac OS X)\\
+Alt-Ctrl S& Save Configuration (Windows/Linux)\\
+F12&Toggle Java console on/off\\
+\hline
+\end{tabular}
+\end{threeparttable}
+\end{center}
+\end{table}
+
+
+
+Joystick Figure~\ref{fig:shift-lock}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{shift-lock.png}
+\caption{The Shift Lock -button}
+\label{fig:shift-lock}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+
+\section{Simulation versus Cutting Metal}
+
+EazyCNC can be in one of two operating modes, simulation mode or machining mode.
+
+The simulation mode is handy for training or experimentation and for 
+G-code verification before you actually
+machine anything. Because no TOAD4 motor controller is used or needed in the simulation
+mode you can install and run the EazyCNC software in any computer and use it
+in the comfort of your study or office.
+
+The simulation mode attempts to be step-accurate i.e. simulate the exact movements
+the stepper motors will make and it runs in real time (if your computer is fast enough)
+meaning that simulation takes as long as the actual machining will take. As this
+may take a long time you may speed things up when simulating by using a faster feedrate (the F-word
+G-code) but this will affect the small details of the cutting paths so the path
+generated at high speed is not 100\% same as the lower speed path.
+
+
+You control the operating mode with SIMU and MACH buttons at the bottom of the screen,
+Figure~\ref{fig:simu-mach}, the current operating mode is show with the
+button lit.
+
+To toggle a mode on or off click the corresponding button.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{simu-mach.png}
+\caption{The operating mode control and indicator buttons}
+\label{fig:simu-mach}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+\section{Status Display}
+\label{status-display}
+
+At top of the panel titled 'Machine Controls' at the bottom of the screen,
+Figure~\ref{fig:status-display}, there is a status/error display.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{status-display.png}
+\caption{The status/error display}
+\label{fig:status-display}
+\end{figure}
+%---------------------------------------------------------------------------
+
+This display shows the general status of the system or a helpful error message in
+case of an error.
+
+Most errors are transient in nature because they are the results of an operator 
+(that's you) mistake, such as pressing the right button at the wrong time or entering
+an invalid value into an entry field, thus
+the error messages as just shown briefly accompanied with a beep sound.
+
+If you are not able to read the error/message quickly enough you can press and hold 
+the '?' button down to re-call the last error message and read it at leisure.
+
+During machining it is possible that the G-code contains messages to the operator,
+via the '(MSG, operator message)' -mechanism,
+and those messages are also displayed in this display.
+
+\section{Interactive Execution of G-code}
+
+The status display line doubles as an interactive G-code execution entry field. 
+To execute G-code interactively click on the status line, type in G-code and
+hit ENTER-key. 
+
+This feature should be used with extreme caution as it very easy to enter
+G-code commands that damage the machine or the workpiece. 
+
+Even more care
+and forethought needs to be exercised if the interactive execution is used
+in the middle of machining when the system is in the HOLD-state, because the
+the interactive commands may violate the expectations built into the G-code.
+
+For example it is possible to turn off the spindle interactively with the 
+'\texttt{M5}'  code in which case continuing with the machining is likely
+to result in a broken milling cutter when the machining is continued
+and the spindle is not running.
+
+\section{G-code display}
+
+On the main screen the top right hand quarter of the screen is occupied by the
+G-code display and the associated controls, Figure~\ref{fig:g-code-display}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{g-code-display.png}
+\caption{The G-code editor and display panel}
+\label{fig:g-code-display}
+\end{figure}
+%---------------------------------------------------------------------------
+
+The current G-code file is displayed there. Only one G-code program can
+be open at any given time, but if it calls subroutines in an other
+G-code file it is possible that multiple 'tabs' or files are displayed there.
+
+The next G-code line to be executed is highlighted in blue. If there is
+an error in the G-code then the line containing the error is highlighted
+in red and the associated error message is displayed in the status/error
+display.
+
+The background of the G-code display turns green if the system is in the
+RUN or HOLD state, indicating that the system is either machining or 
+ready to continue machining.
+
+\subsection{Loading G-code for execution}
+
+In order to execute a G-code program you need to load it into the EazyCNC
+first, to do that, click 'Open' button and select the G-code file to load.
+G-code files are pure text (7-bit ASCII) and so often have a '.txt'
+extension but that is not mandatory, some people and systems use '.nc' .
+
+\subsection{The Goto -button}
+
+G-code programs are meant to be executed from the beginning to the end. However
+it is possible to start from somewhere else, for example if you
+need to continue execution after a blackout, even if that is not recommended.
+
+To start the machining from somewhere else than the current
+line highlighted in blue, click on any line and then click the 'Goto' button,
+this will move the highlight to that line and machine will enter the 'HOLD' -state.
+
+The caveat is that because
+you are skipping G-codes when you 'Goto' a specific line in the program
+ you maybe breaking assumptions
+the G-code generator, be it a person or a CAM software, made
+when the code was written and this may have consequences. 
+
+For example
+a plasma cutter is typically programmed to start the cut with a piercing
+burn outside the actual part outline and if you skip that the
+arc may not be established and the metal not be pierced or the piercing may
+leave its mark on the part.
+
+
+\subsection{Editing G-code}
+
+It is also possible to edit and even create G-code files directly in 
+EazyCNC, but this is not recommended. EazyCNC is not a general purpose
+text or G-code editor, anytime you edit the code EazyCNC will go through
+the whole code and re-calculate the tool path and this can be slow,
+especially if the G-code file is very long, as it very well can be.
+
+To edit the code ensure that EazyCNC is in the stopped state (you 
+cannot edit the code while machining)  and just click on line you
+want to edit, most standard basic text editing facilities work as
+you would expect.
+
+To create a new G-code file from scratch click the 'New' button.
+
+An asterisk, '*', after a file name indicates that the file contains
+unsaved changes, to save the changes to the actual file click the 'Save'
+button.
+
+
+
+\section{Toolpath display}
+\label{toolpath-display}
+
+On the main screen the top lefthand quarter of the screen is occupied by the
+toolpath display and the associated controls, Figure~\ref{fig:toolpath-display}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{toolpath-display.png}
+\caption{The toolpath display panel}
+\label{fig:toolpath-display}
+\end{figure}
+%---------------------------------------------------------------------------
+
+In this panel the toolpath that the currently loaded G-code represents is illustrated in
+a three dimensional view.
+
+The movement limits of the axes are illustrated as grids and the corresponding positive axis directions
+are displayed in corresponding colors. You can change the colors, see section~\ref{subsec:axis-color-settings}.
+
+The cutting tool is illustrated as a purple cylinder and the actual tool path is displayed 
+as series of connected red and green lines of different intensity and line width. The colors
+can be changed, see section ~\ref{subsec:tool-color-settings}.
+
+The display is updated in real time as the machining progresses. The toolpath machined or
+cut so far is displayed in green and the yet to be cut toolpath is displayed in red. You
+can change the colors, see section ~\ref{subsec:machined-path-color-settings}.
+
+For the already machined toolpath, in green, the width of the line corresponds to the 
+width of the tool used to cut that path if the spindle was turned 'on' during the
+machining, otherwise the toolpath is shown as a thin line.The colors
+can be changed, see section ~\ref{subsec:machined-path-color-settings}.
+
+Weather the spindle is 'on' or 'off' for a given toolpath segment is indicated by
+the intensity of the color of the line, spindle 'on' is illustrated with with
+bright red or green and spindle 'off' is illustrated with a darker shade.
+
+
+
+When the G-code program is executing or running you can see, if you look carefully,
+that the green toolpath appears to precede the purple tool, this actually accurately
+represents the fact that the movement commands are queued in the motor controller
+waiting to be executed.
+
+ 
+
+\subsection{Controlling the toolpath display}
+
+If the 'Track' button is not active you can move around the three dimensional 
+virtual space and inspect different parts of the toolpath by clicking and dragging 
+in the toolpath display panel. If the 'Track' button is active the 
+display is always automatically cantered at the tooltip and follows it
+as the tool moves. You can toggle the tracking on and off by clicking the button
+repeatedly.
+
+If you hold down the 'ALT' key on your keyboard while you drag with
+the mouse you can rotate the view. If one of the 'XY', 'YZ' or 'XZ' buttons is
+active then the rotation is disabled and the view is forced to be towards
+the corresponding coordinate plane along the 'plane normal' axis. For example if
+you have the XY button selected then the view is as if you were looking
+down from the top of the positive Z-axis towards the XY-plane. 
+
+Note that you can de-select any of the 'Track', 'XY', 'YZ' or 'XZ' by
+just re-clicking on it.
+
+You can use the '+' and '-' buttons to zoom in and out to see more or
+less of the toolpath or you can use the mouse scroll wheel.
+
+
+\section{Coordinate displays aka DROs}
+
+The coordinate displays, Figure~\ref{fig:dro-displays}, also known as
+Digital Readouts or DROs, show the tool position in the currently
+active coordinate system in the currently selected units.
+
+The coordinate system can be quite complex but for most practical purpose 
+you can just think that the DROs just show the position EazyCNC thinks 
+the tool tip is at the moment. If the DROs says that the tool X-axis
+is at position 100 and the G0 -code tells it to move to X150 then
+the tool will travel 50 units to the right, no matter where it
+physically actually was.
+
+
+By clicking at the DRO and typing in a number you can change the
+displayed value. This will not move the tool but will of course
+change how subsequent G-code coordinates are interpreted. 
+
+You can also zero the DRO by clicking at the 'ZERO' button.
+
+If you press the 'HOME' button and you have a home/reference switch
+installed for that axis EazyCNC will drive the axis to the home
+switch position and then zero the DRO automatically. This establishes
+a repeatable absolute  origin for that axis.
+
+
+
+
+
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{dro-displays.png}
+\caption{The Digital Readouts}
+\label{fig:dro-displays}
+\end{figure}
+%---------------------------------------------------------------------------
+
+\section{Jogging}
+
+The Jog buttons, Figure~\ref{fig:jog-controls} can be used to drive or move
+the motors/axes 'manually'. If you need to move the axes you should use
+the jog buttons and not any handles your machine possibly has for moving
+the axes, as if you use the manual handles EazyCNC has no way of knowing that
+the tool has moved and thus coordinate positions used by the system will be wrong.
+
+The buttons to the right of the jog arrow buttons set the jogging mode i.e.
+they control how the jogging is performed.
+
+Never turn off the power to TOAD4 to move the axes manually, always use one of the
+jog modes provided.
+
+
+See  \ref{jogging-panel} for details how to setup the speeds used in jogging.
+
+
+\subsection{FAST -button}
+
+If the FAST-button is selected then pressing and holding a jog button will first move that axis slowly and then rapidly
+accelerate to the full jog speed. Pressing a jog button briefly will
+always move the axis a predetermined, minimal distance. 
+
+The 'slow' speed is specified in the 'Crawl veloc.' entry field for that axis in
+the Axis Setup -screen. The 'fast' speed is specified in the 'Jog veloc.' entry field and 
+the acceleration is controlled by the 'Accel.' entry field.
+
+\subsection{SLOW -button}
+
+If the SLOW-button is selected then pressing a jog button will move that axis slowly a
+as long as the button is pressed.
+
+The 'slow' speed is specified in the 'Crawl veloc.' entry field for that axis in
+the Axis Setup -screen.
+
+\subsection{STEP -button}
+
+If the STEP-button is selected then pressing a jog button will move that axis 
+for by the amount specified in the 'Min. crawl' entry field for that axis in
+the Axis Setup -screen.
+
+\subsection{MANUAL -button}
+
+If this button is selected then the motor drivers in TOAD4 are disable i.e.
+the motor currents are turned off and the axes can be moved manually with
+the hand wheels of the machine. 
+
+This mode of jogging is intended to be used before or after machining to 
+allow the operator to adjust the axes. This is necessary for example when using 
+a feeler to touch a work piece before setting the coordinates.
+
+When the machine axes are moved with the hand wheels EazyCNC
+has no way of knowing how much the axis has moved and thus the coordinates
+will be off/erroneous unless you reset them after moving the axes manually.
+
+Note that when the motor drivers are turned off the axes are free to move
+and thus even small forces, perhaps even internal tensions of the machine or
+tool/workpiece contact may move the axes a small amount and thus ruin the
+accuracy of the coordinates. So think twice before pressing this button.
+
+Important, never ever turn off the TOAD4 to 'free' the axes if you need to move
+them manually, always use this jog mode if you want to use the hand wheels
+to move the axes.
+
+
+
+%TODO "SPECIAL" button
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{jog-controls.png}
+\caption{The Jog control buttons}
+\label{fig:jog-controls}
+\end{figure}
+%---------------------------------------------------------------------------
+
+\section{Finding your bearings i.e. coordinates}
+\label{sec:finding-your-bearings}
+
+Before you start machining you need to establish the correct relationship
+between the virtual part described by the coordinates in your G-code 
+file and the work piece you are about to cut.
+
+It is important to remember that EazyCNC does not really know where
+the tool is, it just keeps track of the position relaying on an
+initial known position. Further even though EazyCNC can keep track of the
+tool position it knows next to nothing about the workpiece location.
+
+There are ways to calibrate all three (the EazyCNC coordinate system, the actual physical axis positions 
+and the workpiece location) in relation to each other,
+ but most of the time this would be an overkill.
+
+The relationship between the physical axis position and the
+coordinate system only really matter for two things: if you enable
+the axis limits and if you need to continue machining after
+a power down.
+
+In the first instance, if EazyCNC does not have the correct relationship
+between the physical axis position and it's internal coordinate
+system then it will allow you to drive the axis bang against
+one end of the movement and will unnecessarily limit your movements
+at the other end.
+
+In the second instance if you lose power, a fuse blows or the 
+job takes so long that you can't do it all at one go, unless the
+system can be returned to the same axis coordinate system relationship
+you will not be able to continue machining accurately after 
+the system has been powered off.
+
+The relationship between the EazyCNC coordinate system and
+the workpiece really only matters if you need to continue machining, see
+above, or you need to remove and remount the workpiece during the
+course of machining, work on existing part or the work piece
+is very close in size to the finished part. 
+
+\section{The easy and lazy way}
+
+The easiest way to setup the coordinate systems is as follows. Just 
+bolt down the workpiece. Jog the axes to ensure that you can
+reach all the parts to be machined without hitting the
+axes limits. Then jog the tool to an approximate location 
+whose coordinates you know  and set the DROs to those coordinates.
+
+If you create your G-codes so that the finished parts
+smallest coordinates are at 0,0,0 i.e the part extends
+to the right, forward and up of the origin, 
+then all you have to do after mounting 
+your workpiece is to drive the tool to the bottom left corner
+on top of the workpiece, press 'ZERO' buttons to zero X and Y 
+and type in the height of the work piece in the Z axis DRO 
+and you are good to go!
+
+
+For a simple system like a plasma cutter where the
+motors are not strong enough to cause any damage even
+if you hit ends of the movement above is very adequate, 
+no home/reference or limit switches,no calibration, no nothing.
+
+For milling you actual you want to drive the tool to the bottom
+left corner of the workpiece so that the tool is well within the workpiece 
+so that there is good margin for cutting. And you also want to
+use set the Z-axis DRO to value slightly less than the height of
+the workpiece so that the cutter will not foul the table.
+
+\section{Going pro}
+
+If you need or want to align EazyCNC's coordinate system
+and the physical axes positions the easiest way is to
+have the home/reference switches installed. With those
+all you have to do after powering up the system is to
+press the 'HOME' buttons and the system will drive the
+axis to the switches and reset the coordinate positions.
+
+For that to work accurately the switches need to perform
+repeatably so optical gates are the way to go. On the other
+hand optical switches need to be protected from chips
+and dust.
+
+As the axes will travel at slow speed during 'homing'
+it is a good idea to have the reference switch in the
+middle of the movement range instead of at the end
+as this will cut down the homing time.
+
+It is also possible to just carefully run the axes 
+to end stops and zero the DROs or type in a know value
+for that position.
+
+Above takes care of the EazyCNC coordinate system
+and physical machine axis relationship.
+
+To 'calibrate' the workpiece to machine relationship
+you can use what ever mechanically accurate method
+you want. Simplest being using known sized gauge 
+blocks. Or if you equip your system with a touch
+probe you can use that to measure the workpiece location.
+
+
+
+\section{Adjusting Feed Rate}
+\label{sec:feed-override}
+
+Feedrate is controlled by the \texttt{F}-word in your
+G-code programs but can be override with the 
+feed override controls illustrated in Figure~\ref{fig:feed-override}.
+
+The idea is that while the G-code programmer designs at 
+what feedrate the part should be cut and
+programs that into the code it sometimes it is necessary to adjust or fine
+tune that while machining.
+
+You can turn the override on and off by clicking he 'ON' button
+and you can adjust the override with the '+' and '-' buttons. 
+
+When the override is off the display shows the current
+feedrate as set by the last \texttt{F}-word executed,
+when the override is off the display shows the overridden
+value. 
+
+The override can be expressed either as a percentage of the
+\texttt{F}-word value or as units/minute. To change that
+click on the button to the right of the display field.
+
+You can adjust the override with the '+' and '-' keys
+or you can type in a new value. Adjusting or setting
+the override value will turn on the override.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{feed-override.png}
+\caption{The Feed Override controls}
+\label{fig:feed-override}
+\end{figure}
+%---------------------------------------------------------------------------
+
+\section{Controlling the Spindle}
+
+Spindle is mainly controlled by your G-code program
+using  \texttt{S}-word for setting the speed, \texttt{M3} to turn
+the spindle 'on' clockwise, \texttt{M4} to turning
+the spindle 'on' counter clockwise and \texttt{M5} to turning the spindle 'off'.
+
+You can manually control or override the G-code program commands with
+the spindle control illustrated in Figure~\ref{fig:spindle-speed}, but as 
+soon the G-code execution reaches next spindle control command that
+command will take over.
+
+
+When the override is off the display shows the current
+spindle speed as set by the last \texttt{S}-word executed,
+when the override is off the display shows the overridden
+value. 
+
+You can adjust the override with the '+' and '-' keys
+or you can type in a new value. Adjusting or setting
+the override value will turn on the override.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{spindle-speed.png}
+\caption{The Spindle controls}
+\label{fig:spindle-speed}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+
+
+
+
+\section{Machining!}
+
+\noindent
+Finally!
+
+Executing G-code or machining with G-code is basically very simple.
+
+You set the operation mode, simulation or machining, with the 'SIMU' 
+or 'MACH' button.
+
+You load your G-code program with the 'Open' button.
+
+Then you start the execution with the 'RUN' button,
+Figure~\ref{fig:run-hold-stop}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{run-hold-stop.png}
+\caption{The G-code execution control buttons}
+\label{fig:run-hold-stop}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+This will cause EazyCNC to interpret the G-codes line by line and 
+control the motors and axis accordingly.
+
+\subsection{Pausing the machining}
+
+If you need to temporarily pause the execution, for example to clean up some swarf
+from the work area, you can press the 'HOLD' button. 
+
+Note that pausing the machining may slightly change the actual machined toolpath because 
+pausing changes the speed of movements and this in turn may affect how corners are cut.
+
+To continue machining you press the 'RUN' button.
+
+You can't move the tool 'manually' with the jog controls while the G-code is executing, 
+but you can move it when the system is in the paused or 'HOLD' state. If you move
+the tool 'manually' EazyCNC will, when you hit the 'RUN button,  automatically return the tool the the position 
+where it was before you jogged it.
+
+In the hold state the spindle and coolant will keep running if they were 'on' when
+you paused the machining. You can
+turn them on/off manually with the respective control buttons, but they will NOT
+be automatically restored to their original state when you resume machining.
+
+
+EazyCNC may also enter the hold state when it encounters one of the pause 
+codes \texttt{M0}, \texttt{M1} or \texttt{M60}. 
+
+When EazyCNC encounters the \texttt{M1} code it only enters the hold state if
+the M1-pause switch is activated, Figure~\ref{fig:m1-lock}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{m1-lock.png}
+\caption{The M1-pause switch}
+\label{fig:m1-lock}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+\subsection{Stepping and Reversing}
+
+Sometimes, especially when simulating and examining G-code, you may want to execute
+the G-code one line at a time. To do that active the 'STEP' button, 
+Figure~\ref{fig:step-reverse}.
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.8]{step-reverse.png}
+\caption{The step and reverse execution control buttons}
+\label{fig:step-reverse}
+\end{figure}
+%---------------------------------------------------------------------------
+
+When the 'STEP' button is active the execution of G-code will automatically
+enter the pause or 'HOLD' state after executing every line of G-code.
+
+An other use for the 'STEP' feature is in combination with the 'REVERSE'
+button. In general you can't run G-code backwards because you can't un-machine
+material back to the work piece or un-flow the coolant, but sometimes you
+want re-run some cut or G-code line because for example the cutter broke
+or you had a flameout in plasma cutting in the middle of the movement.
+
+If something like that happens you press the 'HOLD' button to pause the 
+machining. Then you active the 'STEP' and 'REVERSE' buttons and press the
+'RUN' button to run backwards as required to get to a position before
+where your the tool bit broke or the arc flamed out. Don't forget
+to deactivate 'STEP' and 'REVERSE' afterwards.
+
+Next you stop the spindle to change the cutter and restart the spindle.
+
+Remember to install a kill switch for the spindle/torch 
+and always use it before touching the spindle!
+
+Once you have the cutter changed you can continue machining by hitting
+the 'RUN' button.
+
+\subsection{Stopping}
+
+The machining will of course automatically stop when it reaches the
+end of the G-code file or if it encounters a stop code, M2 or M30.
+
+If you hit the 'STOP' button the machining will stop and spindle and coolant will
+be turned off and the G-code is re-wound to the beginning, so that next time
+you hit 'RUN' it will execute from the beginning. 
+
+
+\section{Setting up and managing the coordinate systems}
+
+This section discusses the coordinate systems in detail.
+
+\subsection{Coordinate axes}
+
+Figure~\ref{fig:coordinate-system} illustrates the coordinate axes. When standing
+in front of the machine and looking into the machine X-axis runs from left
+to right, Y axis from front to back and Z axis from bottom to top. This is a
+well established convention in CNC world.
+
+The origin of the coordinate system where ever your home/ref switches are
+positioned or if you don't have a home/ref switch installed and enabled for
+an axis then origin is where ever that axis motor is when you press the 'HOME'
+switch. 
+
+The physical origin of the coordinate axis is not really relevant
+most of the time as you need to 'calibrate' or set your work coordinate 
+system with respect to the the work piece anyway as explained in the next section.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+%\includegraphics[scale=0.8]{coordinate-system.png}
+\caption{The coordinate systems}
+\label{fig:coordinate-system}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+\subsection{Work/Fixture Coordinate System/Offsets}
+
+Work coordinate system, also know as fixture coordinate system
+or offsets, is the main thing relates the axes physical positions to the
+the coordinates displayed in the DROs or the G-codes coordinates.
+
+EazyCNC supports 255 work coordinate systems, you are unlikely to
+ever need more than a few, most people use only one.
+
+Mathematically a work coordinate system is simply a number for each axis
+that is added to the DRO or G-code value axis value to convert them to
+the physical axis, so basically they off set your coordinates, hence the name.
+
+Changing the coordinate system never moves the tool or axes but
+it will of course change how much or to where commands move the
+axes after the coordinate system is changed.
+
+The purpose of the work/fixture coordinate systems is to
+allow you to set up multiple workpieces and 'calibrate'
+a separate coordinate system for each and then machine
+them at one go instead of machining them one by one. Using
+multiple coordinate system is hardly ever worth the effort
+in a hobby installation, so I suggested you use coordinate
+system number one and stick with it.
+
+You manage the coordinate systems with the Work Offsets screen,
+see Figure~\ref{fig:work-offsets-view}.
+
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{work-offsets-view.png}
+\caption{The Work Offsets screen}
+\label{fig:work-offsets-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+\subsection{Selecting the active coordinate system}
+
+At any given time one of the coordinate systems is in effect.
+To switch from current coordinate system to an other click on
+one the buttons labeled with '1 (G54)' etc or type in the
+number of the coordinate system you want to use into the 
+entry field labeled 'Active Offset'. The coordinate systems 
+are numbered from 1 to 255.
+
+
+You can also, of course, change the active coordinate system
+in you G-code. To remind you of this and make the connection
+in your mind between the coordinate systems and the G-codes
+the corresponding G-code is shown on the button and to the
+right of the 'Active Offset' entry field.
+
+\subsection{Changing offsets/setting up the coordinates}
+
+One way to set up the coordinate system was already
+described in Section~\ref{sec:finding-your-bearings}, that is
+you drive the axis to a know or desired position and 
+set coordinates in the DROs either manually or automatically.
+
+If you do that while you are in the 'Work Offsets' screen
+you will see how the offsets in the 'X:','Y:'... entry fields
+change. Or if you feel comfortable working with the offsets
+directly you can just type them into the entry fields.
+
+A third way to set offsets and  to specify the coordinate/axis
+origin is by 'touching' the work piece with a probe or the cutter
+in the tool in the tool holder. 
+
+\subsection{Setting the XY-coordinate system origin via touching}
+
+ This is
+illustrated and done with the controls in the 'Set XY-origin' panel.
+This feature assumes that you want to set XY origin to edge
+of the work piece, typically the left/front edge of it.
+
+Usually a special edge finder probe or wobbler tool is held
+in the chuck while touching because it gives much better sensitivity
+and accuracy to the touching and does not mark the work piece
+and neither is likely to break like cutter would.
+
+To use the touch feature simply Jog the axis to the work piece
+edge, ensure that the probe diameter is correctly entered into
+the 'Probe Diameter:' entry field and click on one of the
+'Touch' buttons to indicate the edge you have the driven the
+probe to. EazyCNC then calculates and sets the offsets so that
+the coordinate origin for that axis is at the indicated edge
+of the work piece.
+
+\subsection{Setting the Z-coordinate system origin via touching}
+
+ This is illustrated and done with the
+controls in the 'Set Z-origin' panel. This feature assumes that you want to set Z origin to top
+milling table.
+
+Remember that physically changing the tool or cutter requires you to 
+re-set the Z-axis via any of the methods described here, unless you
+have a presettable toolholder system and keep the 
+tool table up to date.
+
+
+As setting the Z-coordinate origin via touching is dependent on the tool or cutter length 
+mounted in the chuck you need to ensure that the correct tool is currently selected
+and set up as described in the following Section~\ref{sec:tool-setup}. 
+
+Touching in the Z-direction is usually done with the tool or
+cutter in the chuck. To use the touch feature you will need a gauge piece about
+10 mm or half an inch thick.
+
+Start by jogging down the Z-axis close to
+the milling table taking care not to actually hit 
+the table with the cutter. Closer than the thickness
+of the gauge piece is close enough.
+
+Next jog \emph{up}, slowly and carefully, until your gauge 
+piece just fits between the cutter and the table.
+
+Now enter the thickness of your gauge piece into
+the 'Gauge Thickness:' field and click 'Touch'.
+
+EazyCNC then calculates and sets the Z offset so that
+the coordinate origin for that axis is at the top of the
+workpiece.
+
+Note that it is much safer from the tool breakage point
+of view to jog up i.e. first jog close to the milling
+table without the gauge piece in place, then job up a little
+bit at a time until you can just slide the gauge piece
+between the table and the cutter. 
+
+\section{Setting up and managing tool information}
+\label{sec:tool-setup}
+
+Certain features of EazyCNC rely on correct information of the
+tool i.e. the cutter diameter and length. To help you to manage this
+EazyCNC maintains a table of tool information for up to 256 tools. 
+
+You manage the tool table with the Tool Setup  screen,
+see Figure~\ref{fig:tool-setup-view}.
+
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{tool-setup-view.png}
+\caption{The Tool Setup Screen}
+\label{fig:tool-setup-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+The tool dimension are used in movement limit calculations and
+if they are not correct you may either move bang against the end
+of an axis movement or EazyCNC may not allow you to move the
+tool. This applies to both manual jogging and running G-code
+programs.
+
+The tool diameter is also used in the cutter compensation calculations,
+and it can take advantage of the tool diameter information 
+in the tool table or you can manage that in the G-code. 
+
+Keeping the tool information in the tool table has the advantage
+that the tool information can be kept up to date without touching the G-code files
+as cutters wear or are changed, but for some types of machines like plasma cutters
+where the width of the cut depends on the feed rate it maybe 
+better managed in the G-code files themselves.
+
+To effectively use the tool table you need a presettable toolholder 
+system that allows you to repeatably change the tool without affecting
+the cutter position i.e. a system that allows you to take a tool out
+and put it back in later and which keeps the tool at the same height
+in relation to the mill spindle. 
+
+If you don't have a toolholder like that you can just set the cutter
+manually, hopefully with a jig or something, to a correct correct 
+depth in the chuck and update the tool length in the table
+manually. With this method, as the length info is probably not accurate,  
+you need to re-set the Z-axis coordinate system every time you change the tool. 
+
+You may also decide that keeping the tool length information correct in 
+the tool table is too much work in which case you can just set the tool length
+to zero in the tool table, re-set the Z-coordinates as needed 
+and disable the Z-axis limits, see Section~\ref{subsubsec:enable-limist}.
+
+You also don't have to maintain the tool diameter as this 
+can be handled in the G-code. If you find keeping the tool
+diameter correct in the tool table too much work then just
+set it zero and disable the XY-axis limits.
+
+\subsection{Setting the current tool}
+
+To set which tool in the tool table is in use, shown
+and manipulated on the screen 
+click on one the buttons labeled with '1 (T1)' etc or 
+type in a number you want to use into the 
+entry field labeled 'Current Tool'. The tools are numbered from
+1 to 256.
+
+You can also set the current tool in you G-code program
+with the \texttt{T}' word. To remind you of this and make the connection
+in your mind between the tool table entries and the G-codes
+the corresponding T-word is shown on the button and to the
+right of the 'Current Tool' entry field.
+
+
+Note that EazyCNC relies on you to keep the physical 
+world and the software in sync. Just changing
+the tool number in you G-code program with the
+'\texttt{T} is not enough, you
+actually have to physically change the tool. To
+be able to do that you need to stop the spindle
+and pause the G-code execution by adding following
+sequence to you program.
+
+\begin{verbatim}
+M5                     ; Spindle off
+T 5                    ; Select tool 5
+M0 (MSG Load tool 5)   ; Pause with a message to the operator
+\end{verbatim}
+
+When EazyCNC encounters above sequence it sets the current
+tool to 5 and pauses i.e. enters the 'HOLD' state, allowing you
+to change the tool after which you hit 'RUN'. 
+
+
+
+Don't forget to wait for the spindle to stop and 
+use the kill switch before touching the spindle!
+
+If you change the tool length or diameter 
+in the tool table when you change the tool  those updated length and 
+diameter values are \emph{not} automatically used. Instead
+you need to click one of the G40,G41,G42,G43 and G49 buttons
+as needed if you update the tool table during machining.
+
+\subsection{Managing the tool diameter and length}
+
+To set or examine a tool table entry for a tool
+first set it as the current tool and then
+view or type in the tool diameter and length
+in the 'Diameter:' and 'Length:' fields. 
+
+You can also update the tooltable in your G-code program
+with \texttt{G10 L1 P\emph {toolno} Z \emph radius X \emph{length}} command; you
+could for example have a G-code program that
+updates all of your tool table. 
+
+\subsection{Setting the tool length via touching}
+
+
+This is illustrated and done with the
+controls in the 'Set Tool Length' panel.
+
+This feature expects that you have set your Z-coordinate system
+correctly, which may sound sound a bit odd as setting the
+Z-coordinates system via touching requires that the tool
+height is correct! The way around this problem is to first
+set the tool length to zero, calibrate the Z-axis with no
+tool in the holder and then proceed to set the tool heights
+via touching.
+
+Don't forget that all this is hardly worth the trouble if
+you do not have a re-settable toolholder, otherwise you
+can just always re-set the Z-axis and be done with it. 
+
+
+To set the tool length via touching you need 
+a gauge piece of known thickness. The thickness
+is not important but about 10 mm or half an inch is good.
+
+First enter
+the correct tool number into the 'Current Tool'
+entry field and then mount the corresponding cutter
+into the spindle. Then jog down the Z-axis close to
+the milling table taking care not to actually hit 
+the table with the cutter. Closer than the thickness
+of the gauge piece is close enough.
+
+Next jog \emph{up}, slowly and carefully,  until your gauge 
+piece just fits between the cutter and the table.
+
+Now enter the thickness of your gauge piece into
+the 'Gauge Thickness:' field and click 'Touch'.
+
+EazyCNC then calculates and sets the Tool Length.
+
+
+
+
+
+%You can work with both and even mix them but it is suggested that for sake of
+%sanity you pick one or the other and stick with it.
+
+%You can change the unit used in 'Mach Setup' screen, see section~\ref{sec:mach-setup-units}.
+
+%If you want to change the unit from 'mm' to 'inch' or back you can do it at anytime
+%and it won't change anything except the displayed values because internally
+%EazyCNC maintains the correct physical values. 
+
+%So for example if you change the unit from 'mm' to 'inch'
+%and your X-axis 'steps/mm' value was \emph{1 steps/mm} it will be displayed as
+%\emph{254 step/inch} and everything still works as they should. And similarly
+%for movement limits etc they all retain their original physical meaning
+%regardless of the unit, as they should.
+
+%There are well establish conventions in CNC world for axes and units.
+

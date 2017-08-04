@@ -1,0 +1,1484 @@
+%XXX add a chapter about limit switch wiring somewhere XXX
+%XXX add a chapter where to put the reference switch XXX
+%XXX add about stepper motor coils XXX
+%XXX add chapter about the units XXX
+%XXX add chapter steppers in general XXX
+%XXX implement automatic checking for lost steps XXX
+%XXX implement G-code limit checks in software and maybe tool size to jogging
+%XXX implement homing reset value
+%XXX backslash compensation
+
+\chapter{Setting Up and Configuring}
+
+
+EazyCNC should work out of the box without any setup or configuration,
+so you can play around and test it right away.
+
+However before you can actually use it with TOAD4 and machine something
+there are a few things you need to set up and configure.
+
+This chapter proceeds in the preferred order of setting things up,
+however I suggest you read it all through once before setting up
+the system.
+
+The two most important things to set up are communication between
+your computer and you TOAD4 and configure each axis to match the motor
+characteristics and axis gearing.
+
+\section{Saving Your Setup}
+
+EazyCNC stores all setup and configuration information as well
+as the current machine state in file named 'EazyCNC-Mach-Config.ecnc' 
+in a folder/directory named 'EazyCNC' in your 'home' directory.
+
+Your 'home' directory location depends on your operating system as
+follows:
+
+
+\begin{tabular}{ll}
+\hline
+Mac OS X & \PVerb{/Users/username} \\
+Windows XP & \PVerb{C:\Documents and Settings\username} \\
+Windows 7 & \PVerb{C:\Users\username} \\
+Linux & \PVerb{/Users/username} \\
+\hline
+\end{tabular}
+
+where \emph{username} is the name you use when you log into your computer.
+
+
+Note, EazyCNC does not ever automatically save the settings,
+this is to protect you from accidentally altering your
+carefully crafted machine setup and configuration. To
+save your settings or any changes you've made you need to
+click the 'SAVE' button. Also don't forget to make backup copies
+of this file.
+
+If the file or folder does not exist EazyCNC will create them
+with reasonable default settings when you click the 'SAVE' 
+button.
+
+You do not have to 'worry' about this file but it is good to know
+about it as you may want to make backup copies of it or maintain
+several different ones for different system configurations.
+
+The file is in a plain text format so it is ok to view and even
+edit it manually, though that is not recommend unless you
+know what you are doing. 
+
+Many programs like Mac OS X Textedit may mess things up by 
+adding formatting and changing the file name extension with
+.txt or .rtf, so learn to avoid those if you venture there.
+
+
+
+\section{Setting the Communication Port Name}
+\label{sec:setting-up-commp-port}
+
+
+Remember that you do not need to setup the communication port just to play with the program 
+or to use it to simulate machining, perhaps on a different computer 
+from your CNC computer.
+
+TOAD4 looks like a virtual serial port to your computers
+operating system.
+
+EazyCNC uses the operating systems standard serial port
+programming interface and device drivers to talk to TOAD4.
+
+
+To set the communication port name start EazyCNC and
+from the top/left corner buttons click 'Mach Setup'
+button and then from the top row of buttons click 'Comm',
+see Figure~\ref{fig:mach-setup-comm-view}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-comm-view.png}
+\caption{The communication port setup screen}
+\label{fig:mach-setup-comm-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+Click on the entry field labeled "Port:" and type
+in the port name. To find out the port name you need
+to follow instruction in the following section for
+your operating system, or you can use use the Auto Detect
+feature, see section ~\ref{subsec:using-auto-detect-port}.
+
+Note that the serial port name changes if you you
+plug the USB cable to a different port in your 
+computer. In some version of Windows it sometimes
+seems to change for no apparent reason.
+
+To test that the communication works click the 'MACH'
+button at the bottom of the screen.
+
+If everything is correct the very wide entry field 
+just above the bottom row of buttons should
+show the TOAD4 firmware version number. 
+
+If it shows 'Controller: Device Not Found' then EazyCNC
+was unable to open the serial port connection.
+
+If it shows 'Controller: Device in use' this is means that
+EazyCNC found the device but was unable to open it. This
+message covers a variety of reasons. It is possible that
+some other software is using the device, in which case it
+is most likely an other instance of EazyCNC running on the
+same computer. However in Linux the most likely cause is that
+you do not have permissions to use the device, in which
+case see section ~\ref{subsec:setting-up-permissions-in-linux}.
+
+
+Don't forget to click 'SAVE' so that the port 
+name is saved and you do not need to set it again!
+
+\subsection{Using the Auto Detect port function}
+\label{subsec:using-auto-detect-port}
+
+Note that on Windows you first have to install the driver,
+see below section ~\ref{subsec:installing-windows-serial-driver}.
+
+To Auto Detect the port you need to have the TOAD4 powered 
+on and the USB cable plugged into the computer; next click the 
+'Auto Detect' button, and then un-plug and re-plug the USB
+cable pausing for about one second in-between.
+
+If the port is successfully detected a dialog will inform
+you and ask if you want to use that port, click Yes and
+the port name will be automatically entered in to the
+'Port:' field.
+
+If the port is not found a dialog will inform you and
+you can try again more slowly or try to use the manual
+methods outlined in the following sections.
+
+Note for Mac OS X users: prior to EazyCNC version 0.0.0.24a the port
+is sometimes erroneously detected as 'cu.usbmodemXXXX'
+instead of 'tty.usbmodemXXX'. In theory both
+port names should work but it appears that some un-identified 
+combinations of Mac OX X, EazyCNC and TOAD4 have problems
+with the 'cu.' named ports so ensure the name starts with
+'tty.'.
+
+\subsection{Installing the Windows Serial Port Driver}
+\label{subsec:installing-windows-serial-driver}
+
+As said above all operating systems, even Windows, come with the serial port 
+driver installed.
+
+Except that on Windows you have to tell the Windows where
+it is and how to use it! 
+
+Installing the driver is a bit complicated process.
+
+Further more the details of the driver installation depend
+on the Windows version.
+
+Following is a brief outline how to do the driver installation
+on Windows 7. For better and detailed instructions I refer to
+google.
+
+You need a file that contains the instructions for Windows
+on how to locate and use the driver it already has and you 
+need to tell Windows where that file is.
+
+The file is called
+
+\begin{verbatim}
+eazycnc.inf
+\end{verbatim}
+
+and you can download it from the same place you downloaded
+the EazyCNC application file.
+
+To tell Windows about this file plug in the
+USB cable from your TOAD4 to your computer make and
+sure TOAD4 is powered on.
+
+Then Go to the Windows Start -menu and from there select Printers and Devices.
+
+From the window that appears select (somewhere at the bottom) 
+the 'unknown device' that represents the TOAD4 at this stage, 
+right click on it and select Properties.
+
+From the dialog that appears select the Hardware-tab, then in 
+that tab , from the Device Functions list, select the Driver 
+and click Properties.
+
+From the dialog that appears, select the Driver-tab and 
+from that tab select Update Driver...
+
+From the dialog that appears select Browse my computer 
+for driver software, then click the 'Browse...'
+button and browse to the directory/folder where 
+you have the 'eazycnc.inf' file and click next.
+
+This should install the driver for you.
+
+Once the installation is complete go back to the Printers
+and Devices window and make a note of the COM port name
+that is now show in place of the 'Unknown Device'.
+
+Enter the COM port name in the port field 
+in the 'Mach Setup' screen.
+
+\subsection{Finding out the virtual serial port name on Mac OS X}
+
+In Mac you need to go to the Terminal program which is in the
+the /Applications/Utilities folder or you can use Spotlight to
+locate it.
+
+Plugin TOAD4 and make sure it is powered on.
+
+Open the terminal and type the following:
+
+\begin{verbatim}
+ls /dev
+\end{verbatim}
+
+
+this will produce a long list of devices, from this list
+you need to look for something like:
+
+\begin{verbatim}
+tty.usbmodemNNNN 
+\end{verbatim}
+
+where NNNN is a series of digits.
+
+If you find several, unplug TOAD4 and give the 'ls /dev'
+command again, the one device that disappeared is the
+one you are looking for.
+
+Make a note of the device name and enter it in the port field 
+in the 'Mach Setup' screen.
+
+
+
+\subsection{Finding out the virtual serial port name in Linux}
+\label{subsec:finding-out-serial-port-in-linux}
+
+
+In Linux you need to go to the terminal which typically
+can be found from the Accessories menu of the Desktop
+application.
+
+Plugin TOAD4 and make sure it is powered on.
+
+Open the terminal and type the following:
+
+ls /dev
+
+this will produce a long list of devices, from this list
+you need to look for something like:
+
+\begin{verbatim}
+tty.ACMnnn 
+\end{verbatim}
+
+where nnn is a series of digits.
+
+If you find several, unplug TOAD4 and give the 'ls /dev'
+command again, the one device that disappeared is the
+one you are looking for.
+
+Make a note of the device name and enter it in the port field 
+in the 'Mach Setup' screen.
+
+\subsection{Setting up permission in Linux}
+\label{subsec:setting-up-permissions-in-linux}
+
+Most Linux distros take a very serious view of security. This means that by default
+you are not even allowed to use your own devices! To complicate matters there is
+no easy way to give yourself the necessary permissions, instead you have to do
+the following.
+
+To allow EazyCNC to talk to the TOAD4 you need to create a file named:
+ 
+\begin{verbatim}
+99-TOAD4.rules 
+\end{verbatim}
+
+ and put it in the directory 
+
+\begin{verbatim}
+ /etc/udev/rules.d 
+\end{verbatim}
+
+In the  file '99-TOAD4.rules' you need to put the following line (all on one line):
+
+\begin{verbatim}
+SUBSYSTEMS=="usb", ATTRS{idProduct}=="000a", ATTRS{idVendor}=="0408", MODE="0660",
+ SYMLINK+="ttyACM0", GROUP="plugdev"
+\end{verbatim}
+
+Basically you can do that with any text editor. Unfortunately you do not have the permission to write it to the directory '/etc/udev/rules.d'. So I recommend creating the file in your home directory and then use the Terminal and type in the following command
+to copy the file over:
+
+\begin{verbatim}
+sudo cp ~/99-TOAD4.rules /etc/udev/rules.d
+\end{verbatim}
+
+This command will ask for your password to allow you temporarily write to that directory.
+
+
+\section{Setting the User Interface}
+\label{sec:mach-setup-units}
+
+Now that the communication works and before we set up the 
+motors and axis we want to select the length units you are comfortable
+with. 
+
+To do that go the the 'User Interface' seyup screen, Figure~\ref{fig:mach-setup-user-interface-view}. 
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{mach-setup-user-interface-view.png}
+\caption{The User Interface setup screen}
+\label{fig:mach-setup-user-interface-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+EazyCNC supports working in millimeters or inches. All displays and entry fields
+will always show values in the selected units and accept values in these
+units. You can change the units at any time and it will not confuse EazyCNC,
+so you can use millimeters to set up things and then switch to inches; however
+even if EazyCNC will not get confused, you may, so it is best to select
+one system of units and stick with it.
+
+Note that regardless of the units selected here the G-code file can contain
+coordinates that are expressed in millimeters (G21 mode) or inches (G20 mode),
+and this is perfectly fine, as long as the correct G20/G21 mode is specified
+in the G-code file.
+
+
+\subsection{Units -popup menu}
+
+There are two options.
+
+'mm' -- with this setting all the entry fields and DROs displays are
+in millimeters.
+
+'inch' -- with this setting all the entry fields and DROs are
+in inches.
+
+\subsection{DRO-format -entry field}
+
+With this entry field you can control how numbers in the entry fields and DROs are
+displayed.
+
+The main usage is to control the number of decimals you want displayed, to do 
+that just enter '0.' followed by as many '0' characters as you want decimals.
+
+For example with inches it is probably preferable to use three decimals to see
+the 'thous' so enter '0.000' in this field, for working with millimeters
+'0.00' is probably best.
+
+\subsection{Update rate -entry field}
+
+This entry field controls how many times per second (frames per second, fps) the
+toolpath display is updated. Smaller values than 10 may produce jerky updates and
+higher values than 30 are unnecessary and may bog down the computer.
+
+\subsection{Language -popup menu}
+
+This popup allows you to select the language used in the user interface. 
+
+
+\subsection{Screen Size -popup menu}
+
+This popup allows you to select between 'Standard' and 'Compact' screen layouts.
+
+Depending on the operating system and the various docks and toolbars in them
+the 'Compact' layout should fit a screen as small as 1024 x 600 at a pinch.
+
+Note that you need to both Save the configuration and re-start the program. If
+you are running in a small screen the Save-button may not be visible, in that
+case use the Alt-Cmd-S for Mac OS X or Alt-Ctrl-S for Windows/Linux to save the
+the configuration before re-starting EazyCNC.
+
+\subsection{Machined Path -settings}
+\label{subsec:machined-path-color-settings}
+
+The settings in this panel control how the tool path for the already cut path is 
+displayed in the Toolpaht display panel in the main screen.
+
+A different color can be specified depending on weather the spindle was on or off
+when the path was cut.
+
+The width of the path in the Toolpath display panel, in \emph{pixels}, can be specified 
+in the 'Width:' -entry field. If this is set to zero then the actual tool width from the
+tool table for the tool selected by the G-code program is used in displayin the path.
+
+\subsection{Planned Path -settings}
+\label{subsec:planned-path-color-settings}
+
+
+The settings in this panel control how the tool path for the planned i.e. yet to be cut
+path is displayed in the toolpath display panel in the main screen.
+
+A different color can be specified depending on weather the spindle will be on or off
+when the path will be cut.
+
+The width of the path in the Toolpath display panel, in \emph{pixels}, can be specified 
+in the 'Width:' -entry field.
+
+\subsection{Tool Display -settings}
+\label{subsec:tool-color-settings}
+
+The color of the tool in the Toolpath display can be spefied as well as the size of 
+it by entering the desired tool width , in \emph{mm or inch}, into the 'Width:' -entry field.
+
+If the tool width is set to zero then the actual tool width from the
+tool table for the tool selected by the G-code program is used in displayin the path.
+
+\subsection{Axis Display -settings}
+\label{subsec:axis-color-settings}
+
+The colors used to display the  axis (grids) in the Toolpath display can be spefied here.
+
+\section{Configuring Motors and Axes} \label{axis-configuration}
+
+To configure the motors and axes go to the 'Axis Setup' screen, 
+see figure~\ref{fig:mach-setup-axis-view}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.4]{mach-setup-axis-view.png}
+\caption{The Axis setup screen}
+\label{fig:mach-setup-axis-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+On the top of the 'Axis Setup' panel you see four buttons that 
+correspond to the four axes that TOAD4 can control. By clicking at 
+those buttons you control which axis parameters are shown
+on the panel.
+
+There are three group of parameters for each motor and axis.
+
+
+\subsection{Motor Config -panel}
+
+There are five parameters for each motor.
+
+\subsubsection{Axis On -checkbox}
+
+Axis On -parameter controls weather the G-code commands control
+that axis/motor or not. If the motor is not controlled by the
+G-code (Axis On checkbox is not 'ticked') then that motor/axis is
+available for manual jogging during machining or it can be
+controlled with EazyCNC plugin extensions. 
+
+Typically you want to use G-code to control the motors so
+make sure the Axis On checkbox is ticked, but if an axis
+is not used (say you only have a three axis set up) then 
+un-tick the box so that you do not need to set up the
+motor properly.
+
+\subsubsection{Current -popup menu}
+
+TOAD4 supports two different drive currents for each motor,
+named High and Low, in addition to which the current can be totally
+off. The actual motor current depends on the current measurement
+resistors mounted to the TOAD4 board and the jumper settings
+on the TOAD4 board, see TOAD4 Hardware Manual for details.
+
+The Current -popup menu controls how the three different currents
+are used when driving the motors.
+
+There are four different options.
+
+Low -- with this setting the motor current is always set to Low. 
+You might want to use this if the High current is too much for 
+your motor.
+
+High -- with this setting the motor current is always set to High. This 
+provides the most 'stiff' setup but means that motors will have full
+full current applied and 'run' hot.
+
+Auto Off -- with this setting when the motor/axis is moving or the G-code 
+program is being executed the current will be set to High, but once 
+the movement or machining stops the motor current will be turned off 
+completely within two seconds.
+
+Depending on the mechanics and usage this may not be ideal as the 
+motors may move under external forces if there is no current and thus
+the axis may lose its accurate position.
+
+Auto Hold -- with this setting when the motor/axis is moving or a G-code 
+program is being executed the current will be set to High, but once the movement or
+machining stops the motor current will be set to Low within two seconds.
+
+This is often the most desirable motor current setting as full current
+and force is used during machining but the current and heat is reduced
+when the motors are not being used.
+
+\subsubsection{Forward -popup menu}
+
+The Forward popup menu controls weather the direction output on
+the TOAD4 board is 1 or 0 when the motor is driven forward.
+
+Forward means that the coordinates of the axis are increasing.
+
+There are two options.
+
+Output = 0 -- with this setting the (internal to TOAD4 board)
+DIR signal is set to logic zero to when the axis/motor
+is driven forward.
+
+Output = 1 -- with this setting the (internal to TOAD4 board)
+DIR signal is set to one zero to when the axis/motor
+is driven forward.
+
+You need not to care about zeros or ones, just make sure this
+setting is right! When you press the axis jog buttons (+X,+Y,+Z or +4) 
+the motor should be running in the direction that you have designated
+as the increasing coordinate for that axis.
+
+If the motor runs in the wrong direction just change the setting
+in this popup.
+
+\subsubsection{Home -popup menu}
+
+TOAD4 supports one home/reference position switch input for each axis. 
+
+The Home popup menu controls weather the REF input on
+the TOAD4 board is 1 or 0 when home/reference is switch is
+active. 
+
+There are three different options.
+
+None -- with this option the REF input is ignored and when
+you press the HOME button no movement happens, only the
+DRO for that axis is reset.
+
+Input = 0 -- with this setting EazyCNC expects that the
+REF input is a logical zero (closed) when
+the reference switch is active.
+
+Input = 1 -- with this setting EazyCNC expects that the
+REF input is a logical one (open) when
+the reference switch is active.
+
+Again you should not care if the signal is active or non-active,
+zero or one, just make sure it works for you. If, when you press 
+the 'HOME' button, the axis does not begin
+to move towards the reference switch the setting of this
+input is wrong. Note that you should first ensure that
+DIR signal is correctly configures, see previous section.
+
+When you press the 'HOME' button for an axis EazyCNC will drive that 
+axis until it finds the home/reference position at which point
+that axis DRO is automatically reset. 
+
+The way this works when you press the 'HOME' button 
+is that if the the REF input is active the axis is driven to
+the positive axis direction until the signal becomes non-active. If the
+the signal is non-active to begin with then the axis is driven 
+in the negative direction until the REF signal becomes active and
+then to the positive direction until it becomes non-active again.
+
+This ensures that even though there is some backlash in the mechanism
+or hysteresis in the switch the mechanism position will always be
+correct.
+
+You do not need to use a reference switch but by having one for
+each axis allows the system to know its absolute physical position 
+which in turn makes it possible for EazyCNC
+to guard the movements against the physical limits of your system
+preventing crashes.
+
+Using reference switches it is also possible to continue machining
+after a sudden loss of power because the absolute axis positions
+can be re-covered by homing the axes.
+
+\emph{\color{red} Note that the home or reference switch is no substitute for limit
+switches that should be installed at each end of the movements
+and wired to act on the emergency stop system}. 
+
+The optimal placement for a reference switch is around the
+middle of the axis travel, but this requires that the switch
+is so configured that the REF signal is always on or off 
+depending on which side of the switch the 'axis' is; it 
+should not be possible to drive the axis 'beyond' the switch.
+
+\subsubsection{Home -popup menu}
+
+TOAD4 supports one home/reference position switch input for each axis. 
+
+The Home popup menu controls weather the REF input on
+the TOAD4 board is 1 or 0 when home/reference is switch is
+active. 
+
+\subsubsection{Pair X and A -checkbox}
+
+This checkbox is only available in the X-Axis setup panel.
+
+If this checkbox is ticked then the A-axis motor is used in
+parallel with the X-axis allowing the use of two motors to
+drive the X-axis. 
+
+For jogging and machining the motors run in parallel making
+equals amounts of steps. When you home the motors with the
+HOME-button both motors start at the same time but find their
+reference switch positions independently thus 'alligning' the 
+motors.
+
+
+\subsubsection{Steps/mm -entry field, Steps/inch -entry field}
+
+This entry fields tells EazyCNC how many steps it takes
+to move the axis a unit (mm or inch) length. We call
+this value the step ratio.
+
+Note that this is not an integral value and it should be entered
+with as many significant digits as required  to achieve
+the desired accuracy. As rule of thumb use at least six 
+significant digits in calculations and entry to achieve 0.01 mm 
+accuracy over 1000 mm axis movement range.
+
+To calculate this value you need to know following:
+
+\begin{itemize}
+\item $mode$, a factor dependent on TOAD4 step mode
+\item $steps$, the number of steps per revolution for the motor
+\item $pitch$, the axis movement per motor revolution (including possible gearing)
+\end{itemize}
+
+Then you calculate the step ratio as follows:
+
+\begin{equation}
+\label{step-ratio} 
+step_{ratio} =  \frac{mode *steps}{pitch}
+\end{equation}
+
+The step mode depends on the M1 and M2 jumpers for each motor on the TOAD4 board. 
+
+See  Table~\ref{tab:jumper-labels} for the jumper labels for each motor
+and Table~\ref{tab:step-modes} for the jumpers that need to be installed
+to get the desired step mode and the mode value to use in Equation~\eqref{step-ratio}
+
+
+%---------------------------------------------------------------------------
+\begin{table}[H] 
+\begin{threeparttable}[b]
+\renewcommand\arraystretch{1}
+\caption{Motors versus configuration jumpers} 
+\label{tab:jumper-labels} 
+\begin{tabular}{c c c p{8cm}} 
+Motor & M2 & M1 &\\
+\hline
+X & U29 & U25\\
+Y & U30 & U26\\
+Z & U31 & U27\\
+4 & U32 & U28\\
+\end{tabular} 
+\end{threeparttable}
+\end{table}
+%---------------------------------------------------------------------------
+
+
+The driver chip supports four different step modes: full step, half step, fine step and micro step. Fine step provides eight intermediate sinusoidal current values for each full step and micro stepping provides sixteen intermediate current values.
+
+Typically, micro stepping is preferred for its smooth ride, but sometimes speed requirements dictate the use of half or even full step.
+
+%---------------------------------------------------------------------------
+\begin{table}[H] 
+\begin{threeparttable}[b]
+\renewcommand\arraystretch{1}
+\caption{Jumpers versus Step Mode} 
+\label{tab:step-modes} 
+\begin{tabular}{c c c  p{8cm}} 
+M2 & M1 & mode & \\
+\hline
+- & - & 1 & Full Step (2 phase)\\
+- & X & 2 & Half Step (1-2 phase)\\
+X & X & 8 & Fine Step (2W1-2 phase)\\
+X & - & 16 & Micro Step (4W1-2 phase)\\
+\end{tabular} 
+
+\begin{tablenotes} 
+\item
+\item '-' indicates no jumper installed
+\item 'X' indicates jumper is installed
+\item
+\item (value) refers to TB6560 excitation mode, see data sheet for details
+\end{tablenotes}
+
+\end{threeparttable}
+\end{table}
+%---------------------------------------------------------------------------
+
+
+Above may feel a bit complicated so an example maybe useful. 
+
+Most stepper motors have 200 steps or step angle of 1.8\degree so we have:
+
+\begin{equation*}
+steps = 200 (steps/rev)
+\end{equation*}
+
+For this example we assume that we want to run X-axis motor at 'Half Step' 
+mode so from Table~\ref{tab:step-modes} we see that we need to have jumper
+M1 installed and from Table~\ref{tab:jumper-labels} we see that for X-motor
+M1 jumper is labeled U25 (don't forget to see the errata for the TOAD4 board,
+some of the jumper labels in the early board are wrong). 
+
+While looking at Table~\ref{tab:step-modes} we also
+note that 'mode' value for 'Micro Step' is 2 so we have:
+
+
+\begin{equation*}
+mode = 2
+\end{equation*}
+
+To make this more interesting and life-like let's suppose we use a lead screw
+to move the X-axis and the screw has a pitch of 3 mm/revolution and that
+we use a toothed belt to drive it with a 16 tooth
+pulley on the motor axis and 45 pulley on the lead screw, so we have:
+
+\begin{equation*}
+pitch = 3 * \frac{16}{45} =  1.066666 (mm/rev)
+\end{equation*}
+
+Putting it all together we have
+
+\begin{equation*}
+step_{ratio} =  \frac{2 * 200}{ 1.0666666} = 375.000 (steps/mm)
+\end{equation*}
+
+Now would be good time to check how fast we can move the X-axis.
+
+The maximum theoretical step rate is about 11 kHz, for jitter
+and other reasons the maximum recommended pulse rate is about
+$\frac{1}{5}$ of that, say 2000 pulses/sec. You need to divide
+this by the $mode$ factor we looked up above so in our example
+the maximum step rate is 1000 steps/sec and so our max speed
+is
+
+\begin{equation*}
+\frac{1000}{375} \approx 2.6 mm/sec
+\end{equation*}
+
+Which is not very fast so maybe we should have 
+geared up instead of down!
+
+
+\begin{framed}
+Here is a Top Tip!
+
+Even though EazyCNC guides you if you try to enter too big (or small) value
+to an entry field and even tells you what the limiting parameter is
+and  further tells you what is the maximum value you can use, sometimes this can
+turn into a bit of a chore.
+
+So before you enter the step ratio, set the maximum jog acceleration and velocity
+for all axes (Mach Setup / Axis Setup) and movement (Mach Setup / Movement) 
+to a very small values, say 1 mm/sec or 0.01 inch/sec.
+This will allow you to enter almost any step ratio, which is necessary as
+the step ratio is a function of your gearing and thus won't budge.
+
+Once you have entered the correct step ratios try to set the accelerations
+and velocities to a very large values, say 1000 mm/sec or 10 inch/sec and EazyCNC will tell the
+maximum possible values, so enter and use those.
+
+\end{framed}
+
+
+\subsection{Axis Limits -panel}
+
+EazyCNC can guard movements against
+set limits to prevent crashing the mechanism.
+
+This is especially useful in Jogging where
+it is too easy to run too fast to an end of
+an axis.
+
+However the limit checking is not fool proof
+and it depends on the operators (that's you!)
+diligence to work properly. If you for example
+put a large cutter into the spindle chuck but
+don't tell EazyCNC about it or move the axis manually
+by turning handles or forgot to 'home' the axes
+there is nothing EazyCNC can do about it.
+
+
+A 'bad' a G-code move may still crash the machine
+and you need to visually satisfy yourself using
+the simulation mode that this will not happen.
+
+Also worth remembering is that the limits checking
+does nothing to prevent crashing against the
+workpiece, fixtures or other obstacles.
+
+The actual movement limits are based a fixed
+coordinate system independent of all the different G-code
+coordinate systems. The limits are expressed in
+the current unit system unscaled and unaffected by
+any G-code coordinate system transformations.
+
+
+The origin of the limits coordinate system is at 
+the home/ref switch position, so if the home/ref switch 
+is not used you should not enable the limits because
+the position is physically undefined. 
+
+If you want to use the limits you must remember to 'home'
+all axes by pressing the 'HOME' buttons if the 
+TOAD4 has been power cycled (it is TOAD4 who maintains the 
+coordinates so it will loose track of the position
+if it is turned off).
+
+Also worth remembering is that if you use the limits
+you should have the motors energized at all times
+otherwise the motors will 'lose' their positions,
+so don't use the 'Auto Off' current mode.
+
+\subsubsection{Limits Enabled -checkbox}
+\label{subsubsec:enable-limist}
+
+Limits Enabled -checkbox controls weather EazyCNC
+enforces the limits for the axes or not.
+
+\subsubsection{Min/Max - entry fields / Touch -buttons}
+
+These entry field controls the minimum and maximum 
+coordinates allowed for the axis, expressed in the 
+current unit system. 
+
+The easiest way to set the limit is to disable the
+limit checking and carefully 'jog' the mechanisms
+to each end of the movement and press the corresponding
+'Touch' button which will then set corresponding
+limit based on the current axis position
+
+Remember to 'home' the axis before setting the
+limits and don't forget to enable the limits once you have set them.
+
+And don't forget to verify your limits!
+
+\subsection{Jogging -panel} \label{jogging-panel}
+
+Jogging refers to manually moving the axes with
+either the 'jog buttons' or with the joystick.
+
+The settings in this panel control the details
+of jogging.
+
+When you 'jog' an axis, the axis first moves
+slowly i.e. crawls. This goes on for some
+short time after which the movement accelerates
+until it reaches the jog speed. Jogging then
+continues at that speed as long as you keep
+jogging or you hit the end of movement, after
+which the speed decelerates to a halt.
+
+In many CNC mechanisms the axes are not created
+equal, some motors are by necessity stronger
+than others
+and thus the desired jogging characteristics
+are different and you want to set them individually
+for each axis.
+
+
+
+
+\subsubsection{Crawl Velocity -entry field}
+
+This entry field controls the initial ie
+crawl speed of jogging, you typically want
+to have this pretty slow.
+
+\subsubsection{Crawl Length -entry field}
+
+This entry field controls how long a distance
+the crawl will go  until the acceleration
+starts if you keep on jogging.
+
+
+\subsubsection{Min Crawl -entry field} \label{crawl-velocity}
+
+This entry field sets a minimum crawl distance,
+ie the axis will always move at least this much
+even if you jog very briefly.
+
+\subsubsection{Acceleration -entry field}
+
+This entry field control the acceleration/deceleration rate
+of the movement, you probably want to have this as high
+as possible but not so high that there is a risk
+of stalling the motor or the motor skipping steps. 
+
+Only experimentation can find a correct value for this,
+start with a small value and first find the maximum
+jog speed  before you try to maximize 
+the acceleration.
+
+EazyCNC has a motor test function, see  
+section~\ref{subsec:test-panel}), to help you to 
+determine the limits of your motors and mechanisms.
+
+\subsubsection{Jog Velocity -entry field} \label{jog-velocity}
+
+This entry field controls the jog or maximum speed
+the axis will run when you jog it. You probably want
+to have this set as high as possible but not so high 
+that there is a risk of stalling the motor or the 
+motor skipping steps. 
+
+Only experimentation can find a correct value for this,
+start with a small value and find the maximum at which
+you can jog back and forth to a given DRO value 
+watching that the tool tip hits exact same position
+every time.
+
+
+A manual way to check that the motor has not lost any
+steps is to 'home' the axis and see that as the 
+axis approaches the home position the DRO will not
+suddenly jump to the reset value when the reference
+switch is reached, this is not wholly accurate if the
+motor only loses a small number of steps but typically
+it is a all or nothing with stepper motors.
+
+\subsection{Test -panel}
+\label{subsec:test-panel}
+
+The controls in this panel can be used to test and
+find out the maximum acceleration and velocity for
+an axis.
+
+When you click the 'TEST' button EazyCNC will
+perform a test movement on that motor/axis
+and report the accuracy if you have a reference
+switch installed. 
+
+If you don't have a reference switch then you will
+need to use a Dial Test Indicator or some such
+to measure the accuracy.
+
+\subsection{Pre-requisites}
+
+\emph{Note that this test can damage your machine if not
+performed carefully and as intended.}
+
+The test run requires free travel of 25 mm or one inch plus
+the distance is takes to accelerate from the start velocity
+to the top velocity and back.
+
+To use this test you must have the reference switch located
+at least 30 mm away from the negative end of the axis movement.
+
+If you don't have that 30 mm spare travel you run the risk of hitting the
+the end of the axis movement range on the return leg of the
+test run. It is acceptable to temporarily move the reference
+switch to a suitable location for this test or use a temporary switch 
+if you so desire.
+
+If you don't have a reference switch then you need to ensure
+that you start the test from a position on the axis from which
+there is enough free travel on both sides of the starting position.
+
+
+\subsection{The Test run}
+
+When you click the the 'TEST button the test movement is performed as follows.
+
+First EazyCNC 'homes' the  axis/motor ie it moves slowly 
+towards the reference switch and then just out 
+of it.
+
+EazyCNC makes an internal note of this step position.
+
+Next the axis/motor starts to move into the positive (or negative,
+depending on which direction you have selected)
+axis direction and accelerates at the given acceleration until
+the motor reaches the given test speed. The movement continues
+for 25 mm (about 1 inch) and then it
+decelerates back to stand still. 
+
+Then the axis is homed again and a note of the
+step position at which the reference switch is
+detected is noted down.
+
+The difference between the two home positions noted down
+is reported as the accuracy or repeatability of
+the movement at the given acceleration and 
+movement velocity.
+
+A positive value indicates that steps were lost
+on the way out i.e. during acceleration or high
+speed movement. A negative value indicates that
+steps were lost on the way back i.e. slow movement;
+this should not really ever occur.
+
+A small non zero value is acceptable or even expected 
+as it is unlikely that  the system
+can be absolutely accurate all things considered, but repeated tests at
+given acceleration and velocity should show consistently
+similar values.
+
+To guarantee that the test is valid for machining
+conditions the acceleration is performed step wise
+at the current machine Update Period just as it
+will when take place when executing G-codes. 
+
+Therefore you need to remember that if you change 
+the update period it is good to re-run the test
+for each axis, especially if you are running close to the speed
+and acceleration limits of your system.
+
+%\subsubsection{Start Velocity -entry field}
+%
+%In this field enter the start velocity for the test, this should
+%be a low speed at which the motor is more or less guaranteed
+%to work without losing steps or stalling.
+
+\subsubsection{Top Velocity -entry field}
+
+This is the velocity you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
+
+\subsubsection{Acceleration -entry field}
+
+This is the acceleration you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
+
+
+\subsubsection{Direction -popup menu}
+
+This selects weather the test movement direction will be
+along the positive direction or negative direction
+from home/ref position.
+
+This is the acceleration you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
+
+
+\section{Setting the Kinematic limits}
+\label{sec:setup-movement-limits}
+
+The parameters in this screen Figure~\ref{fig:mach-setup-movement-view} 
+tell EazyCNC how fast
+it is safe to accelerate and run the motors, how often
+the motor position and speed should be updated 
+and how accurately you want EazyCNC to follow
+the tool path described by the G-code file.
+
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-movement-view.png}
+\caption{The movement setup screen}
+\label{fig:mach-setup-movement-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+Next to the individual axis/motor parameters these
+are the most import parameters to carefully set as
+if you set the speed and acceleration to too high values
+the steppers will lose steps and the accuracy 
+is ruined or the motors will completely stall.
+
+On the other hand you will want to have the values
+as high as reasonable so as not to waste time in
+machining and with some cutters like plasma torches 
+even the dimensions and quality of cut are dependent on
+high enough speeds.
+
+Note that these settings here set the maximum 
+values, G-code programs specify the actual value
+which can be lower or higher that what you specify
+here. If the G-code specifies a lower value then that
+applies but if the G-code specifies a higher value
+then what you have set up here applies.
+
+The only way to find out the maximum acceptable value
+you can use is to try progressively higher
+values and verify the accuracy of the 
+motions for each trial.
+
+Note that the values here are common to all axes. 
+See section~\ref{subsec:test-panel}) on how to do this for
+each axis. Once you have found out the maximum velocity
+and acceleration for each axis, pick the minimum of those 
+values and use that here as the maximum velocity and acceleration
+for machining.
+
+
+\subsection{Velocity -entry field}
+
+Enter the minimum of the maximum velocities your motors
+can handle.
+
+Note that it is acceptable to use/have too high feed rate 
+in G-code (the F-word) as EazyCNC will automatically
+limit the feed rate to the maximum velocity you have
+set here.
+
+\subsection{Acceleration -entry field}
+
+Enter the minimum of the maximum accelerations your motors
+can handle.
+
+\subsection{Path tolerance -entry field}
+\label{sec:path-tolerance-entry-field}
+
+This field tells EazyCNC how accurately during machining 
+it should try to  follow the tool path described by the G-code 
+program.
+
+If you enter a value of zero here then the tool path is
+accurately reproduced but this necessitates that the tool
+comes to a complete stop between cutting movements (G-codes 
+G1,G2 and G3).
+
+This is because to have the tool
+follow the path absolutely without stopping at corners would require infinite
+acceleration and that strong motors are hard to find.
+
+If you enter a non-zero value then EazyCNC will try to
+follow the prescribed tool path to within the specified 
+limit but using the leeway given by the tolerance to allow continuous movement
+and not stopping between cuts. 
+
+Rapid tool positioning (G0) always stops at the end of
+the movement so this parameter does not apply.
+
+If you use EazyCNC with a plasma torch  it is important to try to 
+minimize the speed variations as the cut width depends
+on the travel speed of the torch so use as large path
+tolerance you can accept.
+
+\subsection{Z-scaler -entry field}
+
+Sometimes the Z-axis motor is different from the X and Y axis motors,
+for example in a plasma cutting machine the X/Y movements need high acceleration
+and velocities but the Z-movement is rather small and thus a smaller motor
+that is not capable of such feats can be used. To prevent the system
+from exceeding the Z-motor capabilities a Z-scaler value (smaller than one)
+should be entered. This will effectively scale down the accelerations and
+velocities for G-code movements that involve the Z-axis.
+
+\subsection{Update Period -entry field}
+
+Setting a suitable value for the Update Period is also
+critical.
+
+This value depends on the speed your computer. A faster
+computer allows for a faster update period, however
+there are limits on how fast it is acceptable to
+update the speed and position into TOAD4.
+
+USB limits the update period to a minimum value (maximum
+update speed) of 1 msec, but typically you should aim
+to a value of 10 to 20 msec on a modern PC hardware. Note
+that this has nothing to do with step rate because
+we are transferring position values to the TOAD4 and
+the actual steps are generated on the TOAD4 board.
+
+To understand how the update period affects things here
+is brief description.
+
+TOAD4 maintains a queue of movement commands so that
+small pauses, interruptions or hiccups in the computer 
+won't affect cutting movements. 
+
+If TOAD4 runs out of movements commands ie the queues
+run empty which happens if the computer does not
+send new commands fast enough on average then the cutting 
+movements will stop until more commands arrive.
+
+At best this is not desirable as an interrupted cut can leave
+a mark in the workpiece and  at worst the accuracy may be
+lost if the movement was at such a high feed rate that
+that the motor cannot be accurately stopped from such
+speed.
+
+The queue capacity is 16 commands, so an update period
+of 20 msec means that there are commands for 16 x 20 msec
+or 320 msec and the system can tolerate a pause, such
+as Java garbage collection, for that length of time. So
+longer period allows for longer pauses and hiccups in
+the host computer system.
+
+On the other hand TOAD4 can only change speed at the
+interval of the update period so when the speed is
+changing, like when the machine is cutting a circular
+path, the speed is always partially 'wrong' for the duration of
+the update period. 
+
+So longer Update Period will result in an increased positional error,
+which fortunately is not accumulative.
+
+The upper theoretical
+limit for such an error is  'feed rate x update period',
+for example if you are cutting at 1200 mm/min which is 20 mm/sec
+and your update period is 20 msec then the maximum error
+caused by the update period is 20 mm/sec x 0.02 sec which
+is 0.4 mm. This would probably be un-acceptable for milling
+but such high feed rates when milling are rare and for plasma
+cutting where such high feed rates are common this is in
+the same ballpark as cutting accuracy anyway. Besides that is a worst
+case error unlikely to happen in practice.
+
+\section{Spindle setup}
+\label{sec:spindle-setup}
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-spindle-view.png}
+\caption{The spindle setup screen}
+\label{fig:mach-setup-spindle-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+Whenever the spindle has been turned ON with M3 or M4 -code TOAD4 will
+output a voltage from the 'SPINDLE SPEED' output proportional to the S-word value.
+
+The output voltage is relative to the voltage fed into the '+10 VREF IN' input
+to the TOAD4 board, the intention is to grab that voltage from the VFD from
+which it is typically readily available for just this purpose.
+
+The output voltage is calculated as
+
+\begin{equation}
+Uout = \frac{Sword - MinSpeed}{MaxSpeed - MinSpeed}*Uref
+\end{equation}
+
+where 
+
+\begin{equation*}
+Sword = \textrm{The S-word value from the G-code program}
+\end{equation*}
+
+\begin{equation*}
+Uout = \textrm{'SPINDLE SPEED' output voltage in TOAD4}
+\end{equation*}
+
+\begin{equation*}
+Uref = \textrm{'+10 VREF IN' input voltage in TOAD4}
+\end{equation*}
+
+\begin{equation*}
+MinSpeed = \textrm{Value entered into the 'Min Speed' entry field}
+\end{equation*}
+
+\begin{equation*}
+MaxSpeed = \textrm{Value entered into the 'Max Speed' entry field}
+\end{equation*}
+
+
+if above should result in a value outside the range 0..100\% of Uref then
+it is clamped to that range.
+
+Typically a VFD has parameters that are used to set the minimum and
+maximum spindle speed and it is precisely those same speed values that you 
+should enter into EazyCNC here. Figure~\ref{fig:mach-setup-spindle-view}.
+
+\subsection{Min Speed -entry field}
+
+Enter into this field the rpm value which corresponds to the 0 Volt voltage at SPINDLE SPEED output and VFD speed input.
+\subsection{Max Speed -entry field}
+
+Enter into this field the rpm value which corresponds to the 10 Volt (100\%) voltage at SPINDLE SPEED output and VFD speed input.
+
+
+\section{G-Code Options}
+\label{sec:g-code-options}
+
+G-code dates back to 1960s with the final revision RS274D approved in 1980. 
+Over the years manufacturers of CNC system have added extension and variations to the standard.
+
+EazyCNC tries to accommodate a common subset of the most popular systems
+out there by allowing you to fine tune some details of the G-code interpretation to match your G-code program.
+
+
+You can change them in the G-code screen, Figure~\ref{fig:mach-setup-g-code-view}.
+
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-g-code-view.png}
+\caption{The G-code setup screen}
+\label{fig:mach-setup-g-code-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+
+
+For a complete description of G-codes supported by EazyCNC see Chapter~\ref{chap:g-code-chapter}.
+
+
+
+\subsection{Incremental IJK -checkbox}
+\label{sec:incremental-ijk-checkbox}
+
+If this check box is ticked then the I,J and K words in the arc cutting G2 and G3 
+commands are interpreted relative to the start point of the arc.
+
+If you see a lot of large erroneous arcs in te tool path graphics panel when 
+your are previewing your G-codes then you can be pretty confident that this
+tick box is in the wrong state.
+
+\subsection{Incremental XYZ -checkbox}
+
+If this check box is ticked then the X,Y and Z words in the movement commands
+G0,G1,G2 and G3 are interpreted relative to the previous X,Y or Z words/positions.
+
+\subsection{G4 P in msec -checkbox}
+
+If this check box is ticked then the P-word value in the G4 dwell command
+is interpreted in milliseconds instead of seconds.
+
+If the execution of G-codes seems to stop at G4 commands you can be pretty sure
+that this check box is not ticked but should be.
+
+\subsection{G41/G42 code options}
+
+When tool compensation is turned on with either G41 or G42 G-codes the question arises 
+how the tool should move in external corners.
+
+Traditionally the tool moves arounds the corner in an arc.
+
+The other option is for
+the tool to move in a straigh line until it has 'cleared' the corner and the move
+in a straight line along the next segment. If the (external) corner is very tight
+then this would cause the tool to move very long away beyond the corner point, there
+for a maximum length can be specified.
+
+This later option maybe useful in plasma cutting as it takes the cutting flame further
+away from the potentially sharp and narrow corner which tends to burn if the torch linger
+around the corner too long.
+
+\subsection{Use round join -radiobutton}
+
+If this is selected then the traditional way of handling external corners is used, i.e.
+the tool moves in an arc around the corner.
+
+\subsection{Use miter join -radiobutton}
+
+If this is selected then tool will move  in a straigh line until it has 'cleared' the corner and the move
+in a straight line along the next segment. If, as a result of the corner geometry,
+ the tool would move further from the corner than what
+is specified in the 'bevel limi' -entry field, then the move is pruned as indicated.
+
+\section{Shortcuts setup}
+\label{sec:shortcut-setup}
+
+
+EazyCNC is really designed to be used on a PC or tablet computer with a touch screen. 
+However you can use most of the functions with convenient single key
+keyboard shortcuts on a conventional keyboard or with a gamepad function keys
+and joystick.
+
+The key assignments are fully user definable so you can configure these as
+you best please.
+
+To examine or change the key assignments go to the Shortcuts setup screen,
+Figure~\ref{fig:mach-setup-shortcuts-view}.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-shortcuts-view.png}
+\caption{The Shortcuts setup screen}
+\label{fig:mach-setup-shortcuts-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+On the left side column you see the keys and on the right side column the
+corresponding assigned functionality.
+
+To change the key, click on the left side column at the key you want to change; 
+this will popup a dialog prompting you to press the new key you want to
+assign for that functionality.
+
+To change the functionality click on the right side column of the key
+assignment you want to change and from the popup pick the functionality
+you want to assign.
+
+To create a totally new keyboard shortcut scroll to the bottom of
+the list and click at the 'New Shortcut' button at the bottom of the
+left column.
+
+To delete a shortcut click on the left column on the shortcut you
+want to delete and from the dialog that pops up select 'Delete'.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-shortcuts-view-delete.png}
+\caption{Deleting or re-defining a shortcut}
+\label{fig:mach-setup-shortcuts-view-delete}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+
+
+
+\section{Sys Info screen}
+
+This screen displays bunch of system related information, 
+Figure~\ref{fig:mach-setup-sys-info-view}.
+
+Most of the information displayed is just to report back
+to eazycnc@eazycnc.com if you are reporting a bug.
+
+The two pieces of information that are useful for you
+are the 'EazyCNC version' to identify which
+version you are running (it is also shown in the window title
+if that is visible) and 'EazyCNC parameter' which tells you
+the location of the configuration file in case you have doubts
+about which configuration file is being used.
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.35]{mach-setup-sys-info-view.png}
+\caption{The Diagnostics screen}
+\label{fig:mach-setup-sys-info-view}
+\end{figure}
+%---------------------------------------------------------------------------
+
+%\section{Diagnostics screen}
+
+%In addition to displaying a bunch of system related information 
+%the Diagnostics screen, Figure~\ref{fig:mach-setup-diagnostics-view}, can be
+%used to get insight into how consistently EazyCNC is able to communicate
+%with the TOAD4 controller.
+
+%When the controller is connected (the 'MACH' button is active) the histogram
+%shows in real time the distribution of actual update periods.
+
+%The middle of the histogram represents the current 'Update Period' so
+%the access times should consistently pile up slightly to the right
+%of that. When EazyCNC is executing the G-code program the update speed
+%is actually double so the pile should be concentrated on the left side
+%of the histogram.
+
+%If the update times show up all over the place then there is something
+%in your computer setup disturbing EazyCNC, possibly an other program
+%or process running in the background.
+
+%As time goes by the histogram represents a longer and longer history
+%and thus new information makes little difference to it, that is why
+%you should clear the histogram by pressing the 'Reset' button to
+%get fresh look at the distribution of update periods.
+
+%---------------------------------------------------------------------------
+%\begin{figure}[htb]
+%\includegraphics[scale=0.35]{mach-setup-diagnostics-view.png}
+%\caption{The Diagnostics screen}
+%\label{fig:mach-setup-diagnostics-view}
+%\end{figure}
+%---------------------------------------------------------------------------

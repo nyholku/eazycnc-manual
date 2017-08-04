@@ -1,0 +1,159 @@
+%& -output-directory=./pdf -aux-directory=./temp
+%
+% NOTE This requires LaTeX (SEE THAT POPUP IN THE TexShop toolbar!!!!)
+% 
+\documentclass[11pt,oneside]{book}
+\usepackage[a4paper,left=3cm,right=2cm,top=3cm,bottom=2cm]{geometry}  
+% To create the HTML pages
+% 1. Uncomment on of the following lines for html generation, comment out both for pdf
+%\usepackage[html,png,2,frames]{tex4ht}             
+%\usepackage[html,png]{tex4ht}   
+% 2. Set Typeset option TeX / Ghostscript         
+% 3. execute from command line following:
+% ht latex root 
+%
+% ht, tex4ht installed with Fink (IIRC)
+%
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{amssymb,amsmath,textcomp,gensymb}
+\usepackage{epstopdf}
+\usepackage{alltt} 
+\usepackage{threeparttable}
+\usepackage[colorlinks=true,urlcolor=blue,bookmarks=true]{hyperref}
+\usepackage{pdfpages}
+\usepackage{pdflscape,examplep,longtable}
+\usepackage{listings}
+\usepackage{floatflt}
+\usepackage{amssymb}
+\usepackage[T1]{fontenc}
+\usepackage[justification=centering]{caption}
+\usepackage{fancyvrb}
+\usepackage{float}
+\usepackage{framed}
+
+% -----------------------------------------------------
+\begin{document}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+\graphicspath{ {./images/} } 
+
+% -----------------------------------------------------
+% Here it is: the code that adjusts justification and spacing around caption.
+\makeatletter
+% http://www.texnik.de/floats/caption.phtml
+% This does spacing around caption.
+\setlength{\abovecaptionskip}{6pt}   % 0.5cm as an example
+\setlength{\belowcaptionskip}{6pt}   % 0.5cm as an example
+% This does justification (left) of caption.
+\long\def\@makecaption#1#2{%
+  \vskip\abovecaptionskip
+  \sbox\@tempboxa{#1: #2}%
+  \ifdim \wd\@tempboxa >\hsize
+    #1: #2\par
+  \else
+    \global \@minipagefalse
+    \hb@xt@\hsize{\box\@tempboxa\hfil}%
+  \fi
+  \vskip\belowcaptionskip}
+\makeatother
+
+% This causes empty line between paragraphs
+\setlength{\parskip}{\baselineskip}
+
+
+% -----------------------------------------------------
+% Tables in courier
+\makeatletter
+\renewenvironment{table}%
+  {\renewcommand{\familydefault}{\ttdefault}\selectfont
+  \@float{table}}
+  {\end@float}
+\makeatother
+%-------------------------------------------------------
+\begin{titlepage}
+\begin{center}
+
+\textsc{\LARGE SpareTimeLabs}\\[1.5cm]
+
+
+\begin{center} \large
+eazycnc@sparetimelabs.com
+\end{center}
+
+% Upper part of the page
+
+\HRule \\[0.4cm]
+
+{ \huge \bfseries EazyCNC -- Manual}\\[0.8cm]
+\begin{center} 
+Revision 3 
+\end{center}
+
+\begin{center} 
+for 
+\end{center}
+
+\begin{center} \large
+EazyCNC version 0.0.0.26a 
+\end{center}
+
+\HRule \\[0.4cm]
+
+\includegraphics[scale=0.25]{titlepicture.png}
+
+\HRule \\[1.5cm]
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+
+\fontencoding{T1}
+  \fontfamily{garamond}
+  \fontseries{m}
+  \fontshape{it}
+  \fontsize{12}{15}
+  \selectfont
+
+\tableofcontents
+\setcounter{tocdepth}{3}
+\listoftables
+\listoffigures
+
+
+\chapter*{Preface}
+
+\include{disclaimer}
+\include{safetyfirst}
+\include{introduction}
+\include{deployment}
+\include{installation}
+\include{general}
+\include{setup}
+\include{operating}
+\include{cuttercompensation}
+\include{g-codes}
+\include{appendix}
+
+% firmware description
+% mechanical construction
+
+%mains
+%probe
+%no jumpers, just wires
+
+
+
+\clearpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{center} 
+{ \huge \bfseries ***  The End *** }
+\vspace*{\fill}
+\end{center}
+
+\end{document}  

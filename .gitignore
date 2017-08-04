@@ -1,0 +1,8 @@
+*.log
+*.aux
+*.lof
+*.lot
+*.fdb_latexmk
+*.sublime-project
+*.sublime-workspace
+*.zip

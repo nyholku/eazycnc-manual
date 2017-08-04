@@ -1,0 +1,133 @@
+\chapter{Cutter compensation}
+
+G-codes specify the cutter or tool movement with coordinates. These
+coordinates specify the position of the spindle of the milling machine.
+Because the cutter of the milling has a non negligible size they  do \emph{not} 
+specify the size and shape of the part you are cutting. It is the job a CAM software 
+post processors software to turn CAD models into toolpaths that accommodate for
+the diameter and length of the cutter.
+
+However G-codes specify and EazyCNC supports limited automatic cutter length
+and diameter compensation so that you can use the \emph{coordinates of the
+part} to be machined instead of the coordinates of the spindle.
+
+These can be useful with hand written G-code programs and
+with some special machine configurations such as plasma cutters and when
+working mainly in plane i.e. two dimensions.
+
+\section{Tool length compensation}
+
+Tool length compensation is rather simple to understand, basically
+it just moves the machine higher by the length of the tool. So when the
+G-codes specify for example \texttt{Z 200} and the current tool
+length compensation is turned on (with \texttt{G43} code) and the
+tool length for the current tool (set with the \texttt{T} word)
+is 50  the actually Z coordinate the machine moves to is 250.
+
+\section{Cutter diameter compensation}
+
+Cutter diameter compensation is not difficult to understand 
+but there are more details to consider.
+
+Basically if you use the diameter compensation you put the
+coordinates of the part your are machining in to your G-code
+program and when you turn on the compensation you tell
+EazyCNC on which side of the path you want the tool travel. 
+The side of course depends on weather you are cutting an opening
+or an outline of the path and weather you are traveling the
+path clockwise or counter clockwise.
+
+The cutter compensation cannot change the past, what is cut is cut,
+so when you turn on the compensation (\texttt{G41} for and \texttt{G42})
+for right) the compensation will only have an effect the next move.
+
+Therefore you need pay attention to the first move when you
+are planning your tool path and you need to pre-position (usually
+with \texttt{G0} code) the tool outside of the part by at least
+half the tool diameter. Also consider the direction this first 
+move-in cut will make, ideally this should be in the same direction
+as the first actual part outline to be cut, but for inside holes
+or openings this is not always possible.
+
+\subsection{Cutter compensation example - cutting part's outline}
+
+To get a more concrete picture of above please study the 
+following example G-code  
+and the the Figure~\ref{fig:cutter-compensation-right} which illustrates various aspects of the diameter compensation
+process.
+
+\begin{verbatim}
+N1 G40      ; make sure diameter compensation is off
+N2 G0 X2 Y1 ; move to our starting position
+N3 G42 P0.4 ; turn on compensation to the right for 0.8 unit tool diameter
+N4 G1 X3 Y2 ; first move, from starting point to part perimeter
+N5 G1 X8 Y2 ; cut the lower edge
+N6 G1 X8 Y6 ; cut the right side
+N7 G1 X3 Y3 ; cut the slanted top edge
+N8 G1 X3 Y2 ; and finally back to where we started cutting the left edge
+N9 G40      ; compensation is off
+\end{verbatim}
+
+Referring to the Figure~\ref{fig:cutter-compensation-right} the black line illustrates
+the uncompensated coordinate path i.e. the coordinates in the G-code file.
+The green lines illustrates the path of the center of the tool and the compensated
+coordinates. And finally the red line illustrates the left edge of the groove
+the cutter actually cuts, i.e. this is the actual outline of the part
+we are making here, so any deviation between the black and red line (except 
+for the initial move-in movement) is a indication of badly constructed 
+G-code program.
+
+%---------------------------------------------------------------------------
+\begin{figure}[H]
+\includegraphics[scale=0.5]{cutter-compensation-right.png}
+\caption{G-code path versus compensated cutter path}
+\label{fig:cutter-compensation-right}
+\end{figure}
+%---------------------------------------------------------------------------
+
+
+Overall the part outline and the cut path seem to match but if you look
+carefully in the blown up detail of the beginning of the cut in 
+Figure~\ref{fig:cutter-compensation-detail} you see that cutting the
+path as specified would leave a semi circular concave notch to the part
+and besides, at least in theory, the part would be left hanging by
+a thread as the loop is not completed. These problems come from the first two actual
+moves (lines \texttt{N2},\texttt{N4} and \texttt{N4}) which are not parallel.
+
+%---------------------------------------------------------------------------
+\begin{figure}[H]
+\includegraphics[scale=0.2]{cutter-compensation-detail.png}
+\caption{Cutter compensation detail}
+\label{fig:cutter-compensation-detail}
+\end{figure}
+%---------------------------------------------------------------------------
+\subsection{Cutter compensation example - cutting holes and openings}
+
+To illustrate cutting a hole or cutout to match the above part we can
+just set compensation to the left and move the starting point to the inside
+of the path. Following G-code does just that, the actual path is identical
+to the previous example only the compensation side and starting point
+are different. The starting point was
+deliberately chosen badly and the cutter is way oversize relative
+to the path dimensions to exaggerate the issues you may encounter
+when designing your paths.
+
+\begin{verbatim}
+N1 G40      ; make sure diameter compensation is off
+N2 G0 X5 Y3 ; move to our starting position
+N3 G41 P0.4 ; turn on compensation to the left for 0.8 unit tool diameter
+N4 G1 X3 Y2 ; first move, from starting point to part perimeter
+N5 G1 X8 Y2 ; cut the lower edge
+N6 G1 X8 Y6 ; cut the right side
+N7 G1 X3 Y3 ; cut the slanted top edge
+N8 G1 X3 Y2 ; and finally back to where we started cutting the left edge
+N9 G40      ; compensation is off
+\end{verbatim}
+
+%---------------------------------------------------------------------------
+\begin{figure}[H]
+\includegraphics[scale=0.5]{cutter-compensation-left.png}
+\caption{G-code path versus compensated cutter path}
+\label{fig:cutter-compensation-left}
+\end{figure}
+%---------------------------------------------------------------------------

@@ -1,0 +1,160 @@
+\BOOKMARK [0][-]{chapter.1}{Safety First!}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Introduction to CNC-Machining}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Overview of a CNC Machining System}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Understanding Real-Time}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Understanding Stepper Motors}{chapter.2}% 5
+\BOOKMARK [0][-]{chapter.3}{Hardware and Software Requirements}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Dedicated Computer}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{Hardware}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.3}{Operating System}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.4}{Java}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.5}{Anti-Virus Software}{chapter.3}% 11
+\BOOKMARK [0][-]{chapter.4}{Installation}{}% 12
+\BOOKMARK [1][-]{section.4.1}{Getting Java}{chapter.4}% 13
+\BOOKMARK [1][-]{section.4.2}{Getting the Application}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.3}{Installing the Application}{chapter.4}% 15
+\BOOKMARK [0][-]{chapter.5}{Overview of EazyCNC}{}% 16
+\BOOKMARK [1][-]{section.5.1}{Moving Around in the Program}{chapter.5}% 17
+\BOOKMARK [0][-]{chapter.6}{Setting Up and Configuring}{}% 18
+\BOOKMARK [1][-]{section.6.1}{Saving Your Setup}{chapter.6}% 19
+\BOOKMARK [1][-]{section.6.2}{Setting the Communication Port Name}{chapter.6}% 20
+\BOOKMARK [2][-]{subsection.6.2.1}{Using the Auto Detect port function}{section.6.2}% 21
+\BOOKMARK [2][-]{subsection.6.2.2}{Installing the Windows Serial Port Driver}{section.6.2}% 22
+\BOOKMARK [2][-]{subsection.6.2.3}{Finding out the virtual serial port name on Mac OS X}{section.6.2}% 23
+\BOOKMARK [2][-]{subsection.6.2.4}{Finding out the virtual serial port name in Linux}{section.6.2}% 24
+\BOOKMARK [1][-]{section.6.3}{Setting the User Interface}{chapter.6}% 25
+\BOOKMARK [2][-]{subsection.6.3.1}{Units -popup menu}{section.6.3}% 26
+\BOOKMARK [2][-]{subsection.6.3.2}{DRO-format -entry field}{section.6.3}% 27
+\BOOKMARK [2][-]{subsection.6.3.3}{Update rate -entry field}{section.6.3}% 28
+\BOOKMARK [2][-]{subsection.6.3.4}{Language -popup menu}{section.6.3}% 29
+\BOOKMARK [2][-]{subsection.6.3.5}{Screen Size -popup menu}{section.6.3}% 30
+\BOOKMARK [1][-]{section.6.4}{Configuring Motors and Axes}{chapter.6}% 31
+\BOOKMARK [2][-]{subsection.6.4.1}{Motor Config -panel}{section.6.4}% 32
+\BOOKMARK [3][-]{section*.12}{Axis On -checkbox}{subsection.6.4.1}% 33
+\BOOKMARK [3][-]{section*.13}{Current -popup menu}{subsection.6.4.1}% 34
+\BOOKMARK [3][-]{section*.14}{Forward -popup menu}{subsection.6.4.1}% 35
+\BOOKMARK [3][-]{section*.15}{Home -popup menu}{subsection.6.4.1}% 36
+\BOOKMARK [3][-]{section*.16}{Home -popup menu}{subsection.6.4.1}% 37
+\BOOKMARK [3][-]{section*.17}{Pair X and A -checkbox}{subsection.6.4.1}% 38
+\BOOKMARK [3][-]{section*.18}{Steps/mm -entry field, Steps/inch -entry field}{subsection.6.4.1}% 39
+\BOOKMARK [2][-]{subsection.6.4.2}{Axis Limits -panel}{section.6.4}% 40
+\BOOKMARK [3][-]{section*.23}{Limits Enabled -checkbox}{subsection.6.4.2}% 41
+\BOOKMARK [3][-]{section*.24}{Min/Max - entry fields / Touch -buttons}{subsection.6.4.2}% 42
+\BOOKMARK [2][-]{subsection.6.4.3}{Jogging -panel}{section.6.4}% 43
+\BOOKMARK [3][-]{section*.25}{Crawl Velocity -entry field}{subsection.6.4.3}% 44
+\BOOKMARK [3][-]{section*.26}{Crawl Length -entry field}{subsection.6.4.3}% 45
+\BOOKMARK [3][-]{section*.27}{Min Crawl -entry field}{subsection.6.4.3}% 46
+\BOOKMARK [3][-]{section*.28}{Acceleration -entry field}{subsection.6.4.3}% 47
+\BOOKMARK [3][-]{section*.29}{Jog Velocity -entry field}{subsection.6.4.3}% 48
+\BOOKMARK [2][-]{subsection.6.4.4}{Test -panel}{section.6.4}% 49
+\BOOKMARK [2][-]{subsection.6.4.5}{Pre-requisites}{section.6.4}% 50
+\BOOKMARK [2][-]{subsection.6.4.6}{The Test run}{section.6.4}% 51
+\BOOKMARK [3][-]{section*.30}{Top Velocity -entry field}{subsection.6.4.6}% 52
+\BOOKMARK [3][-]{section*.31}{Acceleration -entry field}{subsection.6.4.6}% 53
+\BOOKMARK [3][-]{section*.32}{Direction -popup menu}{subsection.6.4.6}% 54
+\BOOKMARK [1][-]{section.6.5}{Setting the Movement limits}{chapter.6}% 55
+\BOOKMARK [2][-]{subsection.6.5.1}{Velocity -entry field}{section.6.5}% 56
+\BOOKMARK [2][-]{subsection.6.5.2}{Acceleration -entry field}{section.6.5}% 57
+\BOOKMARK [2][-]{subsection.6.5.3}{Path tolerance -entry field}{section.6.5}% 58
+\BOOKMARK [2][-]{subsection.6.5.4}{Z-scaler -entry field}{section.6.5}% 59
+\BOOKMARK [2][-]{subsection.6.5.5}{Update Period -entry field}{section.6.5}% 60
+\BOOKMARK [1][-]{section.6.6}{Spindle setup}{chapter.6}% 61
+\BOOKMARK [2][-]{subsection.6.6.1}{Min Speed -entry field}{section.6.6}% 62
+\BOOKMARK [2][-]{subsection.6.6.2}{Max Speed -entry field}{section.6.6}% 63
+\BOOKMARK [1][-]{section.6.7}{G-Code Options}{chapter.6}% 64
+\BOOKMARK [2][-]{subsection.6.7.1}{Incremental IJK -checkbox}{section.6.7}% 65
+\BOOKMARK [2][-]{subsection.6.7.2}{Incremental XYZ -checkbox}{section.6.7}% 66
+\BOOKMARK [2][-]{subsection.6.7.3}{G4 P in msec -checkbox}{section.6.7}% 67
+\BOOKMARK [1][-]{section.6.8}{Shortcuts setup}{chapter.6}% 68
+\BOOKMARK [1][-]{section.6.9}{Sys Info screen}{chapter.6}% 69
+\BOOKMARK [0][-]{chapter.7}{Operating Your CNC Machine}{}% 70
+\BOOKMARK [1][-]{section.7.1}{Using Keyboard and Joystick}{chapter.7}% 71
+\BOOKMARK [1][-]{section.7.2}{Simulation versus Cutting Metal}{chapter.7}% 72
+\BOOKMARK [1][-]{section.7.3}{Status Display}{chapter.7}% 73
+\BOOKMARK [1][-]{section.7.4}{Interactive Execution of G-code}{chapter.7}% 74
+\BOOKMARK [1][-]{section.7.5}{G-code display}{chapter.7}% 75
+\BOOKMARK [2][-]{subsection.7.5.1}{Loading G-code for execution}{section.7.5}% 76
+\BOOKMARK [2][-]{subsection.7.5.2}{The Goto -button}{section.7.5}% 77
+\BOOKMARK [2][-]{subsection.7.5.3}{Editing G-code}{section.7.5}% 78
+\BOOKMARK [1][-]{section.7.6}{Toolpath display}{chapter.7}% 79
+\BOOKMARK [2][-]{subsection.7.6.1}{Controlling the toolpath display}{section.7.6}% 80
+\BOOKMARK [1][-]{section.7.7}{Coordinate displays aka DROs}{chapter.7}% 81
+\BOOKMARK [1][-]{section.7.8}{Jogging}{chapter.7}% 82
+\BOOKMARK [1][-]{section.7.9}{Finding your bearings i.e. coordinates}{chapter.7}% 83
+\BOOKMARK [1][-]{section.7.10}{The easy and lazy way}{chapter.7}% 84
+\BOOKMARK [1][-]{section.7.11}{Going pro}{chapter.7}% 85
+\BOOKMARK [1][-]{section.7.12}{Adjusting Feed Rate}{chapter.7}% 86
+\BOOKMARK [1][-]{section.7.13}{Controlling the Spindle}{chapter.7}% 87
+\BOOKMARK [1][-]{section.7.14}{Machining!}{chapter.7}% 88
+\BOOKMARK [2][-]{subsection.7.14.1}{Pausing the machining}{section.7.14}% 89
+\BOOKMARK [2][-]{subsection.7.14.2}{Stepping and Reversing}{section.7.14}% 90
+\BOOKMARK [2][-]{subsection.7.14.3}{Stopping}{section.7.14}% 91
+\BOOKMARK [1][-]{section.7.15}{Setting up and managing the coordinate systems}{chapter.7}% 92
+\BOOKMARK [2][-]{subsection.7.15.1}{Coordinate axes}{section.7.15}% 93
+\BOOKMARK [2][-]{subsection.7.15.2}{Work/Fixture Coordinate System/Offsets}{section.7.15}% 94
+\BOOKMARK [2][-]{subsection.7.15.3}{Selecting the active coordinate system}{section.7.15}% 95
+\BOOKMARK [2][-]{subsection.7.15.4}{Changing offsets/setting up the coordinates}{section.7.15}% 96
+\BOOKMARK [2][-]{subsection.7.15.5}{Setting the XY-coordinate system origin via touching}{section.7.15}% 97
+\BOOKMARK [2][-]{subsection.7.15.6}{Setting the Z-coordinate system origin via touching}{section.7.15}% 98
+\BOOKMARK [1][-]{section.7.16}{Setting up and managing tool information}{chapter.7}% 99
+\BOOKMARK [2][-]{subsection.7.16.1}{Setting the current tool}{section.7.16}% 100
+\BOOKMARK [2][-]{subsection.7.16.2}{Managing the tool diameter and length}{section.7.16}% 101
+\BOOKMARK [2][-]{subsection.7.16.3}{Setting the tool length via touching}{section.7.16}% 102
+\BOOKMARK [0][-]{chapter.8}{Cutter compensation}{}% 103
+\BOOKMARK [1][-]{section.8.1}{Tool length compensation}{chapter.8}% 104
+\BOOKMARK [1][-]{section.8.2}{Cutter diameter compensation}{chapter.8}% 105
+\BOOKMARK [2][-]{subsection.8.2.1}{Cutter compensation example - cutting part's outline}{section.8.2}% 106
+\BOOKMARK [2][-]{subsection.8.2.2}{Cutter compensation example - cutting holes and openings}{section.8.2}% 107
+\BOOKMARK [0][-]{chapter.9}{G-code reference}{}% 108
+\BOOKMARK [1][-]{section.9.1}{The Basics}{chapter.9}% 109
+\BOOKMARK [2][-]{subsection.9.1.1}{Operator Messages}{section.9.1}% 110
+\BOOKMARK [2][-]{subsection.9.1.2}{Debug Messages}{section.9.1}% 111
+\BOOKMARK [1][-]{section.9.2}{Numbers, Expressions and Parameters}{chapter.9}% 112
+\BOOKMARK [2][-]{subsection.9.2.1}{Numbers}{section.9.2}% 113
+\BOOKMARK [2][-]{subsection.9.2.2}{Expressions}{section.9.2}% 114
+\BOOKMARK [3][-]{section*.59}{Arithmetic operators}{subsection.9.2.2}% 115
+\BOOKMARK [3][-]{section*.60}{Arithmetic functions}{subsection.9.2.2}% 116
+\BOOKMARK [2][-]{subsection.9.2.3}{Parameters}{section.9.2}% 117
+\BOOKMARK [1][-]{section.9.3}{G-codes and M-codes}{chapter.9}% 118
+\BOOKMARK [2][-]{subsection.9.3.1}{Length Units, G20,G21 codes}{section.9.3}% 119
+\BOOKMARK [2][-]{subsection.9.3.2}{Coordinate Axes}{section.9.3}% 120
+\BOOKMARK [2][-]{subsection.9.3.3}{Setting the length units \205 G20,G21}{section.9.3}% 121
+\BOOKMARK [2][-]{subsection.9.3.4}{Feedrate \205 F-word}{section.9.3}% 122
+\BOOKMARK [2][-]{subsection.9.3.5}{Spindle speed \205 S-word}{section.9.3}% 123
+\BOOKMARK [2][-]{subsection.9.3.6}{Spindle on/off \205 M3,M4,M5 codes}{section.9.3}% 124
+\BOOKMARK [2][-]{subsection.9.3.7}{Coolant on/off \205 M7,M8,M9 codes}{section.9.3}% 125
+\BOOKMARK [2][-]{subsection.9.3.8}{Select a tool \205 T-word}{section.9.3}% 126
+\BOOKMARK [2][-]{subsection.9.3.9}{Dwelling \205 G4 P*-code}{section.9.3}% 127
+\BOOKMARK [2][-]{subsection.9.3.10}{Coordinates/moving axes \205 XYZABC -words}{section.9.3}% 128
+\BOOKMARK [2][-]{subsection.9.3.11}{Motion mode \205 G0,G1,G2 and G3 codes}{section.9.3}% 129
+\BOOKMARK [2][-]{subsection.9.3.12}{Rapid positioning \205 G0 code}{section.9.3}% 130
+\BOOKMARK [2][-]{subsection.9.3.13}{Linear interpolation \205 G1 code}{section.9.3}% 131
+\BOOKMARK [2][-]{subsection.9.3.14}{Clockwise Arc interpolation \205 G2 code}{section.9.3}% 132
+\BOOKMARK [3][-]{section*.64}{Specifying arc using center point}{subsection.9.3.14}% 133
+\BOOKMARK [3][-]{section*.66}{Specifying arc using radius}{subsection.9.3.14}% 134
+\BOOKMARK [2][-]{subsection.9.3.15}{Counter Clockwise Arc interpolation \205 G3 code}{section.9.3}% 135
+\BOOKMARK [2][-]{subsection.9.3.16}{Perform probing move \205 G31}{section.9.3}% 136
+\BOOKMARK [2][-]{subsection.9.3.17}{Pause Machining \205 M0,M1}{section.9.3}% 137
+\BOOKMARK [2][-]{subsection.9.3.18}{Stop Machining \205 M2}{section.9.3}% 138
+\BOOKMARK [1][-]{section.9.4}{Coordinate systems}{chapter.9}% 139
+\BOOKMARK [2][-]{subsection.9.4.1}{Scaling \205 G50,G51 codes}{section.9.4}% 140
+\BOOKMARK [2][-]{subsection.9.4.2}{Incremental mode \205 G90,G91 codes}{section.9.4}% 141
+\BOOKMARK [2][-]{subsection.9.4.3}{Polar coordinate mode \205 G15,G16 codes}{section.9.4}% 142
+\BOOKMARK [2][-]{subsection.9.4.4}{Temporary coordinate system offsets \205 G52}{section.9.4}% 143
+\BOOKMARK [2][-]{subsection.9.4.5}{Temporary coordinate system offsets \205 G52,G92,G92.1,G92.2,G92.3 codes}{section.9.4}% 144
+\BOOKMARK [2][-]{subsection.9.4.6}{Coordinate system rotation \205 G68,G69 codes}{section.9.4}% 145
+\BOOKMARK [2][-]{subsection.9.4.7}{Active plane \205 G17,G18,G19 codes}{section.9.4}% 146
+\BOOKMARK [2][-]{subsection.9.4.8}{Tool length compensation \205 G43,G44,G49 codes}{section.9.4}% 147
+\BOOKMARK [2][-]{subsection.9.4.9}{Work/fixture offsets \205 G54,G55,G56,G57,G58,G59 codes}{section.9.4}% 148
+\BOOKMARK [2][-]{subsection.9.4.10}{Absolute coordinates \205 G53 code}{section.9.4}% 149
+\BOOKMARK [2][-]{subsection.9.4.11}{Cutter radius compensation \205 G40,G41,G4 codes}{section.9.4}% 150
+\BOOKMARK [2][-]{subsection.9.4.12}{Feedrate mode \205 G93,G94,G95 codes}{section.9.4}% 151
+\BOOKMARK [2][-]{subsection.9.4.13}{Feedrate override on/off \205 M48,M49 codes}{section.9.4}% 152
+\BOOKMARK [2][-]{subsection.9.4.14}{Tool change \205 M6 code}{section.9.4}% 153
+\BOOKMARK [2][-]{subsection.9.4.15}{Tool length compensation \205 G43,G44,G49 codes}{section.9.4}% 154
+\BOOKMARK [2][-]{subsection.9.4.16}{Path mode \205 G61,G61.1,G64 codes}{section.9.4}% 155
+\BOOKMARK [2][-]{subsection.9.4.17}{Incremental XYZ mode \205 G90,G91 codes}{section.9.4}% 156
+\BOOKMARK [2][-]{subsection.9.4.18}{Incremental IJK mode \205 G90.1,G91.1 codes}{section.9.4}% 157
+\BOOKMARK [2][-]{subsection.9.4.19}{Set tool table \205 G10 L1 code}{section.9.4}% 158
+\BOOKMARK [2][-]{subsection.9.4.20}{Set work/fixture offsets \205 G10 L2 code}{section.9.4}% 159
+\BOOKMARK [2][-]{subsection.9.4.21}{Call subroutine \205 M98/M99}{section.9.4}% 160
