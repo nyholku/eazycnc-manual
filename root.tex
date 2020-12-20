@@ -15,6 +15,7 @@
 % ht, tex4ht installed with Fink (IIRC)
 %
 \usepackage{array}
+%\usepackage[draft]{graphicx}
 \usepackage{graphicx}
 \usepackage{amssymb,amsmath,textcomp,gensymb}
 \usepackage{epstopdf}
@@ -25,18 +26,65 @@
 \usepackage{pdflscape,examplep,longtable}
 \usepackage{listings}
 \usepackage{floatflt}
-\usepackage{amssymb}
 \usepackage[T1]{fontenc}
 \usepackage[justification=centering]{caption}
 \usepackage{fancyvrb}
 \usepackage{float}
 \usepackage{framed}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage{lipsum}  
+\usepackage{longtable}
+
+
+ 
+ 
+\usepackage[T1]{fontenc}
+\usepackage[urw-garamond]{mathdesign}
+%\usepackage{garamondx}
+
+\usepackage[section]{placeins}
+%\usepackage[subsection]{placeins}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{lipsum}
+\usepackage{mwe}
+
+\newsavebox\iconbox
+\savebox\iconbox{}
+\newcommand{\seticons}[1]{%
+  \savebox\iconbox{{\makebox[\iconboxwidth]{\includegraphics[width=\iconboxwidth]{#1}}}}}
+\newlength{\iconboxwidth}
+\setlength{\iconboxwidth}{0.5in}
+\newlength{\iconsep}
+\setlength{\iconsep}{4pt}
+\makeatletter
+\renewcommand{\@seccntformat}[1]{%
+  \llap{\parbox[t][0pt]{\iconboxwidth}{\hfill{\csname the#1\endcsname}\\[\iconsep]\usebox{\iconbox}}\hspace{0.5em}}}
+\renewcommand{\section}{\@startsection{section}{1}{\z@}
+    {-4ex \@plus -1ex \@minus -.4ex}
+    {1ex \@plus.2ex }
+    {\normalfont\large\sffamily\bfseries}}
+\renewcommand{\subsection}{\@startsection {subsection}{2}{\z@}
+    {-3ex \@plus -0.1ex \@minus -.4ex}
+    {0.5ex \@plus.2ex }
+    {\normalfont\sffamily\bfseries}}
+
+%%%%%%%%%%%%%%%%%%%% 
+
+
+
 
 % -----------------------------------------------------
 \begin{document}
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
-\graphicspath{ {./images/} } 
+\graphicspath{ {./images/} {./screencaps/}} 
 
 % -----------------------------------------------------
 % Here it is: the code that adjusts justification and spacing around caption.
@@ -71,6 +119,26 @@
   {\end@float}
 \makeatother
 %-------------------------------------------------------
+
+
+%---------------------------------------------------------------------------
+\newcommand{\screencap}[2] {
+\begin{figure}[htb] 
+\includegraphics[scale=0.2]{#1.png}
+\caption{#2}
+\label{fig:#1}
+\end{figure}
+Figure~\ref{fig:#1}
+}
+%---------------------------------------------------------------------------
+
+% no first line indents
+\setlength{\parindent}{0pt}
+
+
+
+
+
 \begin{titlepage}
 \begin{center}
 
@@ -78,7 +146,7 @@
 
 
 \begin{center} \large
-eazycnc@sparetimelabs.com
+eazycnc@eazycnc.com
 \end{center}
 
 % Upper part of the page
@@ -87,7 +155,7 @@ eazycnc@sparetimelabs.com
 
 { \huge \bfseries EazyCNC -- Manual}\\[0.8cm]
 \begin{center} 
-Revision 3 
+Revision 1 
 \end{center}
 
 \begin{center} 
@@ -95,12 +163,12 @@ for
 \end{center}
 
 \begin{center} \large
-EazyCNC version 0.0.0.26a 
+EazyCNC version 2.0.36
 \end{center}
 
 \HRule \\[0.4cm]
 
-\includegraphics[scale=0.25]{titlepicture.png}
+\includegraphics[scale=0.25]{title-picture.png}
 
 \HRule \\[1.5cm]
 
@@ -109,16 +177,16 @@ EazyCNC version 0.0.0.26a
 % Bottom of the page
 {\large \today}
 
-\end{center}
+\end{center}    
 \end{titlepage}
 
-\fontencoding{T1}
-  \fontfamily{garamond}
-  \fontseries{m}
-  \fontshape{it}
-  \fontsize{12}{15}
-  \selectfont
-
+%\fontencoding{T1}
+ % \fontfamily{garamond}
+ % \fontseries{m}
+ % \fontshape{it}
+ % \fontsize{12}{15}
+ % \selectfont
+ 
 \tableofcontents
 \setcounter{tocdepth}{3}
 \listoftables
@@ -128,22 +196,33 @@ EazyCNC version 0.0.0.26a
 \chapter*{Preface}
 
 \include{disclaimer}
-\include{safetyfirst}
-\include{introduction}
-\include{deployment}
-\include{installation}
-\include{general}
-\include{setup}
-\include{operating}
-\include{cuttercompensation}
-\include{g-codes}
-\include{appendix}
+\include{1-safetyfirst}
+\include{2-introduction}
+\include{3-deployment}
+\include{4-installation}
+\include{5-general}
+\include{6-setup}
+\include{7-operating}
+\include{8-cuttercompensation}
+\include{9-g-codes}
+
+\appendix
+\section{Appendices}
+
+\include{appendix-revision-history}
+\include{appendix-supported-g-codes}
+\chapter{Supported MPG pendants}
+\include{appendix-whb04}
+\include{appendix-whb04b}
+
+
+
 
 % firmware description
 % mechanical construction
 
 %mains
-%probe
+%probe 
 %no jumpers, just wires
 
 

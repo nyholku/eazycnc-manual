@@ -1,0 +1,83 @@
+\chapter{Hardware and Software Requirements}
+
+This chapter gives you important information about the software and hardware
+requirements for a system based on EazyCNC and TOAD4. 
+
+
+\section {Dedicated Computer}
+
+The computer used for CNC machining should be dedicated for the CNC system and not shared for other use. 
+
+A CNC machine should not be directly connected to Internet because of the possibility
+of viruses and malware causing havoc in an environment where they can 
+cause actual physical damage and injury. 
+
+If the dedicated CNC PC is connected to a local network it is important
+that the network is secure and runs behind a firewall and the all 
+network connectivity on the CNC PC is kept to minimum.
+
+No other software besides the operating system and EazyCNC should be running
+on the CNC PC during machining. You should especially watch out for 
+programs that start automatically behind the scenes when the computer
+boots up. Utility programs to kill non required applications and processes
+exist.
+
+All screen savers, auto log-off and power save features and modes should be turned off.
+
+Once the system has been set up, configured properly and tested it should be 'freezed' and \underline{any
+upgrades and changes to the system should be approached with due caution and care}.
+
+
+\section {Hardware}
+
+It is impossible to give hard limits as to which kind of PC computer should be used with EazyCNC.
+
+In a less demanding application at moderate feed rates you can get by with a less powerful computer.
+
+It is tempting to utilize that old PC that is just lying there gathering dust, but that is not recommended. 
+
+Consider that you are building an automated machining tool and for that you want reliability and responsiveness. A suitable PC can be purchased for a few hundred euros/dollars and is well worth it considering that you are building and what your are going to do with it.
+
+A fairly recent and decent PC with at least 2 GHz processor, good graphics card, a minimum of 4 GB RAM is recommended as the minimum. To install and run EazyCNC you need at least 400 MB of free disk space.
+
+During machining all the G-code data as well as the tool path graphics is kept in memory so there is no such thing as too much memory, too fast graphics card or too fast CPU!
+
+
+\section {Operating System}
+
+The following operating systems/version have been tested:
+
+
+
+\begin{itemize}
+\item Mac OS X 10.13.6 
+\item Windows 10
+\item Linux Lubuntu 18.04.1 LTS (NOT tested as of 23.9.2018)
+\end{itemize}
+
+
+EazyCNC is built on Java which is fairly operating system independent so 
+it is likely it will run with a wide range of version of above mentioned operating systems
+but of course it is not possible to guarantee that.
+
+Also worth noting is that operating system version tend to become obsolete and 
+unsupported in a matter of some years and while I try to maintain compatibility
+with older OS versions it may become impossible at anytime.
+
+
+\section {Anti-Virus Software}
+
+An anti-virus software is not recommended on the PC running EazyCNC as such
+software is very intrusive and can cause real-time violations and machining
+failures. Further, it is not very necessary because the CNC PC should not be connected
+to Internet.
+
+It is of course important that anti-virus software or some other means
+are used to ensure clean operation of the computer 
+producing or transferring the G-code file as a virus
+might infect the media, such as a USB memory stick, used to transfer the G-code to the CNC system.
+
+
+
+
+

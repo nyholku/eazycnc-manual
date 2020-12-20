@@ -1,0 +1,309 @@
+
+\section{XHC WHB04B Pendant / MPG} 
+\begin{figure}[htb]
+\includegraphics[scale=0.07]{whb04b.jpg}
+\caption{WHB04B Pendant / MPG}
+\label{fig:whb04b}
+\end{figure}
+
+EazyCNC supports a commercially available MPG named WHB04B 
+(note the B at then end of the type code), 
+see Figure~\ref{fig:whb04b}.  This actually comes in two varieties, 
+WHB04B-4 for use with four axis and WHB04B-6 for use with six axis.
+    
+Out of the box this pendant (or rather EazyCNC) support a
+much smaller set of functionality than for example the WHB04.
+This is because the pendant has a smaller number of buttons
+and even smaller number of usefully labeled buttons.
+
+\subsection{WHB04B Controls}
+
+
+The three main controls of the MPG are the axis selector knob,
+step size selector knob and the large pulse wheel.
+
+In general the axis selector selects which axis is affected
+by the pulse wheel or buttons on the keypad. 
+ 
+The step size selector change how fast the wheel moves the axis.
+
+The keypad is used to activate EazyCNC functions.
+
+\subsection{Display}
+\begin{figure}[htb]
+\includegraphics[scale=0.2]{whb04b-display.jpg}
+\caption{WHB04B Display}
+\label{fig:whb04b-display}
+\end{figure}
+
+Figure~\ref{fig:whb04b-display} shows a close up of the WHB04B display.
+
+The display has DROs for three axes at a time. If the axis selector
+is in X,Y or Z position then the corresponding axis values are 
+displayed in the DROs. If the selector is in A position then axis positions
+of the A, B and C axis are displayed.
+
+An asterisk ('*') in front of an axis letter indicates that that axis has
+is currently selected by the Axis Selector knob.
+    
+The DROs  display the same DRO values as on the EazyCNC computer screen.
+    
+Note that you can NOT see more decimals on the pendant DRO than on the computer screen 
+eventhough the pendant always displays four decimal digits.
+    
+Note that if the Axis Selector is in the OFF position then EazyCNC
+is not able to update the display at all.
+
+On the top row alternatively eithe the step selector percentage is displayed
+or feed  ('F') or spindle ('S') is displayed. The percentage makes
+little sense but can be used as a reminder of the selected wheel step size.
+
+To display the feed or spindle speed you need to press the Feed +/- or 
+Spindle +/- key. If the corrosponding feed or spindle speed is not 
+currently displaying when you press the key then the display will switch
+and the key is ignored, i.e. it will not change the feed or spindle speed.
+
+When the pendant is powered up you may see the text 'RESET' on the top row.
+To get rid of that you have to press any button on the key pad and rotate
+the step selector knob. This is makes no sense but it is what it is
+and EazyCNC cannot do anything about that.
+
+
+
+
+\subsection{Keypad}
+\begin{figure}[htb]
+\includegraphics[scale=0.2]{whb04b-keypad.jpg}
+\caption{WHB04B Keypad}
+\label{fig:whb04b-keypad}
+\end{figure}
+
+Figure~\ref{fig:whb04b-keypad} shows a close up of the WHB04B keypad.
+
+The keypad has 15 keys plus the orange 'Fn' key which alter the
+functions of those keys that have an orange label on them. To 
+activate the 'orange' function you need to hold the 'Fn' key down
+while pressing the intended key.
+
+Note that the functions associated with the keys are not fixed
+and you can change them
+in the Mach Setup / Shortcuts screen, see section \ref{sec:shortcut-setup},
+
+For inspiration of functions you could assign to the keys I suggest
+reading the WHB04 appendix which lists number of useful functions
+that are available out-of-the-box with that pendant.
+
+
+
+\subsection{Axis Selector}
+\begin{figure}[htb]
+\includegraphics[scale=0.2]{whb04b-axis-knob.jpg}
+\caption{WHB04B Axis Selector }
+\label{fig:whb04b-axis-knob}
+\end{figure}
+
+
+
+\subsection{WHB04 Wheel}
+
+Every 'click' of the wheel moves the selected axis one step to the wheel direction.
+The speed at which the mill table,head or plasma torch moves is relative to how fast you
+turn the wheel. 
+    
+In principle the wheel allows absolute (well incremental really) control of 
+the axis position and speed. In practice the wheel sometimes misses pulses 
+so turning the wheel ten clicks may only result in nine steps, always
+confirm by looking at the DROs.
+    
+Because it is possible to turn the wheel faster than the axis can move there
+is a windup prevention that prevents the wheel position from advancing too 
+much beyond where the axis has advanced.
+    
+Because of the long chain of hardware and software that connects the pulse wheel
+to the axis stepper motor, the feel of control you get with the wheel is far from 
+perfect. However it does allow you to control the axis position rather
+swiftly and accurately.
+
+The step size that is used when you turn the wheel depends on the Step Selector, 
+see below.
+    
+\subsection{Step Selector}
+\begin{figure}[htb]
+\includegraphics[scale=0.2]{whb04b-step-knob.jpg}
+\caption{WHB04B Step Selector}
+\label{fig:whb04b-step-knob}
+\end{figure}
+
+The Step Selector has some confusing labeling, you should go by the
+labels in white.
+
+Depending on weather you are working with  inches or millimeters 
+(see Mach Setup / Screen / Units)
+the wheel click/step size varies as shown in the table below. 
+
+\begin{tabular}{ r | l | l }
+Selector position& Units = mm & Units = inch\\
+\hline
+0.001 / 2\% &  0.001 mm  & 0.001" (0.0254 mm)\\
+0.01 / 5\% &  0.01 mm  & 0.001" (0.254 mm)\\
+0.1 / 10\% &  0.1 mm  & 0.001" (2.54 mm)\\
+1.0 / 30\% &  1.0 mm  & minimal\\
+LEAD\% &  minimal  & minimal\\
+\end{tabular}
+    
+In above 'minimal' indicates smallest possible step, for example
+if in your Axis Setup / Step/mm you have 400 step/mm then 
+the minimal step size is 1/400 mm i.e. 0.0025 mm.
+
+Note that if the theoretical step size as per above table results
+in a step that is smaller than 'minimal' then the minimal step is 
+selected.
+
+For safety the "1.0" selector position does not result in one 
+inch step size in inch mode. 
+
+\seticons{whb04b-reset}
+\subsection{Reset -Key}   
+                                  
+Pressing this has the same effect as pressing HOME button on the computer 
+screen.
+
+Use the axis selector knob to select the affected axis, or set the
+axis selector knob to 'Off' to HOME ALL axis.
+
+A long press will force HOME ALL action regardless of the axis selector knob position.
+
+
+\seticons{whb04b-stop}
+\subsection{Stop -Key}  
+
+
+This key has the same effect as pressing the STOP button on the computer screen.
+ 
+\seticons{whb04b-start-pause}
+\subsection{Start / Run -key}   
+ 
+This key has the same effect as pressing alternatively the RUN and HOLD buttons
+on the computer screen.
+   
+
+
+\seticons{whb04b-feed+}
+\subsection{Macro-1 [Feed+]-key} 
+
+If the 'F' is not displayed on the pendant display then the key press 
+is ignored and the display changes to display the feed speed.
+
+When pressed together with the 'Fn' key this button has the same effect
+as pressing the the '+' key in the Feed/Override panel on the screen.
+
+When pressed without  the 'Fn' key this key has no function unless you
+assign one to it.
+    
+
+\seticons{whb04b-feed-}
+\subsection{Macro-2 [Feed-]-key}   
+
+
+If the 'F' is not displayed on the pendant display then the key press 
+is ignored and the display changes to display the feed speed.
+
+When pressed together with the 'Fn' key this button has the same effect
+as pressing the the '-' key in the Feed/Override panel on the screen.
+
+When pressed without  the 'Fn' key this key has no function unless you
+assign one to it.
+  
+\seticons{whb04b-spindle+}
+\subsection{Macro-3 [Spindle+] -key}   
+
+
+If the 'S' is not displayed on the pendant display then the key press 
+is ignored and the display changes to display the spindle speed.
+
+When pressed together with the 'Fn' key this button has the same effect
+as pressing the the '+' key in the Spindle panel on the screen.
+
+When pressed without  the 'Fn' key this key has no function unless you
+assign one to it.
+  
+
+\seticons{whb04b-spindle-}
+\subsection{Macro-4 [Spindle-]-key}  
+
+
+If the 'S' is not displayed on the pendant display then the key press 
+is ignored and the display changes to display the spindle speed.
+
+When pressed together with the 'Fn' key this button has the same effect
+as pressing the the '-' key in the Spindle panel on the screen.
+
+When pressed without  the 'Fn' key this key has no function unless you
+assign one to it.
+
+\seticons{whb04b-m-home}
+\subsection{Macro-5 [M-HOME]-key}   
+
+This key has no function unless you assign one to it.
+
+\seticons{whb04b-safe-z}
+\subsection{Macro-6 [Safe-Z]-key}    
+    
+                                              
+Pressing this key will cause the Z-axis to move to the  Safe Z value set in the Axis Setup / Axis Z.
+
+
+\seticons{whb04b-w-home}
+\subsection{Macro-7 [W-HOME]-key}
+
+Pressing this key will cause the X and Y axis to jog to the zero
+position of the DROs.
+
+    
+\seticons{whb04b-s-on-off}
+\subsection{Macro-8 [S-ON/OFF]-key}  
+
+Pressing this key has the same effect as pressing the SPINDLE button on 
+the computer screen. 
+
+In other words it toggles the spindle on and off.
+
+
+\seticons{whb04b-fn}
+\subsection{Fn -key}       
+ 
+This key together with some other is used to evoke the secondary 
+function of that key. To use that press and hold the 'Fn' key down
+while pressing the other key.
+    
+\seticons{whb04b-probe-z}
+\subsection{Macro-9 [Probe-Z]-key}   
+
+
+Pressing this key has the same effect as 
+pressing the Touch button in the Work Offsets / Set Z origin screen when the 
+'Use PROBE to Touch' feature is enabled.
+    
+In other word this will perform a short probing move on the Z axis 
+axis and as soon as the probe trips the movement stops and rectracts 
+and the Z axis work offset is set to the Gage Height parameter in 
+the Work Offsets screen.
+    
+Thus this is a handy way to perform 'zero' the Z-axis with the probe.
+ 
+\seticons{whb04b-macro-10}
+\subsection{Macro-10}   
+
+
+This key has no function unless you assign one to it.
+
+\seticons{whb04b-continuous}
+\subsection{Continuous -key}  
+
+
+This key has no function unless you assign one to it.
+
+\seticons{whb04b-step}
+\subsection{Step -key}       
+
+This key has no function unless you assign one to it.
