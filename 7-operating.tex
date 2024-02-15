@@ -315,7 +315,7 @@ toolpath display and the associated controls, Figure~\ref{fig:toolpath-display}.
 
 %---------------------------------------------------------------------------
 \begin{figure}[htb]
-\includegraphics[scale=0.4]{toolpath-display.png}
+\includegraphics[scale=0.6]{toolpath-display.png}
 \caption{The toolpath display panel}
 \label{fig:toolpath-display}
 \end{figure}
@@ -334,7 +334,7 @@ see section section~\ref{subsubsec:enable-limist}.
 
 If the white cube blinks, then the EazyCNC has not been HOMEed by pressing the
 HOME buttons for each axis and thus the EazyCNC does not know where in the
-real physical world the axes which means that the limits are not reliable
+real physical world the axes are which means that the limits are not reliable
 at the moment. Press HOME on each axis to remedy the situation.
 
 The grids are always displayed in the coordinates defined by the current
@@ -353,8 +353,8 @@ something is wrong with your G-code or the grids.
 %---------------------------------------------------------------------------
 \begin{figure}[htb]
 \includegraphics[scale=0.8]{grids-and-limits.png}
-\caption{The G-code editor and display panel}
-\label{fig:grids-and-limits}
+\caption{The toolpath panel with grids and limits but no toolpath}
+\label{fig:grids-and-limits} 
 \end{figure}
 %---------------------------------------------------------------------------
 
@@ -387,14 +387,22 @@ waiting to be executed.
 \subsection{Controlling the toolpath display}
 
 If the 'Track' button is not active you can move around the three dimensional 
-virtual space and inspect different parts of the toolpath by clicking and dragging 
-in the toolpath display panel. If the 'Track' button is active the 
+virtual space and inspect different parts of the toolpath.
+
+
+If the [rot]-button is activated dragging in the tool path panel rotates the 
+view, if the [Pan]-button is activated then dragging moves the view.
+
+If the 'Track' button is active the 
 display is always automatically cantered at the tooltip and follows it
 as the tool moves. You can toggle the tracking on and off by clicking the button
 repeatedly.
 
 If you hold down the 'ALT' key on your keyboard while you drag with
-the mouse you can rotate the view. If one of the 'XY', 'YZ' or 'XZ' buttons is
+the mouse you can rotate the view without activating the [Rot]-button. 
+
+
+If one of the 'XY', 'YZ' or 'XZ' buttons is
 active then the rotation is disabled and the view is forced to be towards
 the corresponding coordinate plane along the 'plane normal' axis. For example if
 you have the XY button selected then the view is as if you were looking
@@ -404,7 +412,9 @@ Note that you can de-select any of the 'Track', 'XY', 'YZ' or 'XZ' by
 just re-clicking on it.
 
 You can use the '+' and '-' buttons to zoom in and out to see more or
-less of the toolpath or you can use the mouse scroll wheel.
+less of the toolpath or you can use the mouse scroll wheel. On Operating
+systems that support touch screen 'pinching' that should also work
+for zooming.
 
 
 \section{Coordinate displays aka DROs}
@@ -592,7 +602,7 @@ the tool is, it just keeps track of the position relaying on an
 initial known position. Further even though EazyCNC can keep track of the
 tool position it knows next to nothing about the workpiece location.
 
-There are ways to calibrate all three (the EazyCNC coordinate system, the actual physical axis positions 
+There are different ways to calibrate all three (the EazyCNC coordinate system, the actual physical axis positions 
 and the workpiece location) in relation to each other,
  but most of the time this would be an overkill.
 
@@ -602,7 +612,7 @@ the axis limits and if you need to continue machining after
 a power down.
 
 In the first instance, if EazyCNC does not have the correct relationship
-between the physical axis position and it's internal coordinate
+between the physical axis position and its internal coordinate
 system then it will allow you to drive the axis bang against
 one end of the movement and will unnecessarily limit your movements
 at the other end.
@@ -684,6 +694,8 @@ probe you can use that to measure the workpiece location.
 
 
 
+
+
 \section{Adjusting Feed Rate}
 \label{sec:feed-override}
 
@@ -742,6 +754,7 @@ value.
 You can adjust the override with the '+' and '-' keys
 or you can type in a new value. Adjusting or setting
 the override value will turn on the override.
+
 
 
 %---------------------------------------------------------------------------
@@ -902,7 +915,7 @@ The physical origin of the coordinate axis is not really relevant
 most of the time as you need to 'calibrate' or set your work coordinate 
 system with respect to the the work piece anyway as explained in the next section.
 
-\section{XYZ versu ABC axes}
+\section{XYZ versus ABC axes}
 
 EazyCNC supports up to six axes. These are named as X, Y and Z for the obvious
 cartesian coordinates and A, B and C for remaining rotational axes.
@@ -954,13 +967,13 @@ For details how these work see the chapter \ref{chap:g-code-chapter}.
 
 Work coordinate system, also know as fixture coordinate system
 or offsets, is the main thing that relates the axes physical positions to the
-the coordinates displayed in the DROs or the G-codes coordinates.
+coordinates displayed in the DROs or the G-codes coordinates.
 
 EazyCNC supports 255 work coordinate systems, you are unlikely to
 ever need more than a few, most people use only one.
 
 Mathematically a work coordinate system is simply a number for each axis
-that is added to the DRO or G-code value axis value to convert them to
+that is added to the DRO or G-code  axis value to convert them to
 the machine axis position, so basically they offset your coordinates, 
 hence the name.
 
@@ -976,15 +989,23 @@ multiple coordinate system is hardly ever worth the effort
 in a hobby installation, so I suggested you use coordinate
 system number one and stick with it.
 
-You manage the coordinate systems with the Work Offsets screen,
-see \screencap{work-offsets-view}{The Work Offsets screen.}
+You manage the coordinate systems with the Work Offsets panel,
+see Figure~\ref{fig:edge-finder}.
 
-\subsection{Selecting the active coordinate system}
+
+%---------------------------------------------------------------------------
+\begin{figure}[htb]
+\includegraphics[scale=0.5]{work-offsets-edge-finder.png}
+\caption{The Work Offsets screen}
+\label{fig:edge-finder}
+\end{figure}
+%---------------------------------------------------------------------------
+\subsection{Selecting the active coordinate system / work offsets}
 
 At any given time one of the coordinate systems is in effect.
 
-To switch from current coordinate system to an other click on
-one the buttons labeled with '1 (G54)' etc or type in the
+To switch from current coordinate system to another click on
+one of the buttons labeled with '1 (G54)' etc. or type in the
 number of the coordinate system you want to use into the 
 entry field labeled 'Active Offset'. The coordinate systems 
 are numbered from 1 to 255.
@@ -1000,19 +1021,25 @@ right of the 'Active Offset' entry field.
 
 One way to set up the coordinate system was already
 described in Section~\ref{sec:finding-your-bearings}, that is
-you drive the axis to a know or desired position and 
+you drive the axis to a known or desired position and 
 set coordinates in the DROs either manually or automatically.
+
+Using this method you effectively teach the system where 
+the origin coordinate system i.e. the coordinates 0,0,0 are.
 
 If you do that while you are in the 'Work Offsets' screen
 you will see how the offsets in the 'X:','Y:'... entry fields
-change. Or if you feel comfortable working with the offsets
+change. 
+
+If you feel comfortable working with the offsets
 directly you can just type them into the entry fields.
 
 A third way to set offsets and  to specify the coordinate/axis
-origin is by 'touching' the work piece with a probe or the cutter
-in the tool in the tool holder. 
+origin is by 'touching' the work piece or touch plate with an edge finder, 
+electric probe or cutter in the spindle. 
 
-\subsection{Setting the XY-coordinate system origin via touching}
+\subsection{Setting the X/Y work offsets via touching}
+
 
 This is illustrated and done with the controls in the 'Set XY-origin' panel.
 This feature assumes that you want to set XY origin to edge
@@ -1021,9 +1048,9 @@ of the work piece, typically the left/front edge of it.
 Usually a special edge finder probe or wobbler tool is held
 in the chuck while touching because it gives much better sensitivity
 and accuracy to the touching and does not mark the work piece
-and neither is likely to break like cutter would.
+and neither it is likely to break like cutter would.
 
-To use the touch feature simply Jog the axis to the work piece
+To use the touch feature simply Jog the axis to a work piece
 edge, ensure that the probe diameter is correctly entered into
 the 'Probe Diameter:' entry field and click on one of the
 'Touch' buttons to indicate the edge you have the driven the
@@ -1031,7 +1058,7 @@ probe to. EazyCNC then calculates and sets the offsets so that
 the coordinate origin for that axis is at the indicated edge
 of the work piece.
 
-\subsection{Setting the Z-coordinate system origin via touching}
+\subsection{Setting the Z work offset via touching}
 \label{sec:touch-z-coordinate}
 
  This is illustrated and done with the
@@ -1040,7 +1067,7 @@ milling table.
 
 Remember that physically changing the tool or cutter requires you to 
 re-set the Z-axis via any of the methods described here, unless you
-have a presettable toolholder system and keep the 
+have a pre-settable toolholder system and keep the 
 tool table up to date.
 
 
@@ -1073,15 +1100,14 @@ table without the gauge piece in place, then job up a little
 bit at a time until you can just slide the gauge piece
 between the table and the cutter. 
 
-\subsection{Using an electronic Probe to Touch }
+\subsection{Setting the work offsets using an electric probe}
 
-If your system is equiped with an electronic touch probe
-you can enable the automatic touch feature by checking the
-'Use PROBE to Touch' check box. 
+If your system is equipped with an electronic touch probe
+you can use it by activating the PROBE button.
 
-As a safety feature if the 'Use probe to touch' feature is enabled
+As a safety feature if the PROBE feature is enabled
 then the Touch buttons to changed to look like in 
-\screencap{work-offsets-view-auto}{The Work Offsets screen when the 'Use PROBE to Touch' is enabled.}
+\screencaps{work-offsets-view-auto}{0.5}{The Work Offsets screen when the PROBE button is activated}
 
 First you need to jog the tool close enough to the edge in question 
 of the workpiece using the jog controls.
@@ -1093,11 +1119,119 @@ and the offset for the corresponding axis is set just like
 it would be if you had used the manual mode an edge finder or
 gauge block and pressed the Touch button.
 
-After the probe trips it retract to its original position.
+After the probe trips it retracts to its original position.
 
 If the probe fails to trip then an error is displayed in
 the status line and no retraction is performed and the
-Work Offsets are not affected.
+Work Offsets are not affected. 
+
+\section{Probe calibration}
+\label{sec:probe-calibration}
+
+Before you can use the probe you need to calibrate the probe tip in the probe calibration screen by activating 
+Calibration-button, see 
+\screencaps{work-offsets-view-calibrate}{0.5}{The Work Offsets screen when the PROBE button is activated}
+
+For calibration you need a smooth bore ring gauge.
+
+To calibrate place the ring gauge on vice jaws on the milling table, mount the 
+probe in to the spindle and enter the gauge inner diameter into the Gage Diameter
+entry field. 
+
+Then jog the axis until the probe tip is approximately inside the ring in all three axes
+and the press the CALIBRATE button.
+
+EazyCNC will the move the probe to touch the gauge ring from all directions, after
+which it will ask you to manually turn the spindle 180° and the EazyCNC repeats
+the movements.
+
+Once the all that is completed EazyCNC will calculate values for the Offsets.
+
+If you have good quality probe all the values should be almost equal.
+
+When you mount the probe it should always be mounted in the same orientation
+otherwise the calibration will not work as intended.
+
+If you don't have a gauge ring and you trust your probe to be rotationally 
+invariant or centric then you can skip the calibration steps and just manually
+enter half of the tip diameter to each of the offset entry fields.
+
+Don't forget to SAVE your settings, other wise you will need to redo your calibration
+next time you use the probe.
+
+\subsection{Setting the works offsets using an electric touch plate}
+
+
+
+\screencaps{work-offsets-view-touch-plate}{0.5}{The Work Offsets screen when the TOUCH PLATE button is activated}
+
+
+
+First a few words touch plate which I guess is less familiar to many people.
+
+This is a plate that has two lips on the under side of the edges that allow you to place 
+it on top of the work piece so that the plate aligns with the work piece. The plate
+is usually galvanically (i.e. electrically) isolated from the work pieces
+so that the cutting touching the plate can be electrically detected. See 
+
+
+\screencaps{touch-plate}{0.3}{Touch plate usage}
+ 
+
+To use the plate you first mount the cutting tool to the spindle and then you  
+place the plate  on top of the work piece taking care to push it agains a corner
+of the work piece. 
+
+Next you attach (using magnet usually) 
+a wire from the probe input to the spindle. The touch plate is connected via
+another wire to the other probe input connector. 
+
+In this way when the cutter 
+touches the plate the circuit is closed and a touch is detected.
+
+The nomenclature and meaning
+of explanations in following maybe not be obvious, for clarification refer to 
+\screencaps{touch-plate-underside}{0.6}{Touch plate underside}
+and 
+\screencaps{probe-moves}{0.6}{Probing positions in XY plane}.
+First you mount the cutting tool into the spindle and enter the diameter
+of the cutter diameter field. Also make sure the 'Use Tool' checkbox is selected.
+
+Next jog the tool so that the tool it is above and inside the touch plate
+perimeter when viewed from the top, as illustrated in Figure~\ref{fig:touch-plate}.  
+
+This tool position is the starting position.
+
+To use the calibration you need to know the widths of the two underside bars of the touch
+plate because they together with the cutter diameter determine are needed
+to calculate the offsets when the cutter touches the plate.
+
+Now  enter those widths to the 'Horizontal Edge' and 'Vertical Edge' fields. 
+Also enter the cutter diameter to the 'diameter' field. 
+
+Next you need to determine how much the tool needs to move both in X and Y axis
+from the starting position  to clear the touch plate so that when 
+the tool moves down it will not touch the plate. Enter that distance to 
+the 'Probe XY move' field. 
+
+If you want the EazyCNC to set the coordinate system rotation select the 'Probe Rot.'
+checkbox. When this checkbox is selected EazyCNC will make an additional
+probing movement  along the horizontal (x) edge of the touch plate.
+You need to decide that distance and enter it into the 'move X' entry field.
+The longer the distance the more accurate the measurement will be but obviously
+the move must not bring the tool outside the edge of the touch plate.
+
+If you want to set the Z axis work offset as well as the XY offsets,
+make sure the 'Touch Z' checkbox is selected and enter, to the 'Z move' field,
+a  distance that is long enough to bring the tool down from the
+starting position to touch the work piece.
+
+To initiate the probing click on the green button that corresponds to the
+corner of the workpiece where you placed the touch plate, normally bottom left.
+
+When a confirmation dialog the tool will probe first in the Z direction from the initial
+position and then sequentially from the \#1 and \#2 positions
+and finally from \#3 position(if probe rotation is selected).
 
 
 \section{Setting up and managing tool information}
@@ -1108,7 +1242,7 @@ tool i.e. the cutter diameter and length. To help you to manage this
 EazyCNC maintains a table of tool information for up to 256 tools. 
 
 You manage the tool table with the Tool Setup screen,
-see \screencap{tool-setup-view}{The Tool Setup screen.} 
+see \screencaps{tool-setup-view}{0.5}{The Tool Setup screen.} 
 
 The tool dimension are used in movement limit calculations and
 if they are not correct you may either move bang against the end
@@ -1260,7 +1394,7 @@ you can enable the automatic touch feature by checking the
 
 As a safety feature if the 'Use AUTO TOOL SETTER to Touch' feature is enabled
 then the Touch button is changed to look like in 
-\screencap{tool-setup-view-auto}{The Tool Setup screen when the 
+\screencaps{tool-setup-view-auto}{0.5}{The Tool Setup screen when the 
 'Use PROBE to Touch' is enabled.}
 
 First you need to jog the tool close enough to top of the gauge block 
@@ -1415,3 +1549,7 @@ public class RefAllHome extends Plugin {
 Note that ZERO all zeros all six axes X,Y,Z,A,B and C but HOME ALL homes only X,Y and Z axes.
 
 
+\begin{comment}
+
+
+\end{comment}

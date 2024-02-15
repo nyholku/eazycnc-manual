@@ -14,15 +14,14 @@
 EazyCNC should work out of the box without any setup or configuration,
 so you can play around and test it right away.
 
-However before you can actually use it with TOAD4 and machine something
+However before you can actually use it with TOAD4 or TOAD5 and machine something
 there are a few things you need to set up and configure.
 
 This chapter proceeds in the preferred order of setting things up,
 however I suggest you read it all through once before setting up
 the system.
 
-The two most important things to set up are communication between
-your computer and you TOAD4 and configure each axis to match the motor
+The two most important thing to set up is to configure each axis to match the motor
 characteristics and axis gearing.
 
 \section{Saving Your Setup}
@@ -50,14 +49,13 @@ Note, EazyCNC does not ever automatically save the settings,
 this is to protect you from accidentally altering your
 carefully crafted machine setup and configuration. To
 save your settings or any changes you've made you need to
-click the 'SAVE' button. Also don't forget to make backup copies
-of this file.
+click the 'SAVE' button. 
 
 If the file or folder does not exist EazyCNC will create them
 with reasonable default settings when you click the 'SAVE' 
 button.
 
-You do not have to 'worry' about this file but it is good to know
+You do not have to 'worry' about the configuration file but it is good to know
 about it as you may want to make backup copies of it or maintain
 several different ones for different system configurations.
 
@@ -72,17 +70,20 @@ adding formatting and changing the file name extension with
 \subsection{Setting up permission in Linux}
 \label{subsec:setting-up-permissions-in-linux}
 
-If you are not runnig EazyCNC under Linux you can skip this section.
+If you are not running EazyCNC under Linux you can skip this section.
+
+Starting with EazyCNC version 2.0.41 if you install it from the supplied .deb
+file you do not have to worry about udev rules and can also skip this section.
 
 Most Linux distros take a very serious view of security. This means that by default
 you are not even allowed to use your own devices! To complicate matters there is
 no easy way to give yourself the necessary permissions, instead you have to do
 the following.
 
-To allow EazyCNC to talk to the TOAD4 you need to create a file named:
+To allow EazyCNC to talk to the TOAD4 or TOAD5 you need to create a file named:
  
 \begin{verbatim}
-99-TOAD4.rules 
+99-TOADX.rules 
 \end{verbatim}
 
  and put it in the directory 
@@ -97,8 +98,10 @@ In the  file '99-TOAD4.rules' you need to put the following line (all on one lin
 SUBSYSTEMS=="usb", ATTRS{idProduct}=="000a", ATTRS{idVendor}=="0408", MODE="0666", GROUP="plugdev"
 \end{verbatim}
 
-Basically you can do that with any text editor. Unfortunately you do not have the permission to write it to the directory '/etc/udev/rules.d'. So I recommend creating the file in your home directory and then use the Terminal and type in the following command
-to copy the file over:
+Basically you can do that with any text editor. Unfortunately you do not have the permission 
+to write it to the directory '/etc/udev/rules.d'. 
+So I recommend creating the file in your home directory and then use the 
+Terminal and type in the following command to copy the file over:
 
 \begin{verbatim}
 sudo cp ~/99-TOAD4.rules /etc/udev/rules.d
@@ -106,7 +109,7 @@ sudo cp ~/99-TOAD4.rules /etc/udev/rules.d
 
 This command will ask for your password to allow you temporarily write to that directory.
 
-Alternatively following one-liner should accomplist setting up the rules for you:
+Alternatively following one-liner should accomplish setting up the rules for you:
 
 \begin{verbatim}
 sudo echo 'SUBSYSTEMS=="usb", ATTRS{idProduct}=="000a", ATTRS{idVendor}=="0408", MODE="0666", GROUP="plugdev"' >> /etc/udev/99-TOAD4.rules
@@ -117,33 +120,21 @@ make a practice paste to a text file to see that you got it all on one line.
 
 
 
-\section{Selecting Motor Controller Type} 
-\label{sec:selecting-motor-controller-type}
-
-EazyCNC supports multiple different types of motor control hardware with different
-capabilities and features. 
-
-It is important that the Motor Controller selected in EazyCNC matches the hardware and especially
-firmware that you are using.
-
-Each motor controller has different configuration needs so before you can set up
-the rest of the machine correctly you need to select the correct motor controller type.
-
-To select the motor controller go to 'Controller' screen,  
-see \screencap{mach-setup-view-Controller-TOAD4+}{The Motor Controller Type selection setup screen}.
-
-Note that when you change the motor controller type you need to both SAVE and re-start EazyCNC
-for the changes to take effect.
-
-When you change the motor controller type many of the Axis Setup and Mach Setup screen
-change subtly. 
-
 \section{Updating Motor Controller Firmware } 
 \label{sec:updating-motor-controller-firmware}
 
-If you are using TOAD4+ (2.n.m) firmware NEVER update the firmware using a ICSP programmer or PICKit!
+You can check which firmware version your TOAD4 or TOAD5 board currently has
+by activating the MACH button. The version will be displayed on the status
+display.
 
-You can upate the firmware in The Motor Controller Type selection screen, figure~\ref{fig:mach-setup-view-Controller-TOAD4+}.
+At the time of updating this manual for EazyCNC 2.0.41 the latest firmware was 2.0.10-4 for TOAD4 
+and 2.0.10-5 for TOAD5. The last number of the version number indicates which hardware
+the firmware is for.
+
+Never update the firmware using a ICSP programmer or PICKit!
+
+You can upate the firmware in The Motor Controller screen, see .
+\screencaps{mach-setup-view-Controller-TOAD4+}{0.5}{Mach Setup when Controller button is selected} 
 
 To update the firmware do as follows.
 
@@ -262,8 +253,8 @@ Now that the communication works and before we set up the
 motors and axis we want to select the length units you are comfortable
 with. 
 
-To do that go the the 'User Interface' setup screen 
-\screencap{mach-setup-view-Screen}{The User Interface setup screen} 
+To do that go the  'User Interface' setup screen 
+\screencaps{mach-setup-view-Screen}{0.5}{The User Interface setup screen} 
 
 EazyCNC supports working in millimeters or inches. All displays and entry fields
 will always show values in the selected units and accept values in these
@@ -403,7 +394,7 @@ The TOAD4/ board has outputs to control a Variable Frequency Drive (VFD) for
 machine spindle control, an output to control a coolant pump/valve and an input for touch probe.
 
 To setup and/or test your inputs and outputs go to the Input/Ouput setup screen,
-see \screencap{mach-setup-view-IO}{The Input/Ouput setup screen}.
+see \screencaps{mach-setup-view-IO}{0.5}{The Input/Ouput setup screen}.
 
 This screen also contains buttons etc to manually control the outputs for testing purposes.
 
@@ -557,7 +548,7 @@ your machine will start to rotate or the plasma torch turns on! Beware!
 \section{Configuring Motors and Axes} \label{axis-configuration}
 
 To configure the motors and axes go to the 'Axis Setup' screen, 
-see \screencap{axis-setup-view-axis-X}{Axis Setup screen}
+see \screencaps{axis-setup-view-axis-X}{0.5}{Axis Setup screen}
 
 On the top of the 'Axis Setup' panel you see six   or four  [TOAD4] buttons. By clicking at 
 those buttons you control which axis parameters are shown
@@ -1317,7 +1308,7 @@ until you have maxed out your system.
 \label{sec:setup-movement-limits}
 
 The parameters in the 
-\screencap{mach-setup-view-Motion}{The Motion Limits screen.}
+\screencaps{mach-setup-view-Motion}{0.5}{The Motion Limits screen.}
  screen 
 tell EazyCNC how fast
 it is safe to accelerate and run the motors, how often
@@ -1485,7 +1476,7 @@ out there by allowing you to fine tune some details of the G-code interpretation
 
 
 You can change them in the G-code screen, 
-see \screencap{mach-setup-view-G-code}{The G-code screen.}
+see \screencaps{mach-setup-view-G-code}{0.5}{The G-code screen.}
 
 
 
@@ -1545,7 +1536,7 @@ the tool moves in an arc around the corner.
 If this is selected then tool will move  in a straigh line until it has 'cleared' the corner and the move
 in a straight line along the next segment. If, as a result of the corner geometry,
  the tool would move further from the corner than what
-is specified in the 'bevel limi' -entry field, then the move is pruned as indicated.
+is specified in the 'bevel limit' -entry field, then the move is pruned as indicated.
 
 \section{Shortcuts setup}
 \label{sec:shortcut-setup}
@@ -1560,7 +1551,7 @@ The key assignments are fully user definable so you can configure these as
 you best please.
 
 To examine or change the key assignments go to the Shortcuts setup screen,
-see \screencap{mach-setup-view-Shortcuts}{The Shortcuts setup screen.}
+see \screencaps{mach-setup-view-Shortcuts}{0.5}{The Shortcuts setup screen.}
 
 
 On the left side column you see the keys and on the right side column the
@@ -1585,7 +1576,7 @@ see \screencap{mach-setup-shortcuts-view-delete}{The Redefine Shortcut screen.}
 \section{Info screen}
 
 This screen displays bunch of system related information, 
-see \screencap{mach-setup-view-Info}{The System Info screen}
+see \screencaps{mach-setup-view-Info}{0.5}{The System Info screen}
 
 Most of the information displayed is just to report back
 to eazycnc@eazycnc.com if you are reporting a bug.
@@ -1668,3 +1659,14 @@ is ';' then decimal separator is ','.
 %\label{fig:mach-setup-diagnostics-view}
 %\end{figure}
 %---------------------------------------------------------------------------
+
+
+
+\section{Test}
+\label{sec:test-setup}
+
+
+\screencaps{mach-setup-view-Test}{0.5}{The Test screen.}
+
+
+

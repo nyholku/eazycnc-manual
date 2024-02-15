@@ -14,6 +14,7 @@
 %
 % ht, tex4ht installed with Fink (IIRC)
 %
+\renewcommand{\familydefault}{\sfdefault}
 \usepackage{array}
 %\usepackage[draft]{graphicx}
 \usepackage{graphicx}
@@ -37,7 +38,7 @@
 \usepackage{wrapfig}
 \usepackage{lipsum}  
 \usepackage{longtable}
-
+\usepackage{comment}
 \usepackage{url}
 
  
@@ -134,6 +135,15 @@
 Figure~\ref{fig:#1}
 }
 %---------------------------------------------------------------------------
+\newcommand{\screencaps}[3] {
+\begin{figure}[htb] 
+\includegraphics[scale=#2]{#1.png} 
+\caption{#3}
+\label{fig:#1}
+\end{figure}
+Figure~\ref{fig:#1}
+}
+%---------------------------------------------------------------------------
 
 % no first line indents
 \setlength{\parindent}{0pt}
@@ -166,7 +176,7 @@ for
 \end{center}
 
 \begin{center} \large
-EazyCNC version 2.0.36
+EazyCNC version 2.0.41
 \end{center}
 
 \HRule \\[0.4cm]
