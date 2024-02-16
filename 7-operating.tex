@@ -807,6 +807,10 @@ control the motors and axis accordingly.
 If you need to temporarily pause the execution, for example to clean up some swarf
 from the work area, you can press the 'HOLD' button. 
 
+If Auto SPINDLE OFF or Auto COOLANT OFF checkbox in the Options screen has been
+ticked then the spindle and/or coolant are turned off when enter the  HOLD state.
+
+
 Note that pausing the machining may slightly change the actual machined toolpath because 
 pausing changes the speed of movements and this in turn may affect how corners are cut.
 
@@ -888,9 +892,15 @@ the 'RUN' button.
 The machining will of course automatically stop when it reaches the
 end of the G-code file or if it encounters a stop code, M2 or M30.
 
-If you hit the 'STOP' button the machining will stop and spindle and coolant will
-be turned off and the G-code is re-wound to the beginning, so that next time
+If you hit the 'STOP' button the machining will enter the stop prematurely.
+
+When the system enters the STOP state 
+G-code is re-wound to the beginning, so that next time
 you hit 'RUN' it will execute from the beginning. 
+In addition if the Auto SPINDLE OFF and/or 
+Auto COOLANT OFF checkbox in the Options screen has been
+ticked then the spindle and/or coolant are turned off. 
+
 
 
 \section{Setting up and managing the coordinate systems}
@@ -946,7 +956,7 @@ sense with the rotational axes so you must turn them off manually
 in your G-code before you make moves involving the rotational
 axes.
 
-\subsection{Coordinates in G-codes} 
+\section{Coordinates in G-codes} 
 
 G-codes allow you to apply number of 'transformations' to be applied
 to  the coordinates in the G-code file before they are used to position the tool 
@@ -962,7 +972,7 @@ work offsets.
 For details how these work see the chapter \ref{chap:g-code-chapter}.
 
 
-\subsection{Work/Fixture Coordinate System/Offsets}
+\section{Work/Fixture Coordinate System/Offsets}
 \label{sec:work-offsets}
 
 Work coordinate system, also know as fixture coordinate system
@@ -1000,7 +1010,7 @@ see Figure~\ref{fig:edge-finder}.
 \label{fig:edge-finder}
 \end{figure}
 %---------------------------------------------------------------------------
-\subsection{Selecting the active coordinate system / work offsets}
+\section{Selecting the active coordinate system / work offsets}
 
 At any given time one of the coordinate systems is in effect.
 
@@ -1017,7 +1027,7 @@ in your mind between the coordinate systems and the G-codes
 the corresponding G-code is shown on the button and to the
 right of the 'Active Offset' entry field.
 
-\subsection{Changing offsets/setting up the coordinates}
+\section{Changing offsets/setting up the coordinates}
 
 One way to set up the coordinate system was already
 described in Section~\ref{sec:finding-your-bearings}, that is
@@ -1038,7 +1048,7 @@ A third way to set offsets and  to specify the coordinate/axis
 origin is by 'touching' the work piece or touch plate with an edge finder, 
 electric probe or cutter in the spindle. 
 
-\subsection{Setting the X/Y work offsets via touching}
+\section{Setting the X/Y work offsets via touching}
 
 
 This is illustrated and done with the controls in the 'Set XY-origin' panel.
@@ -1058,7 +1068,7 @@ probe to. EazyCNC then calculates and sets the offsets so that
 the coordinate origin for that axis is at the indicated edge
 of the work piece.
 
-\subsection{Setting the Z work offset via touching}
+\section{Setting the Z work offset via touching}
 \label{sec:touch-z-coordinate}
 
  This is illustrated and done with the
@@ -1100,7 +1110,7 @@ table without the gauge piece in place, then job up a little
 bit at a time until you can just slide the gauge piece
 between the table and the cutter. 
 
-\subsection{Setting the work offsets using an electric probe}
+\section{Setting the work offsets using an electric probe}
 
 If your system is equipped with an electronic touch probe
 you can use it by activating the PROBE button.
@@ -1159,7 +1169,7 @@ enter half of the tip diameter to each of the offset entry fields.
 Don't forget to SAVE your settings, other wise you will need to redo your calibration
 next time you use the probe.
 
-\subsection{Setting the works offsets using an electric touch plate}
+\section{Setting the works offsets using an electric touch plate}
 
 
 
@@ -1167,19 +1177,19 @@ next time you use the probe.
 
 
 
-First a few words touch plate which I guess is less familiar to many people.
+First a few words on touch plate which I guess is less familiar to many people.
 
-This is a plate that has two lips on the under side of the edges that allow you to place 
+This is a plate that has two lips on the under side of two edges that allow you to place 
 it on top of the work piece so that the plate aligns with the work piece. The plate
 is usually galvanically (i.e. electrically) isolated from the work pieces
-so that the cutting touching the plate can be electrically detected. See 
+so that the cutter touching the plate can be electrically detected. See 
 
 
 \screencaps{touch-plate}{0.3}{Touch plate usage}
  
 
 To use the plate you first mount the cutting tool to the spindle and then you  
-place the plate  on top of the work piece taking care to push it agains a corner
+place the plate  on top of the work piece taking care to push it against a corner
 of the work piece. 
 
 Next you attach (using magnet usually) 
@@ -1202,7 +1212,7 @@ perimeter when viewed from the top, as illustrated in Figure~\ref{fig:touch-plat
 
 This tool position is the starting position.
 
-To use the calibration you need to know the widths of the two underside bars of the touch
+To use the calibration you need to know the widths of the two underside lips of the touch
 plate because they together with the cutter diameter determine are needed
 to calculate the offsets when the cutter touches the plate.
 

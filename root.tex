@@ -40,8 +40,24 @@
 \usepackage{longtable}
 \usepackage{comment}
 \usepackage{url}
+\usepackage[defaultlines=4,all]{nowidow}
 
- 
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\mdfdefinestyle{warning}{%
+    linecolor=black,
+    outerlinewidth=1pt,
+    innertopmargin=\baselineskip,
+    innerbottommargin=\baselineskip,
+    innerrightmargin=20pt,
+    innerleftmargin=20pt,
+    fontcolor=red}
+
+ \mdfdefinestyle{nobreak}{%
+      outerlinewidth=0pt,
+    nobreak=true}
+
  
 \usepackage[T1]{fontenc}
 \usepackage[urw-garamond]{mathdesign}
@@ -181,7 +197,7 @@ EazyCNC version 2.0.41
 
 \HRule \\[0.4cm]
 
-\includegraphics[scale=0.25]{title-picture.png}
+\includegraphics[scale=0.3]{images/title-picture.png}
 
 \HRule \\[1.5cm]
 

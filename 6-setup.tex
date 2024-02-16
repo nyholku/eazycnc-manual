@@ -138,7 +138,7 @@ You can upate the firmware in The Motor Controller screen, see .
 
 To update the firmware do as follows.
 
-Connect your TOAD4+ hardware to a USB port and power up the controller. 
+Connect your TOAD hardware to a USB port and power up the controller. 
 
 For safety it is better if none of the machinery that the 
 controller is controlling are powered up at the same time!
@@ -154,8 +154,8 @@ update.
 
 \emph{Do not touch anything in the computer or hardware during the update.}
 
-If the firmware update is interrupted you may have to force the TOAD4+ board
-into the firmware update mode by removing the jumper between pins 4 and 5 of J6.
+If the firmware update is interrupted you may have to force the TOAD board
+into the firmware update mode, check the corresponding TOAD hardware manual.
 
 \subsection{Firmware -popup menu}
 
@@ -239,7 +239,7 @@ a peek.
 
 \subsection{Enable TOAD4 communication logging -checkbox}
 
-If this checkbox is ticked then all communication is between EazyCNC and TOAD4+
+If this checkbox is ticked then all communication is between EazyCNC and TOAD4/TOAD5
 is written to a binary file in the directory named 'debuglogs' inside your EazyCNC 
 directory. 
 
@@ -390,158 +390,104 @@ These buttons are used to set color for each grid.
 \section{Setting up Inputs and Outputs} 
 \label{sec:configuring-io}
 
-The TOAD4/ board has outputs to control a Variable Frequency Drive (VFD) for
-machine spindle control, an output to control a coolant pump/valve and an input for touch probe.
+For simplicity most of the I/O on the TOAD board has a fixed purpose.
 
-To setup and/or test your inputs and outputs go to the Input/Ouput setup screen,
-see \screencaps{mach-setup-view-IO}{0.5}{The Input/Ouput setup screen}.
+The polarity of some of the inputs can be configured. 
 
-This screen also contains buttons etc to manually control the outputs for testing purposes.
+To configure the polarity of the home REFIN inputs go to the Axis Setup screen.
 
 \subsection{Probe Input -panel}
 
-\subsubsection{Polarity -popup menu}
+The polarity of the PROBE input can be configured in here.
 
-This popup allows you to set which probe input state (1 or 0) is interpreted as active.
-Active means that EazyCNC interpretes the that the touch probe is touching something.
+\subsubsection{Polarity -popup}
+
+Select here weather the PROBE signal is zero or one when the probe is activated 
+(i.e. when the probe deflected when it touches the work piece).
+
+\subsubsection{Probe -LED}
+
+This 'LED' displays in real-time if the probe is activated or not.
 
 To test that your probe is functional and correctly configured, first ensure that you 
 are in the MACH mode. Then just connect the probe
 to the PROBE INPUT and trip the probe. The PROBE 'LED' on the screen should lit green
 when the probe is tripped, if it doesn't the just change the polarity.
-
 Naturally if the PROBE 'LED' does not change state when you trip the probe then you
 either have a hardware problem or you are not in the MACH mode.
 
-\subsection{SPEED INPUT -panel}
+\subsection{Spindle Speed Calibration -panel}
 
-\subsubsection{ADC Value -entry field}
+The spindle in a milling machine is  driven by Variable Frequency Drive
+(VFD) that synthesizes three phase AC voltage frequency of which is 
+controlled by a voltage.
 
-This entry field shows the digitized ADC (Analog to Digital Converter)
-value of the TOAD4 SPEED input signal.
+The SPEED output of the TOAD board is meant to be connected to that control
+voltage input in the VFD.
 
-You can use this to check the operation of the input signal.
+Whenever the spindle has been turned ON with M3 or M4 C-code TOAD will
+output a voltage from the SPEED output proportional to the S-word value
+and the voltage that is feeding the SPEED output circuitry.
 
-\subsection{Spindle Speed -panel}
-\label{sec:spindle-setup}
+Because the Digital to Analog Conversion (DAC) of a TOAD board is not
+linear starting from zero voltage, it needs to be calibrated.
 
-Whenever the spindle has been turned ON with M3 or M4 -code TOAD4 will
-output a voltage from the 'SPINDLE SPEED' output proportional to the S-word value.
+To calibrate the conversion you need to measure the spindle rotation
+rpm speed at two different DAC setting.
 
-The output voltage is relative to the voltage fed into the '+10 VREF IN' input
-to the TOAD4 board, the intention is to grab that voltage from the VFD from
-which it is typically readily available for just this purpose.
+I recommend using 10\% and 90\% DAC settings.
+
+To obtain the RPM you of course need a tachometer to measure the actual spindle
+speed and you need to set the DAC to those two values using the Test screen,
+see section \ref{subsec:dac-field}.
+
+So go ahead turn on the spindle  and set the DAC to the two values and note down what the tachometer indicates.
+
+Then all you have to do is to enter those rpm and DAC values into the 
+corresponding fields in this panel.
+
+That is it!
+
+If you are curious this is how the math works but you do not need to care.
+
+The output voltage is relative to the voltage fed into the +10V IN input to the 
+TOAD board. The intention is that you get that voltage 
+from the VFD from which typically provides this voltage just for this purpose.
 
 The output voltage is calculated as
 
 \begin{equation}
-Uout = \frac{Sword - MinSpeed}{MaxSpeed - MinSpeed}*Uref
+Uout = (\frac{Sword - LoRPM}{HiRPM - LoRPM}*(HiDAC-LoDAC)+LoDAC)/100*Uref
 \end{equation}
 
 where 
 
-\begin{equation*}
 Sword = \textrm{The S-word value from the G-code program}
-\end{equation*}
 
-\begin{equation*}
-Uout = \textrm{'SPINDLE SPEED' output voltage in TOAD4}
-\end{equation*}
+Uout = \textrm{'SPEED' output voltage in TOAD}
 
-\begin{equation*}
-Uref = \textrm{'+10 VREF IN' input voltage in TOAD4}
-\end{equation*}
+Uref = \textrm{'+10V IN' input voltage in TOAD4}
 
-\begin{equation*}
-MinSpeed = \textrm{Value entered into the 'Min Speed' entry field}
-\end{equation*}
+LoRPM = \textrm{Value entered into the 'Low ' entry field}
 
-\begin{equation*}
-MaxSpeed = \textrm{Value entered into the 'Max Speed' entry field}
-\end{equation*}
+HiRPM = \textrm{Value entered into the 'High ' entry field}
+
+LoDAC = \textrm{Value entered into the 'Low @DAC' entry field}
+
+HiDAC = \textrm{Value entered into the 'High @DAC' entry field}
 
 
-if above should result in a value outside the range 0..100\% of Uref then
+If above should result in a value outside the range 0..100\% of Uref then
 it is clamped to that range.
 
-Typically a VFD has parameters that are used to set the minimum and
-maximum spindle speed and it is precisely those same speed values that you 
-should enter into EazyCNC here. 
+\subsection{Spindle Speed Limits -panel}
 
-\subsection{Min Speed -entry field}
+In this panel you should enter the minimum and maximum RPM 
+values want to allow for the spindle.
 
-Enter into this field the rpm value which corresponds to the 0 Volt voltage at SPINDLE SPEED output and VFD speed input.
-\subsection{Max Speed -entry field}
-
-Enter into this field the rpm value which corresponds to the 10 Volt (100\%) voltage at SPINDLE SPEED output and VFD speed input.
-
-
-\subsection{Spindle Outputs -panel}
-
-\subsubsection{Automatic SPINDLE OFF -checkbox}
-
-If this checkbox is ticked then the spindle is automatically turned OFF when the system moves 
-from RUN state to HOLD or STOP state. It is still possible to use the SPINDLE button manually 
-and indeed it is necessary to manually turn ON the SPINDLE if you just paused the machining
-with the HOLD button; the spindle is NOT turned ON automatically.
-
-This feature is especially very handy with plasma cutting where it is mandatory to turn off
-the torch when the cutting is paused, otherwise the plasma jet will eat a big hole in the workpiece.
-
-
-\subsubsection{FORWARD/REVERSE -controls}
-
-These controls are for testing and trouble shooting the spindle drive setup.
-
-They each have a 'LED' that indicates the output state, weather it is controlled by
-the Machine Control buttons at the bottom of the screen, G-code or the Manual Override ON/OFF
-buttons. 
-
-If the 'Enable manual override' -checkbox is ticked then the output state is controlled by the
-ON/OFF buttons. Take care when using these as it is easy to damage your equipment and hurt
-yourself with the manual overrides. Of course it easy to do that with the 'normal' controls as well.
-
-
-\subsubsection{SPEED -entry field}
- 
-If the 'Enable manual override' -checkbox is ticked then the value in this entry field
-directly controls the analog SPINDLE SPEED signal. 
-
-The SPINDLE SPEED signal is ratiometric meaning the output voltage is a percentage of the
-voltage fed into the +10V REF input.
-
-Entering 0 to this entry field sets the SPINDLE SPEED signal to 0 \% of the reference voltage.
-
-Entering 100 to this entry field sets the SPINDLE SPEED signal (close to) 100\% of the reference voltage.
-
-\subsection{Coolant Outputs -panel}
-
-\subsubsection{Automatic COOLANT OFF -checkbox}
-
-If this checkbox is ticked then the coolant is automatically turned OFF when the system moves 
-from RUN state to HOLD or STOP state. It is still possible to use the COOLANT button manually 
-and indeed it is necessary to manually turn ON the coolant if you just paused the machining
-with the HOLD button; the coolant is NOT turned ON automatically.
-
-\subsubsection{COOLANT -controls}
-
-These controls are for testing and trouble shooting the coolant control setup.
-
-They each have a 'LED' that indicates the output state, weather it is controlled by
-the Machine Control buttons at the bottom of the screen, G-code or the Manual Override ON/OFF
-buttons. 
-
-\subsection{Enable manual override -checkbox}
-
-If this checkbox is 'ticked' then the ON/OFF buttons and the SPEED entry field are enabled
-and the Mach Control buttons at the bottom of the screen nor G-code no longer control the
-outputs, instead they are controlled by afore mentioned buttons and entry field.
-
-\emph{Enabling the manual override can be dangerous because now you can directly control the machinery that
-is connected to those outputs!}
-
-If you click the FORWARD button and you have your VFD on it is likely that the spindle on
-your machine will start to rotate or the plasma torch turns on! Beware!
+An S-word in G-code that is outside of that range will cause an error message
+to be dispalayed and to protect the spindle EazyCNC will not execute a G-code file which
+violetes these limits.
 
 
 
@@ -560,18 +506,6 @@ testing your motor and mechanics.
 Also here you can configure the axis DRO to automatically zero when you
 start a machining run.
 
-\subsection{Zero DRO on start of RUN -checkbox}
-
-
-If this checkbox is ticked then this axis DRO will be automatically
-zeroed when you hit the RUN button if the machine was in STOPed state.
-
-The DRO will NOT be zeroed when you hit the RUN button if the system
-was in HOLD state.
-
-This is handy for plasma cutting where you typically just jog the 
-torch to the origin position, zero the DROs and hit RUN. By ticking
-this box this becomes automatic and you cannot forget to zero the DROs.
 
 
 \subsection{Motor Config -panel}
@@ -599,6 +533,11 @@ named High and Low, in addition to which the current can be totally
 off. The actual motor current depends on the current measurement
 resistors mounted to the TOAD4 board and the jumper settings
 on the TOAD4 board, see TOAD4 Hardware Manual for details.
+
+TOAD5 does not support current control, the motor drivers
+are either enabled via the ENABLE signal implying 100\%
+current, as determined by the driver module used, or not
+enabled implying zero current.
 
 The Current -popup menu controls how the three different currents
 are used when driving the motors.
@@ -689,9 +628,9 @@ axis until it finds the home/reference position at which point
 that axis DRO is automatically reset. 
 
 The way this works when you press the 'HOME' button 
-is that if the the REF input is active the axis is driven to
+is that if the REF input is active the axis is driven to
 the positive axis direction until the signal becomes non-active. If the
-the signal is non-active to begin with then the axis is driven 
+signal is non-active to begin with then the axis is driven 
 in the negative direction until the REF signal becomes active and
 then to the positive direction until it becomes non-active again.
 
@@ -721,10 +660,10 @@ should not be possible to drive the axis 'beyond' the switch.
 
 \subsubsection{Home polarity -popup menu}
 
-TOAD4 supports one home/reference position switch input for each axis. 
+TOAD supports one home/reference position switch input for each axis. 
 
 The Home popup menu controls weather the REF input on
-the TOAD4 board is 1 or 0 when home/reference is switch is
+the TOAD board is 1 or 0 when home/reference is switch is
 active. 
 
 Note that if you are using two motors to control a single axis,
@@ -759,7 +698,7 @@ This entry fields tells EazyCNC how many steps it takes
 to move the axis a unit (mm or inch or degrees) amount. We call
 this value the step ratio.
 
-Note that this is not an integral value and it should be entered
+Note that this is not an integral value and you should enter it
 with as many significant digits as required  to achieve
 the desired accuracy. As rule of thumb use at least six 
 significant digits in calculations and entry to achieve 0.01 mm 
@@ -769,7 +708,7 @@ enter more digits that what the entry field will display.
 To calculate this value you need to know following:
 
 \begin{itemize}
-\item $mode$, a factor dependent on TOAD4 step mode
+\item $mode$, a factor dependent on step mode
 \item $steps$, the number of steps per revolution for the motor
 \item $pitch$, the axis movement per motor revolution (including possible gearing)
 \end{itemize}
@@ -781,65 +720,37 @@ Then you calculate the step ratio as follows:
 step_{ratio} =  \frac{mode *steps}{pitch}
 \end{equation}
 
-The step mode depends on the M1 and M2 jumpers for each motor on the TOAD4 board. 
-
-See  Table~\ref{tab:jumper-labels} for the jumper labels for each motor
-and Table~\ref{tab:step-modes} for the jumpers that need to be installed
-to get the desired step mode and the mode value to use in Equation~\eqref{step-ratio}
+The step mode depends on the jumpers for each motor on the TOAD4 board. 
+With TOAD5 you need to look this up from the documentation of the
+driver modules you use.
 
 
-%---------------------------------------------------------------------------
-\begin{table}[H] 
-\begin{threeparttable}[b]
-\renewcommand\arraystretch{1}
-\caption{Motors versus configuration jumpers} 
-\label{tab:jumper-labels} 
-\begin{tabular}{c c c p{8cm}} 
-Motor & M2 & M1 &\\
-\hline
-X & U29 & U25\\
-Y & U30 & U26\\
-Z & U31 & U27\\
-4 & U32 & U28\\
-\end{tabular} 
-\end{threeparttable}
-\end{table}
-%---------------------------------------------------------------------------
+The step mode factor tells how many STEP pulses it takes to make
+the stepper motor to take one full step.
+
+So for full step mode the mode factor is 1, for half step it is 2 and so on.
+
+Typically you want to run the motors with as small step size as possible
+for  smoother ride, but sometimes speed requirements dictate that a 
+coarser step size is needed because the max STEP output frequency is fixed.
+
+The actual maximum motor rpm (rotation per minute) goes down in direct 
+relation to the step mode factor.
+
+The maximum STEP output frequency is 100 kHz, to keep the jitter of
+that signal acceptable I recommend to keep the step rate below 10\% of
+that frequency.
+
+Supposing a 200  full steps / revolution motor, this means that the 
+ maximum rotation speed of the motor 
+is 100.000 kHz * 10\% / 200 steps/rev = 50 rev/ sec = 3000 rpm.
+With quad steps this is reduced to 750 rpm or 12.5 rev/sec, which
+is still a high speed for a stepper motor, most likely not achievable
+in practice.
 
 
-The driver chip supports four different step modes: full step, half step, fine step and micro step. Fine step provides eight intermediate sinusoidal current values for each full step and micro stepping provides sixteen intermediate current values.
 
-Typically, micro stepping is preferred for its smooth ride, but sometimes speed requirements dictate the use of half or even full step.
-
-%---------------------------------------------------------------------------
-\begin{table}[H] 
-\begin{threeparttable}[b]
-\renewcommand\arraystretch{1}
-\caption{Jumpers versus Step Mode} 
-\label{tab:step-modes} 
-\begin{tabular}{c c c  p{8cm}} 
-M2 & M1 & mode & \\
-\hline
-- & - & 1 & Full Step (2 phase)\\
-- & X & 2 & Half Step (1-2 phase)\\
-X & X & 8 & Fine Step (2W1-2 phase)\\
-X & - & 16 & Micro Step (4W1-2 phase)\\
-\end{tabular} 
-
-\begin{tablenotes} 
-\item
-\item '-' indicates no jumper installed
-\item 'X' indicates jumper is installed
-\item
-\item (value) refers to TB6560 excitation mode, see data sheet for details
-\end{tablenotes}
-
-\end{threeparttable}
-\end{table}
-%---------------------------------------------------------------------------
-
-
-Above may feel a bit complicated so an example maybe useful. 
+This may feel a bit complicated so an example maybe useful. 
 
 Most stepper motors have 200 steps or step angle of 1.8\degree so we have:
 
@@ -848,13 +759,9 @@ steps = 200 (steps/rev)
 \end{equation*}
 
 For this example we assume that we want to run X-axis motor at 'Half Step' 
-mode so from Table~\ref{tab:step-modes} we see that we need to have jumper
-M1 installed and from Table~\ref{tab:jumper-labels} we see that for X-motor
-M1 jumper is labeled U25 (don't forget to see the errata for the TOAD4 board,
-some of the jumper labels in the early board are wrong). 
+so we set jumpers on the hardware to that. 
 
-While looking at Table~\ref{tab:step-modes} we also
-note that 'mode' value for 'Micro Step' is 2 so we have:
+A half step this implies that two STEP pulses are needed for a full step, so we have:
 
 
 \begin{equation*}
@@ -864,7 +771,7 @@ mode = 2
 To make this more interesting and life-like let's suppose we use a lead screw
 to move the X-axis and the screw has a pitch of 3 mm/revolution and that
 we use a toothed belt to drive it with a 16 tooth
-pulley on the motor axis and 45 pulley on the lead screw, so we have:
+pulley on the motor axis and 45 tooth pulley on the lead screw, so we have:
 
 \begin{equation*}
 pitch = 3 * \frac{16}{45} =  1.066666 (mm/rev)
@@ -878,9 +785,9 @@ step_{ratio} =  \frac{2 * 200}{ 1.0666666} = 375.000 (steps/mm)
 
 Now would be good time to check how fast we can move the X-axis.
 
-The maximum theoretical step rate is about 100 kHz, for jitter
+As stated the maximum theoretical step rate is about 100 kHz, for jitter
 and other reasons the maximum recommended pulse rate is about
-$\frac{1}{5}$ of that, say 10000 pulses/sec. You need to divide
+$\frac{1}{10}$ of that, say 10000 pulses/sec. You need to divide
 this by the $mode$ factor we looked up above so in our example
 the maximum step rate is 10000 steps/sec and so our max speed
 is
@@ -954,11 +861,12 @@ to 100 * pi / 360 = 0.872 .
 
 \subsubsection{Master Motor -popup menu }
 
-TOAD4+ allows you to select for each axis which physical motor is used to drive the axis.
+EazyCNC allows you to select for each axis which physical motor is used to drive the axis.
 
 You select that with this popup menu.
 
 On the TOAD4 PCB the motors are number like this: X=0, Y=1, Z=2 and A=3.
+On the TOAD5 PCB the motors are number like this: X=0, Y=1, Z=2, A=3 and B=4.
 
 Typically you don't want to change this to avoid confusion.
 
@@ -979,7 +887,7 @@ If the polarity is wrong, change it with the 'Home polarity' -popup.
 On some mechanical setups paralleling two motors are handy and allow doubling of the motive power without using
 larger motors.
 
-TOAD4+ allows you to select for each axis a second physical motor that is driven when that axis moves.
+EazyCNC allows you to select for each axis a second physical motor that is driven when that axis moves.
 
 You select that with this popup. 
 
@@ -987,7 +895,7 @@ Below this pop up there is 'LED' that indicates whether the home/ref switch for 
 is active or not. 
 
 When motors are paralled they perform the exact same movements, except when you press the HOME button. 
-Homing is performed indipendently for each motor so that the system will align itself correctly based
+Homing is performed independently for each motor so that the system will align itself correctly based
 on the home/ref switches.
 
 Note that when motors are paralled then all the settings for both motors are taken the
@@ -1012,11 +920,11 @@ and it depends on the operators (that's you!)
 diligence to work properly. If you for example
 put a large cutter into the spindle chuck but
 don't tell EazyCNC about it or move the axis manually
-by turning handles or forgot to 'home' the axes
+by turning the axes handles or forgot to 'home' the axes
 there is nothing EazyCNC can do about it.
 
 
-A 'bad' a G-code move may still crash the machine
+A 'bad'  G-code move may still crash the machine
 and you need to visually satisfy yourself using
 the simulation mode that this will not happen.
 
@@ -1083,13 +991,16 @@ safe to move in XY at that Z setting without hitting anything.
 
 This can be handy for example for changing tools/cutters.
 
+This feature only works correctly if a HOME reference switch is
+installed and the Z-axis is HOMEd before you use the feature.
+
 \subsubsection{Safe Z - entry field}
 
 In this entry field you can enter the safe Z value.
 
 This value is in absolute machine coordinates, just like the
 axis limits. Remember that the absolute machine coordinates
-are definec by where you HOME-switch is located and 
+are defined by where you HOME-switch is located and 
 the 'Home offset' for that axis.
 
 As a safety measure the initial value of this field is 'NaN' 
@@ -1183,126 +1094,9 @@ A manual way to check that the motor has not lost any
 steps is to 'home' the axis and see that as the 
 axis approaches the home position the DRO will not
 suddenly jump to the reset value when the reference
-switch is reached, this is not wholly accurate if the
+switch is reached, this is not totally accurate if the
 motor only loses a small number of steps but typically
 it is a all or nothing with stepper motors.
-
-\subsection{Test -panel}
-\label{subsec:test-panel}
-
-The controls in this panel can be used to test and
-find out the maximum acceleration and velocity for
-an axis.
-
-When you click the 'TEST' button EazyCNC will
-perform a test movement on that motor/axis
-and report the accuracy if you have a reference
-switch installed. 
-
-If you don't have a reference switch then you will
-need to use a Dial Test Indicator or some such
-to measure the accuracy.
-
-\subsection{Pre-requisites}
-
-\emph{Note that this test can damage your machine if not
-performed carefully and as intended.}
-
-The test run requires free travel of 25 mm or one inch plus
-the distance is takes to accelerate from the start velocity
-to the top velocity and back.
-
-To use this test you must have the reference switch located
-at least 30 mm away from the negative end of the axis movement.
-
-If you don't have that 30 mm spare travel you run the risk of hitting the
-the end of the axis movement range on the return leg of the
-test run. It is acceptable to temporarily move the reference
-switch to a suitable location for this test or use a temporary switch 
-if you so desire.
-
-If you don't have a reference switch then you need to ensure
-that you start the test from a position on the axis from which
-there is enough free travel on both sides of the starting position.
-
-
-\subsection{The Test run}
-
-When you click the the 'TEST button the test movement is performed as follows.
-
-First EazyCNC 'homes' the  axis/motor ie it moves slowly 
-towards the reference switch and then just out 
-of it.
-
-EazyCNC makes an internal note of this step position.
-
-Next the axis/motor starts to move into the positive (or negative,
-depending on which direction you have selected)
-axis direction and accelerates at the given acceleration until
-the motor reaches the given test speed. The movement continues
-for 25 mm (about 1 inch) and then it
-decelerates back to stand still. 
-
-Then the axis is homed again and a note of the
-step position at which the reference switch is
-detected is noted down.
-
-The difference between the two home positions noted down
-is reported as the accuracy or repeatability of
-the movement at the given acceleration and 
-movement velocity.
-
-A positive value indicates that steps were lost
-on the way out i.e. during acceleration or high
-speed movement. A negative value indicates that
-steps were lost on the way back i.e. slow movement;
-this should not really ever occur.
-
-A small non zero value is acceptable or even expected 
-as it is unlikely that  the system
-can be absolutely accurate all things considered, but repeated tests at
-given acceleration and velocity should show consistently
-similar values.
-
-To guarantee that the test is valid for machining
-conditions the acceleration is performed step wise
-at the current machine Update Period just as it
-will when take place when executing G-codes. 
-
-Therefore you need to remember that if you change 
-the update period it is good to re-run the test
-for each axis, especially if you are running close to the speed
-and acceleration limits of your system.
-
-%\subsubsection{Start Velocity -entry field}
-%
-%In this field enter the start velocity for the test, this should
-%be a low speed at which the motor is more or less guaranteed
-%to work without losing steps or stalling.
-
-\subsubsection{Top Velocity -entry field}
-
-This is the velocity you want to test for so keep
-adjusting this and retesting 
-until you have maxed out your system.
-
-\subsubsection{Acceleration -entry field}
-
-This is the acceleration you want to test for so keep
-adjusting this and retesting 
-until you have maxed out your system.
-
-
-\subsubsection{Direction -popup menu}
-
-This selects weather the test movement direction will be
-along the positive direction or negative direction
-from home/ref position.
-
-This is the acceleration you want to test for so keep
-adjusting this and retesting 
-until you have maxed out your system.
-
 
 \section{Setting the Motion limits}
 \label{sec:setup-movement-limits}
@@ -1454,7 +1248,7 @@ So longer Update Period will result in an increased positional error,
 which fortunately is not accumulative.
 
 The upper theoretical
-limit for such an error is  'feed rate x update period',
+limit for such an error is  'feed rate * update period',
 for example if you are cutting at 1200 mm/min which is 20 mm/sec
 and your update period is 20 msec then the maximum error
 caused by the update period is 20 mm/sec x 0.02 sec which
@@ -1465,8 +1259,16 @@ the same ballpark as cutting accuracy anyway. Besides that is a worst
 case error unlikely to happen in practice.
 
 
-\section{G-Code Options}
+\section{Configuring  Options}
 \label{sec:g-code-options}
+
+While the design goal of EazyCNC is to reduce complexity by limiting options there
+still are a number options that you may change.
+
+You can change them in the Options screen, 
+see \screencaps{mach-setup-view-G-code}{0.5}{The Options screen.}
+
+\subsection{G-code options -panel}
 
 G-code dates back to 1960s with the final revision RS274D approved in 1980. 
 Over the years manufacturers of CNC system have added extension and variations to the standard.
@@ -1475,8 +1277,6 @@ EazyCNC tries to accommodate a common subset of the most popular systems
 out there by allowing you to fine tune some details of the G-code interpretation to match your G-code program.
 
 
-You can change them in the G-code screen, 
-see \screencaps{mach-setup-view-G-code}{0.5}{The G-code screen.}
 
 
 
@@ -1486,7 +1286,7 @@ For a complete description of G-codes supported by EazyCNC see Chapter~\ref{chap
 
  
 
-\subsection{Incremental IJK -checkbox}
+\subsubsection{Incremental IJK -checkbox}
 \label{sec:incremental-ijk-checkbox}
 
 If this check box is ticked then the I,J and K words in the arc cutting G2 and G3 
@@ -1496,12 +1296,12 @@ If you see a lot of large erroneous arcs in te tool path graphics panel when
 your are previewing your G-codes then you can be pretty confident that this
 tick box is in the wrong state.
 
-\subsection{Incremental XYZ -checkbox}
+\subsubsection{Incremental XYZ -checkbox}
 
 If this check box is ticked then the X,Y and Z words in the movement commands
 G0,G1,G2 and G3 are interpreted relative to the previous X,Y or Z words/positions.
 
-\subsection{G4 P in msec -checkbox}
+\subsubsection{G4 P in msec -checkbox}
 
 If this check box is ticked then the P-word value in the G4 dwell command
 is interpreted in milliseconds instead of seconds.
@@ -1509,34 +1309,146 @@ is interpreted in milliseconds instead of seconds.
 If the execution of G-codes seems to stop at G4 commands you can be pretty sure
 that this check box is not ticked but should be.
 
-\subsection{G41/G42 code options}
+\subsection{G41/G42 code options -panel}
 
 When tool compensation is turned on with either G41 or G42 G-codes the question arises 
 how the tool should move in external corners.
 
-Traditionally the tool moves arounds the corner in an arc.
+Traditionally the tool moves around the corner in an arc.
 
 The other option is for
 the tool to move in a straigh line until it has 'cleared' the corner and the move
 in a straight line along the next segment. If the (external) corner is very tight
-then this would cause the tool to move very long away beyond the corner point, there
-for a maximum length can be specified.
+then this would cause the tool to move very long away beyond the corner point, 
+therefore a maximum length can be specified.
 
 This later option maybe useful in plasma cutting as it takes the cutting flame further
 away from the potentially sharp and narrow corner which tends to burn if the torch linger
 around the corner too long.
 
-\subsection{Use round join -radiobutton}
+\subsubsection{Use round join -radiobutton}
 
 If this is selected then the traditional way of handling external corners is used, i.e.
 the tool moves in an arc around the corner.
 
-\subsection{Use miter join -radiobutton}
+\subsubsection{Use miter join -radiobutton}
 
 If this is selected then tool will move  in a straigh line until it has 'cleared' the corner and the move
 in a straight line along the next segment. If, as a result of the corner geometry,
  the tool would move further from the corner than what
 is specified in the 'bevel limit' -entry field, then the move is pruned as indicated.
+
+subsection{Auto functions -panel}
+LIP
+\subsubsection{Auto SPINDLE OFF -checkbox}
+If this checkbox is ticked then the spindle will automatically turn off when the system
+enters HOLD or STOP states. This very useful for plasma cutting, not so much for 
+milling because you will forget to turn the spindle back on when go from HOLD to RUN
+and break a cutter.
+
+\subsubsection{Auto COOLANT OFF -checkbox}
+
+If this checkbox is ticked the coolant is turned off when the system enters HOLD or
+STOP states. This can useful for milling when you want to pause the milling for 
+observing work or changing the cutter.
+
+\subsection{ZERO DRO on RUN -panel}
+
+\subsubsection{N-axis auto zero -checkboxes}
+
+
+If 'N-axis auto zero'  checkbox  is ticked then N axis DRO will be automatically
+zeroed when you hit the RUN button if the machine was in STOPed state.
+
+The DRO will NOT be zeroed when you hit the RUN button if the system
+was in HOLD state.
+
+This is handy for plasma cutting where you typically just jog the 
+torch to the origin position, zero the DROs and hit RUN. By ticking
+this box this becomes automatic and you cannot forget to zero the DROs.
+
+\subsection{Export (Import)settings -panel}
+
+
+\subsubsection{File format -popup menu}
+
+The Tool Setup screen allows you to save and load the tool setup to/from a text file, 
+see section \ref{sec:tool-setup}
+
+With this popup you select the format in which tool setup is stored in the text file. 
+Currently only CSV (Comma Separated Values) format is supported.
+
+\subsubsection{Number format -entry field}
+
+Into this entry field you enter a 'sample' of how the numbers should be
+formatted. For example if you want to have three decimals
+use '0.000' .
+
+\subsubsection{List item Separator -popup menu}
+
+Unfortunately CSV format does not specify whether the decimal separator is 
+'.' (period) or ',' (comma). Worse than that, you probably want to edit
+the text files in Excel which defaults to different separator depending
+on which language version of the OS you have. 
+
+As mentioned the ',' (comma) can be both desimal separator and list item
+separator, but it should never be used for both purposes at the same time.
+
+So in this popup you can select which (comma ',' or semicolon ';') character
+is used as the list item separator, this changes the list decimal separator. 
+If list separator is ',' then decimal separator is ',' and if list separator
+is ';' then decimal separator is ','.
+
+\subsection{Shutdown -panel}
+
+\subsubsection{Shutdown on Quit -checkbox}
+
+ A clean shutdown is important,
+especially on Raspberry Pi running from SD-card, but without
+a mouse or keyboard this is not possible.
+
+The purpose of this option is to allow operation without a 
+mouse or keyboard by enabling automatic system shutdown.
+
+If this checkbox is ticked then, when press the Quit button 
+EazyCNC will attempt to execute a shutdown script if one
+exists. If there is no shutdown script then EazyCNC will
+try to execute the system shutdown command. 
+
+A shutdown script is a script named shutdown.BAT on Windows
+and shutdown.sh on  macOS/Linux and which is placed in the
+EazyCNC directory in your home directory.
+If one exists EazyCNC will try to execute it using the operating system shell.
+
+The purpose of the shutdown script is to allow you to customise the
+shutdown process e.g. by shutting down additional hardware in 
+you machining system.
+
+\subsection{On-Screen Keyboard -panel}
+
+\subsubsection{Enable Keyboard -checkbox}
+If this checkbox is ticked then an on-screen virtual keyboard will
+appear whenever you click an entry field. The on-screen
+virtual keyboard allows operation with touchscreen only without
+a real physical keyboard. This built in virtual keyboards is preferable
+to the operating system provided because it is optimsed For
+CNC operations and it plays nicely with the rest of the user interface.
+
+
+
+\subsubsection{Sound on Click -checkbox}
+
+If this checkbox is ticked then clicking any of the
+buttons in the user interface will emit a click sound.
+
+In addition, on Raspberry Pi a short pulse is generated
+on the GPIO21 at the same time the click is emitted. 
+This is so that you can connect a 
+tactile feedback device to the GPIO 21 output to give a physical
+feedback on the touchscreen. A simple tactile feedback 
+device can be fashioned from a solenoid.
+
+
 
 \section{Shortcuts setup}
 \label{sec:shortcut-setup}
@@ -1589,43 +1501,6 @@ the location of the configuration file in case you have doubts
 about which configuration file is being used.
 -------------------------------------------------------------------------
 
-\section{Export/Import screen}
-\label{sec:export-import-setup}
-
-The Tool Setup screen allows you to save and load the tool setup to/from a text file, 
-see section \ref{sec:tool-setup}
-
-In the 
-\screencap{mach-setup-view-ExportImport}{The Export/Import screen.}
-you can setup details of text file format.
-
-\subsection{File format -popup menu}
-
-With this popup you select the format in which tool setup is stored in the text file. 
-Currently only CSV (Comma Separated Values) format is supported.
-
-\subsection{Number format -entry field}
-
-Into this entry field you enter a 'sample' of how the numbers should be
-formatted. For example if you want to have three decimals
-use '0.000' .
-
-\subsection{List item Separator -popup menu}
-
-Unfortunately CSV format does not specify whether the decimal separator is 
-'.' (period) or ',' (comma). Worse than that, you probably want to edit
-the text files in Excel which defaults to different separator depending
-on which language version of the OS you have. 
-
-As mentioned the ',' (comma) can be both desimal separator and list item
-separator, but it should never be used for both purposes at the same time.
-
-So in this popup you can select which (comma ',' or semicolon ';') character
-is used as the list item separator, this changes the list decimal separator. 
-If list separator is ',' then decimal separator is ',' and if list separator
-is ';' then decimal separator is ','.
-
-
 
 %\section{Diagnostics screen}
 
@@ -1662,11 +1537,200 @@ is ';' then decimal separator is ','.
 
 
 
-\section{Test}
+\section{Test screen}
 \label{sec:test-setup}
 
 
+The Test screen in
 \screencaps{mach-setup-view-Test}{0.5}{The Test screen.}
+allows you to test all the inputs and output of your TOAD boars as well
+as test or find out the limits of your motors.
+
+To use this panel the system needs to be in MACH state so that it is communicating
+with the TOAD board (this actually works in the SIMU mode as well, but then
+everythings is, well, simulated).
+
+\subsection{Inputs -panel}
+
+This panel shows in real-time the state of the all digital inputs from the TOAD board.
+
+The different inputs are self-explanatory except perhaps the MAN-CTRL which
+indicates that the manual control panel is attached AND in manual control mode.
 
 
+\subsection{Outputs -panel}
+
+This panel allows you to manually control all the digital outputs of the TOAD board.
+
+To exercise the output you need to first activate the orange OVERRIDE button. 
+
+\begin{mdframed}[style=warning]
+Warning!
+
+Once the OVERRIDE is enabled all safety features associated with any of the outputs 
+are disabled and the outputs are solely controlled with the buttons in this panel 
+(and the DAC field in the analog I/O panel). 
+
+This means that it is perfectly possible and very easy to turn the spindle or plasma 
+torch on or make all the axes run wild if you do not know what you are doing.
+
+\end{mdframed}
+
+For some testing/debugging purposes it is of course necessary to do exactly that,
+but for some it is best to disconnect or power down the machine being controlled.
+
+The blue buttons (FORWARD, REVERSE, COOLANT, ARC-START) directly toggle the named 
+outputs. When the button is activated the corresponding output is turned on.
+
+Activating the green STEP/DIR button causes the ENABLE output for all axes to
+turn on and the  STEP and DIR outputs emit pulses that 
+effectively drive the connected axis motor back and forth as 
+long as the button is activated.
+
+Proceed with caution.
+
+\subsection{Analog I/O -panel}
+
+\subsubsection{ADC -field}
+
+The ADC (short for Analog to Digital Conversion) field shows the digitized 
+value of the analog ARC VOLTAGE input of  TOAD5 in percentages.
+
+0\% indicates 0 Volts and 100\% indicates 5 Volts at the analog input. 
+
+\subsubsection{DAC -field}
+\label{subsec:dac-field}
+
+The DAC (short for Digital to Analog Conversion) field can be used to control 
+the SPEED output of TOAD5, when the orange OVERRIDE button in OUTPUTS panel is 
+activated.
+
+The DAC conversion is ratio metric which means
+that the output voltage is always relative to
+the voltage used to feed the circuitry (see TOAD5 manual).
+
+Suppose the feed voltage is 10 Volts then setting the DAC field
+to 100 (\%) causes the SPEED output to rise to aproximately 10 Volts.
+
+The DAC output is not linear, any non zero value in the DAC field
+will cause the SPEED output to be at least 10\% level of feed voltage.
+Above that the response is more or less linear.
+
+A zero value in the DAC field should always produce zero voltage at the output.
+
+\subsection{Motor Test -panel}
+\label{subsec:motor-test-panel}
+
+The controls in this panel can be used to test and
+find out the maximum acceleration and velocity for
+an axis.
+
+When you click the 'TEST' button EazyCNC will
+perform a test movement on that motor/axis
+and report the accuracy if you have a reference
+switch installed. 
+
+If you don't have a reference switch then you will
+need to use a Dial Test Indicator or some such
+to measure the accuracy.
+
+\subsubsection{Pre-requisites}
+
+\emph{Note that this test can damage your machine if not
+performed carefully and as intended.}
+
+The test run requires free travel of 25 mm or one inch plus
+the distance is takes to accelerate from the start velocity
+to the top velocity and back.
+
+To use this test you must have the reference switch located
+at least 30 mm away from the negative end of the axis movement.
+
+If you don't have that 30 mm spare travel you run the risk of hitting 
+the end of the axis movement range on the return leg of the
+test run. It is acceptable to temporarily move the reference
+switch to a suitable location for this test or use a temporary switch 
+if you so desire.
+
+If you don't have a reference switch then you need to ensure
+that you start the test from a position on the axis from which
+there is enough free travel on both sides of the starting position.
+
+
+\subsubsection{The Test run}
+
+When you click the the 'TEST button the test movement is performed as follows.
+
+First EazyCNC 'homes' the  axis/motor ie it moves slowly 
+towards the reference switch and then just out 
+of it.
+
+EazyCNC makes an internal note of this step position.
+
+Next the axis/motor starts to move into the positive (or negative,
+depending on which direction you have selected)
+axis direction and accelerates at the given acceleration until
+the motor reaches the given test speed. The movement continues
+for 25 mm (about 1 inch) and then it
+decelerates back to stand still. 
+
+Then the axis is homed again and a note of the
+step position at which the reference switch is
+detected is noted down.
+
+The difference between the two home positions noted down
+is reported as the accuracy or repeatability of
+the movement at the given acceleration and 
+movement velocity.
+
+A positive value indicates that steps were lost
+on the way out i.e. during acceleration or high
+speed movement. A negative value indicates that
+steps were lost on the way back i.e. slow movement;
+this should not really ever occur.
+
+A small non zero value is acceptable or even expected 
+as it is unlikely that  the system
+can be absolutely accurate all things considered, but repeated tests at
+given acceleration and velocity should show consistently
+similar values.
+
+To guarantee that the test is valid for machining
+conditions the acceleration is performed step wise
+at the current machine Update Period just as it
+will when take place when executing G-codes. 
+
+Therefore you need to remember that if you change 
+the update period it is good to re-run the test
+for each axis, especially if you are running close to the speed
+and acceleration limits of your system.
+
+%\subsubsection{Start Velocity -entry field}
+%
+%In this field enter the start velocity for the test, this should
+%be a low speed at which the motor is more or less guaranteed
+%to work without losing steps or stalling.
+
+\subsubsection{Top Velocity -entry field}
+
+This is the velocity you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
+
+\subsubsection{Acceleration -entry field}
+
+This is the acceleration you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
+
+
+\subsubsection{Direction -popup menu}
+
+This selects weather the test movement direction will be
+along the positive direction or negative direction
+from home/ref position.
+
+This is the acceleration you want to test for so keep
+adjusting this and retesting 
+until you have maxed out your system.
 
