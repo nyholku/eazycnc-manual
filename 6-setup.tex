@@ -133,7 +133,7 @@ the firmware is for.
 
 Never update the firmware using a ICSP programmer or PICKit!
 
-You can upate the firmware in The Motor Controller screen, see .
+You can update the firmware in The Motor Controller screen, see .
 \screencaps{mach-setup-view-Controller-TOAD4+}{0.5}{Mach Setup when Controller button is selected} 
 
 To update the firmware do as follows.
@@ -159,14 +159,14 @@ into the firmware update mode, check the corresponding TOAD hardware manual.
 
 \subsection{Firmware -popup menu}
 
-EazyCNC comes with all the firmwares that have been release at the time of
-te EazyCNC release and those firmwares are listed in this popup menu.
+EazyCNC comes with all the firmware versions that have been released at the time of
+the EazyCNC release and those versions are listed in this popup menu.
 
 If the firmware you want to upload is not listed you can
 either update your EazyCNC, which should never be taken lightly and without
 good judgement, or you can obtain the firmware file (.hex) separately.
 
-If you want to use a separate firmware file select the the 'From file...' 
+If you want to use a separate firmware file select the 'From file...' 
 option from the popup menu.
 
 
@@ -179,11 +179,11 @@ will be present at this point and you need to select the correct firmware
 file.
 
 During the update a dialog box detailing the update progress is shown. 
-This dialog box will disapper after the update is complete. A success/fail
+This dialog box will disappear after the update is complete. A success/fail
 message will be show briefly in the Status Display, if you miss that you
 can always press and hold down the little button marked '?' next to it.
 
-If update was succesful the firmware version should show up in the Status Display
+If update was successful the firmware version should show up in the Status Display
 when you click the MACH button.
 
 
@@ -287,7 +287,7 @@ displayed.
 The main usage is to control the number of decimals you want displayed, to do 
 that just enter '0.' followed by as many '0' characters as you want decimals.
 
-For example with inches it is probably preferable to use three decimals to see
+For example :  with inches it is probably preferable to use three decimals to see
 the 'thous' so enter '0.000' in this field, for working with millimeters
 '0.00' is probably best.
 
@@ -318,14 +318,14 @@ the configuration before re-starting EazyCNC.
 \label{subsec:machined-path-color-settings}
 
 The settings in this panel control how the tool path for the already cut path is 
-displayed in the Toolpaht display panel in the main screen.
+displayed in the Toolpath display panel in the main screen.
 
 A different color can be specified depending on weather the spindle was on or off
 when the path was cut.
 
 The width of the path in the Toolpath display panel, in \emph{pixels}, can be specified 
 in the 'Width:' -entry field. If this is set to zero then the actual tool width from the
-tool table for the tool selected by the G-code program is used in displayin the path.
+tool table for the tool selected by the G-code program is used in displaying the path.
 
 \subsection{Planned Path -settings}
 \label{subsec:planned-path-color-settings}
@@ -343,16 +343,16 @@ in the 'Width:' -entry field.
 \subsection{Tool Display -settings}
 \label{subsec:tool-color-settings}
 
-The color of the tool in the Toolpath display can be spefied as well as the size of 
-it by entering the desired tool width , in \emph{mm or inch}, into the 'Width:' -entry field.
+The color of the tool in the Toolpath display can be specified as well as the size of 
+it by entering the desired tool width, in \emph{mm or inch}, into the 'Width:' -entry field.
 
 If the tool width is set to zero then the actual tool width from the
-tool table for the tool selected by the G-code program is used in displayin the path.
+tool table for the tool selected by the G-code program is used in displaying the path.
 
 \subsection{Axis Display -settings}
 \label{subsec:axis-color-settings}
 
-The size and colors used to display the  axis grids in the Toolpath display can be spefied here.
+The size and colors used to display the  axis grids in the Toolpath display can be specified here.
 
 The main purpose of the grids is to allow you check your toolpath against the current
 working coordinates to ensure that the toolpath and coordinates are set up as you
@@ -425,7 +425,7 @@ controlled by a voltage.
 The SPEED output of the TOAD board is meant to be connected to that control
 voltage input in the VFD.
 
-Whenever the spindle has been turned ON with M3 or M4 C-code TOAD will
+Whenever the spindle has been turned ON with M3 or M4 G-code TOAD will
 output a voltage from the SPEED output proportional to the S-word value
 and the voltage that is feeding the SPEED output circuitry.
 
@@ -486,8 +486,8 @@ In this panel you should enter the minimum and maximum RPM
 values want to allow for the spindle.
 
 An S-word in G-code that is outside of that range will cause an error message
-to be dispalayed and to protect the spindle EazyCNC will not execute a G-code file which
-violetes these limits.
+to be displayed and to protect the spindle EazyCNC will not execute a G-code file which
+violates these limits.
 
 
 
@@ -549,7 +549,7 @@ You might want to use this if the High current is too much for
 your motor.
 
 High -- with this setting the motor current is always set to High. This 
-provides the most 'stiff' setup but means that motors will have full
+provides the most 'stiff' setup but means that motors will have
 full current applied and 'run' hot.
 
 Auto Off -- with this setting when the motor/axis is moving or the G-code 
@@ -599,7 +599,7 @@ in this popup.
 TOAD4 supports one home/reference position switch input for each axis. 
 
 The Home popup menu controls weather the REF input on
-the TOAD4 board is 1 or 0 when home/reference is switch is
+the TOAD board is 1 or 0 when home switch / reference switch is
 active. 
 
 There are three different options.
@@ -685,9 +685,9 @@ Typically you set the limits so that the Min limit is zero
 and the Max limit is the total allowable movement for that
 axis.
 
-For example, say your total X-axis movement is 500 mm. So you
+For example :  say your total X-axis movement is 500 mm. So you
 set Min=0, Max=500 in the Axis Limits panel. Further suppose
-your limit switch is set to activate in the exact midle of that 
+your limit switch is set to activate in the exact middle of that 
 range so you set the Home Offset=250.
 
 
@@ -835,7 +835,7 @@ Example 1
 
 You have 'knee-mill' or a plasma cutter in which the Z-axis cannot be run at the
 same speed as X and Y axis. Instead of using the F-word to 
-slow down movement when ever you move the Z-axis you can use
+slow down movement whenever you move the Z-axis you can use
 thew scaler. 
 
 If the Z-axis can only be moved at half the speed of XY axis you
@@ -874,7 +874,7 @@ Below this pop up there is 'LED' that indicates whether the home/ref switch for 
 is active or not. 
 
 If you use a home/ref switch in your system you can use this 'LED' to diagnose and
-ensure that the switch works and is active at the lower (left,near,bottom) end of its movement.
+ensure that the switch works and is active at the lower (left, near, bottom) end of its movement.
 To do that move for example the X-axis to the extreme left and ensure that the
 'LED' turns ON, then as you move the X-axis to the right, the 'LED' should turn OFF when
 the switch is no longer active. 
@@ -894,11 +894,11 @@ You select that with this popup.
 Below this pop up there is 'LED' that indicates whether the home/ref switch for selected slave motor
 is active or not. 
 
-When motors are paralled they perform the exact same movements, except when you press the HOME button. 
+When motors are paralleled they perform the exact same movements, except when you press the HOME button. 
 Homing is performed independently for each motor so that the system will align itself correctly based
 on the home/ref switches.
 
-Note that when motors are paralled then all the settings for both motors are taken the
+Note that when motors are paralleled then all the settings for both motors are taken the
 same motor setup i.e. axis so the gearing, motors and switch setups need to be identical.
 
 
@@ -947,7 +947,7 @@ the position is physically undefined.
 If you want to use the limits you must remember to 'home'
 all axes by pressing the 'HOME' buttons if the 
 TOAD4 has been power cycled (it is TOAD4 who maintains the 
-coordinates so it will loose track of the position
+coordinates so it will lose track of the position
 if it is turned off).
 
 Also worth remembering is that if you use the limits
@@ -1069,7 +1069,7 @@ jog speed  before you try to maximize
 the acceleration.
 
 EazyCNC has a motor test function, see  
-section~\ref{subsec:test-panel}, to help you to 
+section~\ref{sec:test-panel}, to help you to 
 determine the limits of your motors and mechanisms.
 
 \subsubsection{Jog Velocity -entry field} 
@@ -1135,7 +1135,7 @@ values and verify the accuracy of the
 motions for each trial.
 
 Note that the values here are common to all axes. 
-See section~\ref{subsec:test-panel}) on how to do this for
+See section~\ref{sec:test-panel}) on how to do this for
 each axis. Once you have found out the maximum velocity
 and acceleration for each axis, pick the minimum of those 
 values and use that here as the maximum velocity and acceleration
@@ -1292,7 +1292,7 @@ For a complete description of G-codes supported by EazyCNC see Chapter~\ref{chap
 If this check box is ticked then the I,J and K words in the arc cutting G2 and G3 
 commands are interpreted relative to the start point of the arc.
 
-If you see a lot of large erroneous arcs in te tool path graphics panel when 
+If you see a lot of large erroneous arcs in the tool path graphics panel when 
 your are previewing your G-codes then you can be pretty confident that this
 tick box is in the wrong state.
 
@@ -1317,28 +1317,28 @@ how the tool should move in external corners.
 Traditionally the tool moves around the corner in an arc.
 
 The other option is for
-the tool to move in a straigh line until it has 'cleared' the corner and the move
+the tool to move in a straigth line until it has 'cleared' the corner and the move
 in a straight line along the next segment. If the (external) corner is very tight
 then this would cause the tool to move very long away beyond the corner point, 
 therefore a maximum length can be specified.
 
 This later option maybe useful in plasma cutting as it takes the cutting flame further
-away from the potentially sharp and narrow corner which tends to burn if the torch linger
-around the corner too long.
+away from the potentially sharp and narrow corner which tends to burn if the torch lingers
+too long around the corner.
 
-\subsubsection{Use round join -radiobutton}
+\subsubsection{Use round join -radio-button}
 
 If this is selected then the traditional way of handling external corners is used, i.e.
 the tool moves in an arc around the corner.
 
-\subsubsection{Use miter join -radiobutton}
+\subsubsection{Use miter join -radio-button}
 
-If this is selected then tool will move  in a straigh line until it has 'cleared' the corner and the move
+If this is selected then tool will move  in a straigth line until it has 'cleared' the corner and the move
 in a straight line along the next segment. If, as a result of the corner geometry,
  the tool would move further from the corner than what
 is specified in the 'bevel limit' -entry field, then the move is pruned as indicated.
 
-subsection{Auto functions -panel}
+\subsection{Auto functions -panel}
 LIP
 \subsubsection{Auto SPINDLE OFF -checkbox}
 If this checkbox is ticked then the spindle will automatically turn off when the system
@@ -1357,11 +1357,11 @@ observing work or changing the cutter.
 \subsubsection{N-axis auto zero -checkboxes}
 
 
-If 'N-axis auto zero'  checkbox  is ticked then N axis DRO will be automatically
+If 'N-axis auto zero'  checkbox  is ticked then that axis DRO will be automatically
 zeroed when you hit the RUN button if the machine was in STOPed state.
 
-The DRO will NOT be zeroed when you hit the RUN button if the system
-was in HOLD state.
+The DRO will NOT be zeroed when you hit the RUN button when the system
+is in HOLD state.
 
 This is handy for plasma cutting where you typically just jog the 
 torch to the origin position, zero the DROs and hit RUN. By ticking
@@ -1381,7 +1381,7 @@ Currently only CSV (Comma Separated Values) format is supported.
 \subsubsection{Number format -entry field}
 
 Into this entry field you enter a 'sample' of how the numbers should be
-formatted. For example if you want to have three decimals
+formatted. For example :  if you want to have three decimals
 use '0.000' .
 
 \subsubsection{List item Separator -popup menu}
@@ -1391,7 +1391,7 @@ Unfortunately CSV format does not specify whether the decimal separator is
 the text files in Excel which defaults to different separator depending
 on which language version of the OS you have. 
 
-As mentioned the ',' (comma) can be both desimal separator and list item
+As mentioned the ',' (comma) can be both decimal separator and list item
 separator, but it should never be used for both purposes at the same time.
 
 So in this popup you can select which (comma ',' or semicolon ';') character
@@ -1418,9 +1418,9 @@ try to execute the system shutdown command.
 A shutdown script is a script named shutdown.BAT on Windows
 and shutdown.sh on  macOS/Linux and which is placed in the
 EazyCNC directory in your home directory.
-If one exists EazyCNC will try to execute it using the operating system shell.
+If one exists, EazyCNC will try to execute it using the operating system shell.
 
-The purpose of the shutdown script is to allow you to customise the
+The purpose of the shutdown script is to allow you to customize the
 shutdown process e.g. by shutting down additional hardware in 
 you machining system.
 
@@ -1430,8 +1430,8 @@ you machining system.
 If this checkbox is ticked then an on-screen virtual keyboard will
 appear whenever you click an entry field. The on-screen
 virtual keyboard allows operation with touchscreen only without
-a real physical keyboard. This built in virtual keyboards is preferable
-to the operating system provided because it is optimsed For
+a real physical keyboard. This built-in virtual keyboards is preferable
+to the operating system provided because it is optimised For
 CNC operations and it plays nicely with the rest of the user interface.
 
 
@@ -1510,7 +1510,7 @@ about which configuration file is being used.
 %with the TOAD4 controller.
 
 %When the controller is connected (the 'MACH' button is active) the histogram
-%shows in real time the distribution of actual update periods.
+%shows in real-time the distribution of actual update periods.
 
 %The middle of the histogram represents the current 'Update Period' so
 %the access times should consistently pile up slightly to the right
@@ -1538,21 +1538,21 @@ about which configuration file is being used.
 
 
 \section{Test screen}
-\label{sec:test-setup}
+\label{sec:test-panel}
 
 
-The Test screen in
-\screencaps{mach-setup-view-Test}{0.5}{The Test screen.}
+The Test screen 
 allows you to test all the inputs and output of your TOAD boars as well
-as test or find out the limits of your motors.
+as test or find out the limits of your motors, \screencaps{mach-setup-view-Test}{0.5}{The Test screen.}
+
 
 To use this panel the system needs to be in MACH state so that it is communicating
 with the TOAD board (this actually works in the SIMU mode as well, but then
-everythings is, well, simulated).
+everything is, well, simulated).
 
 \subsection{Inputs -panel}
 
-This panel shows in real-time the state of the all digital inputs from the TOAD board.
+This panel shows in real-time the state of  all the digital inputs from the TOAD board.
 
 The different inputs are self-explanatory except perhaps the MAN-CTRL which
 indicates that the manual control panel is attached AND in manual control mode.
@@ -1562,7 +1562,7 @@ indicates that the manual control panel is attached AND in manual control mode.
 
 This panel allows you to manually control all the digital outputs of the TOAD board.
 
-To exercise the output you need to first activate the orange OVERRIDE button. 
+To exercise the outputs you need to first activate the orange OVERRIDE button. 
 
 \begin{mdframed}[style=warning]
 Warning!
@@ -1659,7 +1659,7 @@ there is enough free travel on both sides of the starting position.
 
 \subsubsection{The Test run}
 
-When you click the the 'TEST button the test movement is performed as follows.
+When you click the 'TEST button the test movement is performed as follows.
 
 First EazyCNC 'homes' the  axis/motor ie it moves slowly 
 towards the reference switch and then just out 

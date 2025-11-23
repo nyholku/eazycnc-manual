@@ -18,8 +18,8 @@ A Joystick or Gamepad can also be used to active most of the functions.
 
 To extend the number of functions accessible using the Joystick/Gamepad buttons
 EazyCNC supports a software 'Shift Lock' -button, Figure~\ref{fig:shift-lock}.
-If this button is activate then the Joystick/Keyboard generates an other set
-of keys onto which functions can be attached.
+If this button is activate then the Joystick/Keyboard generates another set
+of key presses onto which functions can be attached.
 
 See Section~\ref{sec:shortcut-setup} to learn how to view and change both keyboard 
 and joystick shortcuts.
@@ -133,7 +133,7 @@ However you are not limited to these, all the keypad keys can be configured
 in the Mach Setup / Shortcuts screen, see section \ref{sec:shortcut-setup},
 
 Note that for each key it is possible to associate two functions,
-one for a short press of the key and an other one for long press
+one function for a short press of the key and another one for long press
 of the key. To do that simply press the key on pendant for shortly
 or for a 'long' time when assigning the shortcut.
 
@@ -149,7 +149,7 @@ mode you can install and run the EazyCNC software in any computer and use it
 in the comfort of your study or office.
 
 The simulation mode attempts to be step-accurate i.e. simulate the exact movements
-the stepper motors will make and it runs in real time (if your computer is fast enough)
+the stepper motors will make and it runs in real-time (if your computer is fast enough)
 meaning that simulation takes as long as the actual machining will take. As this
 may take a long time you may speed things up when simulating by using a faster feedrate (the F-word
 G-code) but this will affect the small details of the cutting paths so the path
@@ -171,10 +171,10 @@ To toggle a mode on or off click the corresponding button.
 %---------------------------------------------------------------------------
 
 
-Note that the stepper motor drivers are enabled/disabled when you press
+\emph{\color{red} Note that the stepper motor drivers are enabled/disabled when you press
 the MACH button. When the motor drivers are disabled they may not hold
 their exact position and thus accuracy may be lost if you exit MACH mode
-even temporarily before you have finished machining your part.
+even temporarily before you have finished machining your part.}
 
 
 
@@ -224,14 +224,14 @@ and forethought needs to be exercised if the interactive execution is used
 in the middle of machining when the system is in the HOLD-state, because the
 the interactive commands may violate the expectations built into the G-code.
 
-For example it is possible to turn off the spindle interactively with the 
+For example :  it is possible to turn off the spindle interactively with the 
 '\texttt{M5}'  code in which case continuing with the machining is likely
 to result in a broken milling cutter when the machining is continued
 and the spindle is not running.
 
 \section{G-code display}
 
-On the main screen the top right hand quarter of the screen is occupied by the
+On the main screen the top right-hand quarter of the screen is occupied by the
 G-code display and the associated controls, Figure~\ref{fig:g-code-display}.
 
 %---------------------------------------------------------------------------
@@ -243,7 +243,7 @@ G-code display and the associated controls, Figure~\ref{fig:g-code-display}.
 %---------------------------------------------------------------------------
 
 The current G-code file is displayed there. Only one G-code program can
-be open at any given time, but if it calls subroutines in an other
+be open at any given time, but if it calls subroutines in another
 G-code file it is possible that multiple 'tabs' or files are displayed there.
 
 The next G-code line to be executed is highlighted in blue. If there is
@@ -279,7 +279,7 @@ you are skipping G-codes when you 'Goto' a specific line in the program
 the G-code generator, be it a person or a CAM software, made
 when the code was written and this may have consequences. 
 
-For example
+For example : 
 a plasma cutter is typically programmed to start the cut with a piercing
 burn outside the actual part outline and if you skip that the
 arc may not be established and the metal not be pierced or the piercing may
@@ -289,10 +289,12 @@ leave its mark on the part.
 \subsection{Editing G-code}
 
 It is also possible to edit and even create G-code files directly in 
-EazyCNC, but this is not recommended. EazyCNC is not a general purpose
-text or G-code editor, anytime you edit the code EazyCNC will go through
+EazyCNC, but this is not recommended. 
+
+\emph{\color{red} EazyCNC is not a general purpose
+text or G-code editor, any time you edit the code EazyCNC will go through
 the whole code and re-calculate the tool path and this can be slow,
-especially if the G-code file is very long, as it very well can be.
+especially if the G-code file is very long, as it very well can be.} 
 
 To edit the code ensure that EazyCNC is in the stopped state (you 
 cannot edit the code while machining)  and just click on line you
@@ -364,17 +366,17 @@ The cutting tool is illustrated as a purple cylinder and the actual tool path is
 as series of connected red and green lines of different intensity and line width. The colors
 can be changed, see section ~\ref{subsec:tool-color-settings}.
 
-The display is updated in real time as the machining progresses. The toolpath machined or
+The display is updated in real-time as the machining progresses. The toolpath machined or
 cut so far is displayed in green and the yet to be cut toolpath is displayed in red. You
 can change the colors, see section ~\ref{subsec:machined-path-color-settings}.
 
 For the already machined toolpath, in green, the width of the line corresponds to the 
 width of the tool used to cut that path if the spindle was turned 'on' during the
-machining, otherwise the toolpath is shown as a thin line.The colors
+machining, otherwise the toolpath is shown as a thin line. The colors
 can be changed, see section ~\ref{subsec:machined-path-color-settings}.
 
 Weather the spindle is 'on' or 'off' for a given toolpath segment is indicated by
-the intensity of the color of the line, spindle 'on' is illustrated with with
+the intensity of the color of the line, spindle 'on' is illustrated with
 bright red or green and spindle 'off' is illustrated with a darker shade.
 
 When the G-code program is executing or running you can see, if you look carefully,
@@ -404,7 +406,7 @@ the mouse you can rotate the view without activating the [Rot]-button.
 
 If one of the 'XY', 'YZ' or 'XZ' buttons is
 active then the rotation is disabled and the view is forced to be towards
-the corresponding coordinate plane along the 'plane normal' axis. For example if
+the corresponding coordinate plane along the 'plane normal' axis. For example :  if
 you have the XY button selected then the view is as if you were looking
 down from the top of the positive Z-axis towards the XY-plane. 
 
@@ -519,7 +521,7 @@ arrow button.
 
 The size of the step depends on the mode which is named as the number of 1/1000th 
 of the basic unit that you have set your system up with. 
-For example if you have
+For example :  if you have
 set up your system to use 'inch' then step size in step mode 'x100' moves the 
 axis 100/1000th of an inch or 0.1 inch. 
 Like wise if you use 'mm' then step mode 'x10' then causes the step size to 
@@ -529,8 +531,8 @@ be 10/1000th of millimeter or 0.01 mm.
 Step mode 'x0' is special and causes the step size to be the smallest possible 
 given your stepper motor setup i.e. the size is one step in this mode.
 
-If you read carefully you noticed that I said there four step modes but I listed 
-five. Thas is no mistake. In 'inch' mode the step mode 'x1000' is skipped and in
+If you read carefully you noticed that I said there are four step modes but I listed 
+five. That is no mistake. In 'inch' mode the step mode 'x1000' is skipped and in
 'mm' mode the 'x1' mode is skipped as they do not make sense the other being too
 large and the other being too small.
 
@@ -650,7 +652,7 @@ and you are good to go!
 For a simple system like a plasma cutter where the
 motors are not strong enough to cause any damage even
 if you hit ends of the movement above is very adequate, 
-no home/reference or limit switches,no calibration, no nothing.
+no home/reference or limit switches, no calibration, no nothing.
 
 For milling you actual you want to drive the tool to the bottom
 left corner of the workpiece so that the tool is well within the workpiece 
@@ -827,7 +829,7 @@ always commence running.
 
 You can't move the tool 'manually' with the jog controls while the G-code is executing, 
 but you can move it when the system is in the paused or 'HOLD' state. If you move
-the tool 'manually' EazyCNC will, when you hit the 'RUN button,  automatically return the tool the the position 
+the tool 'manually' EazyCNC will, when you hit the 'RUN button,  automatically return the tool the position 
 where it was before you jogged it.
 
 In the hold state the spindle and coolant will keep running if they were 'on' when
@@ -909,10 +911,11 @@ This section discusses the coordinate systems in detail.
 
 \subsection{Coordinate axes}
  
-See \screencap{coordinate-system}{The Coordinate axes} illustrates the coordinate axes. 
+
 When standing in front of the machine and looking into the machine X-axis runs from left
 to right, Y axis from front to back and Z axis from bottom to top. This is a
-well established convention in CNC world.
+well established convention in CNC world. See \screencap{coordinate-system}{The Coordinate axes} which 
+illustrates the coordinate axes. 
 
 The origin of the machine coordinate system is where ever your home/ref switches are
 positioned or if you don't have a home/ref switch installed and enabled for
@@ -923,7 +926,7 @@ are not used in G-code.
  
 The physical origin of the coordinate axis is not really relevant
 most of the time as you need to 'calibrate' or set your work coordinate 
-system with respect to the the work piece anyway as explained in the next section.
+system with respect to the work piece anyway as explained in the next section.
 
 \section{XYZ versus ABC axes}
 
@@ -1000,14 +1003,14 @@ in a hobby installation, so I suggested you use coordinate
 system number one and stick with it.
 
 You manage the coordinate systems with the Work Offsets panel,
-see Figure~\ref{fig:edge-finder}.
+see Figure~\ref{fig:work-offsets-view}.
 
 
 %---------------------------------------------------------------------------
 \begin{figure}[htb]
-\includegraphics[scale=0.5]{work-offsets-edge-finder.png}
+\includegraphics[scale=0.2]{work-offsets-view-edge-finder.png}
 \caption{The Work Offsets screen}
-\label{fig:edge-finder}
+\label{fig:work-offsets-view}
 \end{figure}
 %---------------------------------------------------------------------------
 \section{Selecting the active coordinate system / work offsets}
@@ -1049,6 +1052,7 @@ origin is by 'touching' the work piece or touch plate with an edge finder,
 electric probe or cutter in the spindle. 
 
 \section{Setting the X/Y work offsets via touching}
+\screencaps{work-offsets-view-edge-finder}{0.2}{The Work Offsets screen when the EDGE FINDER button is activated}
 
 
 This is illustrated and done with the controls in the 'Set XY-origin' panel.
@@ -1064,9 +1068,21 @@ To use the touch feature simply Jog the axis to a work piece
 edge, ensure that the probe diameter is correctly entered into
 the 'Probe Diameter:' entry field and click on one of the
 'Touch' buttons to indicate the edge you have the driven the
-probe to. EazyCNC then calculates and sets the offsets so that
-the coordinate origin for that axis is at the indicated edge
-of the work piece.
+probe to. 
+
+EazyCNC then calculates and sets the offsets so that
+the DRO for the touched axis will have the value  
+specified in the 'Touch value' entry field when
+the tip of the cutter is jogged to that edge of
+the work piece. 
+
+For example if you want to
+have the work piece left edge G-code coordinate
+to be at -7 you enter that value to the 'Touch value'
+entry field, you enter the edge finder diameter to the
+'Edge Finder Diam' entry field, jog the edge finder
+to the edge of the work piece and click the 'Touch -X'
+button.
 
 \section{Setting the Z work offset via touching}
 \label{sec:touch-z-coordinate}
@@ -1089,10 +1105,15 @@ Touching in the Z-direction is usually done with the tool or
 cutter in the chuck. To use the touch feature you will need a gauge piece about
 10 mm or half an inch thick.
 
+Note that it is much safer from the tool breakage point
+of view to jog up i.e. first jog close to the milling
+table without the gauge piece in place, then job up a little
+bit at a time until you can just slide the gauge piece
+between the table and the cutter. 
+
 Start by jogging down the Z-axis close to
 the milling table taking care not to actually hit 
-the table with the cutter. Closer than the thickness
-of the gauge piece is close enough.
+the table with the cutter. 
 
 Next jog \emph{up}, slowly and carefully, until your gauge 
 piece just fits between the cutter and the table.
@@ -1100,15 +1121,20 @@ piece just fits between the cutter and the table.
 Now enter the thickness of your gauge piece into
 the 'Gauge Thickness:' field and click 'Touch'.
 
-EazyCNC then calculates and sets the Z offset so that
-the coordinate origin for that axis is at the top of the
-workpiece.
+EazyCNC then calculates and sets the offsets so that
+the Z-DRO will have the value  
+specified in the 'Touch value' entry field when
+the tip of the cutter is jogged to top edge of
+the work piece. 
 
-Note that it is much safer from the tool breakage point
-of view to jog up i.e. first jog close to the milling
-table without the gauge piece in place, then job up a little
-bit at a time until you can just slide the gauge piece
-between the table and the cutter. 
+For example if you want to
+have the work piece top  G-code coordinate
+to be at -8 you enter that value to the 'Touch value'
+entry field, you enter gauge thickness in to the
+'Gauge Height' entry field, jog the edge finder
+to the edge of the work piece and click the 'Touch Z'
+button.
+
 
 \section{Setting the work offsets using an electric probe}
 
@@ -1117,7 +1143,7 @@ you can use it by activating the PROBE button.
 
 As a safety feature if the PROBE feature is enabled
 then the Touch buttons to changed to look like in 
-\screencaps{work-offsets-view-auto}{0.5}{The Work Offsets screen when the PROBE button is activated}
+\screencaps{work-offsets-view-auto}{0.2}{The Work Offsets screen when the PROBE button is activated}
 
 First you need to jog the tool close enough to the edge in question 
 of the workpiece using the jog controls.
@@ -1127,7 +1153,11 @@ to make a small (10 mm ~ 1/2 inch) movement on the axis in
 question. The movement stops as soon as the electronic probe trips
 and the offset for the corresponding axis is set just like 
 it would be if you had used the manual mode an edge finder or
-gauge block and pressed the Touch button.
+gauge block and pressed the Touch button. 
+
+See previous sections for the explanation of the 'Touch value'
+entry field.
+
 
 After the probe trips it retracts to its original position.
 
@@ -1138,9 +1168,9 @@ Work Offsets are not affected.
 \section{Probe calibration}
 \label{sec:probe-calibration}
 
-Before you can use the probe you need to calibrate the probe tip in the probe calibration screen by activating 
+Before you can use the probe you need to calibrate the probe tip in the probe calibration screen by clicking 
 Calibration-button, see 
-\screencaps{work-offsets-view-calibrate}{0.5}{The Work Offsets screen when the PROBE button is activated}
+\screencaps{work-offsets-view-calibrate}{0.2}{The Work Offsets screen after the Calibration button is clicked}
 
 For calibration you need a smooth bore ring gauge.
 
@@ -1270,14 +1300,14 @@ as cutters wear or are changed, but for some types of machines like plasma cutte
 where the width of the cut depends on the feed rate it maybe 
 better managed in the G-code files themselves.
 
-To effectively use the tool table you need a presettable toolholder 
+To effectively use the tool table you need a repeatable toolholder 
 system that allows you to repeatably change the tool without affecting
 the cutter position i.e. a system that allows you to take a tool out
 and put it back in later and which keeps the tool at the same height
 in relation to the mill spindle. 
 
 If you don't have a toolholder like that you can just set the cutter
-manually, hopefully with a jig or something, to a correct correct 
+manually, hopefully with a jig or something, to a correct 
 depth in the chuck and update the tool length in the table
 manually. With this method, as the length info is probably not accurate,  
 you need to re-set the Z-axis coordinate system every time you change the tool. 
@@ -1556,7 +1586,7 @@ public class RefAllHome extends Plugin {
 \end{verbatim}
 
 
-Note that ZERO all zeros all six axes X,Y,Z,A,B and C but HOME ALL homes only X,Y and Z axes.
+Note that ZERO all zeros all six axes X, Y, Z, A, B and C but HOME ALL homes only X, Y and Z axes.
 
 
 \begin{comment}

@@ -56,7 +56,7 @@ they are ignored and make no difference to the execution.
 In this document a hashtag, '\texttt{\#}' after a word is used to denote a
 word followed by a value, i.e. number or expression.
 These are optional arguments or parameters to the G-code
-in question. For example '\texttt{G0 X\# Y\# Z\#'} indicates that 
+in question. For example :  '\texttt{G0 X\# Y\# Z\#'} indicates that 
 you can write '\texttt{G0 X10 Y20}'. Weather parameters are
 optional or not is explained in the text. A asterisk '\texttt{*}' is used to 
 denote a compulsory or required word. 
@@ -94,7 +94,7 @@ very handy when debugging G-code programs.  When outputting
 text to the console \#number -references in the text are
 replaced with value of the parameter with that number.
 
-For example 
+For example :  
 
 \texttt{(PRINT,value of parameter 123 is \#123)}
 
@@ -122,7 +122,7 @@ Some valid examples:
 Where ever a number can be used an arithmetic enclosed expression in brackets, '['
 and ']', can be used.
 
-For example the commands
+For example :  the commands
 
 \texttt{X100}
 
@@ -141,7 +141,7 @@ denoted as follows. Operations in a higher precedence group are executed before 
 Operators in on the same precedence level are executed from left to right. This
 pretty much follows the common arithmetic expression calculation order.
 
-The highest precedence group only has the the exponentiation or power operator '\texttt{**}'.
+The highest precedence group only has the exponentiation or power operator '\texttt{**}'.
 
 The second highest precedence contains the multiplication, division and modulus operators
 '\texttt{*}', '\texttt{/}' and '\texttt{MOD}' respectively.
@@ -196,7 +196,7 @@ function argument enclosed in brackets, '[' and ']'.
 
 
 
-For example calculate the square root of two you would write:
+For example :  calculate the square root of two you would write:
 
 \texttt{SQRT[2]}
 
@@ -220,7 +220,7 @@ of numbers in expression.
 
 Instead of names the parameters are referred to by numbers preceded with a '\texttt{\#}'\#sign. 
 
-For example
+For example : 
 
 \texttt{\#5324}
 
@@ -231,7 +231,7 @@ You can for example create G-code programs that is parametrized
 to cut different sized parts by just changing a parameter or two. 
 
 To change or set a parameter you follow the parameter name with the
-equal sign '\texttt{=}'. For example:
+equal sign '\texttt{=}'. For example : 
 
 \texttt{\#5324 = 12.34}
 
@@ -715,7 +715,7 @@ the fixture offsets nor does it affect the tool length or
 temporary offsets.
 
 \noindent
-For example following will scale a 2D part design to three times it's original size.
+For example :  following will scale a 2D part design to three times it's original size.
 
 \begin{verbatim}
 G50       ; ensure all scaling is off and set to 1.0
@@ -734,7 +734,7 @@ model all axis words are interpreted relative to the current to position
 tool position.
 
 \noindent
-For example following
+For example :  following
 
 
 \begin{verbatim}
@@ -889,7 +889,7 @@ It is an error to have both \texttt{G68} and \texttt{G69} on the same line.
 \label{gcode-G19}
 
 The arc interpolation i.e. arc cutting (\texttt{'G2'} and \texttt{'G3'}) works by calculating
-a circular path in the active plane which is one of the the main coordinate planes XY,XZ or YZ
+a circular path in the active plane which is one of the main coordinate planes XY,XZ or YZ
 plane.
 
 The \texttt{'G17'} sets the active plane to XY-plane.
@@ -1183,11 +1183,11 @@ codes \texttt{G2} and \texttt{G3}
 can be either absolute or incremental.
  
 To set the absolute interpretation use \texttt{G90.1}, in
-this mode the the IJK words specify the center coordinates
+this mode the IJK words specify the center coordinates
 in the local/current coordinate system.
 
 To set the incremental interpretation use \texttt{G91.1}, in
-this mode the the IJK words specify the center coordinates
+this mode the IJK words specify the center coordinates
 relative to the starting point of the arc.
 
 Incorrect settings of this mode will usually result in large 
